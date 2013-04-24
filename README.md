@@ -1,5 +1,7 @@
 # PagSeguro
 
+[![Build Status](https://travis-ci.org/pagseguro/rails.png)](https://travis-ci.org/pagseguro/rails)
+
 TODO: Write a gem description
 
 ## Installation
