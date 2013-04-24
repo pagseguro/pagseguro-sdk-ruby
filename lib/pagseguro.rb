@@ -1,3 +1,4 @@
+require "bigdecimal"
 require "forwardable"
 
 require "pagseguro/extensions/mass_assignment"
