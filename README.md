@@ -2,25 +2,7 @@
 
 [![Build Status](https://travis-ci.org/pagseguro/rails.png)](https://travis-ci.org/pagseguro/rails)
 
-TODO: Write a gem description
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem "pagseguro"
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install pagseguro
-
-## Usage
-
-TODO: Write usage instructions here
+This is a working in progress!
 
 ## Contributing
 
