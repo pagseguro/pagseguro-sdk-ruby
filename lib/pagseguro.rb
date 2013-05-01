@@ -1,6 +1,10 @@
 require "bigdecimal"
 require "forwardable"
 
+require "nokogiri"
+require "aitch"
+
+require "pagseguro/errors"
 require "pagseguro/extensions/mass_assignment"
 require "pagseguro/extensions/ensure_type"
 require "pagseguro/address"
@@ -10,8 +14,8 @@ require "pagseguro/item"
 require "pagseguro/items"
 require "pagseguro/payment_request"
 require "pagseguro/payment_request/serializer"
-require "pagseguro/http_request"
-require "pagseguro/http_response"
+require "pagseguro/payment_request/response"
+require "pagseguro/request"
 require "pagseguro/sender"
 require "pagseguro/version"
 
@@ -27,9 +31,6 @@ module PagSeguro
     # The API token associated with this account.
     attr_accessor :token
 
-    # The API endpoint.
-    attr_accessor :endpoint
-
     # The encoding that will be used.
     attr_accessor :encoding
 
@@ -38,9 +39,25 @@ module PagSeguro
     attr_accessor :environment
   end
 
-  self.endpoint = "https://ws.pagseguro.uol.com.br/v2"
   self.encoding = "UTF-8"
-  self.environment = "production"
+  self.environment = :production
+
+  # Register endpoints by environment.
+  def self.uris
+    @uris ||= {
+      production: {
+        api: "https://ws.pagseguro.uol.com.br/v2",
+        site: "https://pagseguro.uol.com.br/v2"
+      }
+    }
+  end
+
+  # Return the root uri based on its type.
+  # Current types are <tt>:api</tt> or <tt>:site</tt>
+  def self.root_uri(type)
+    root = uris.fetch(environment.to_sym) { raise InvalidEnvironmentError }
+    root[type.to_sym]
+  end
 
   # Set the global configuration.
   #
@@ -51,5 +68,15 @@ module PagSeguro
   #
   def self.configure(&block)
     yield self
+  end
+
+  # The API endpoint.
+  def self.api_url(path)
+    File.join(root_uri(:api), path)
+  end
+
+  # The site url.
+  def self.site_url(path)
+    File.join(root_uri(:site), path)
   end
 end

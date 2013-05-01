@@ -16,6 +16,9 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "aitch"
+  spec.add_dependency "nokogiri"
+
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
@@ -23,4 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "autotest-standalone"
   spec.add_development_dependency "test_notifier"
   spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "fakeweb"
 end

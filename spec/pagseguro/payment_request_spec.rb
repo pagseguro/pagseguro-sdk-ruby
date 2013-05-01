@@ -28,4 +28,47 @@ describe PagSeguro::PaymentRequest do
     payment = PagSeguro::PaymentRequest.new
     expect(payment.currency).to eql("BRL")
   end
+
+  describe "#register" do
+    let(:payment) { PagSeguro::PaymentRequest.new }
+    before { FakeWeb.register_uri :any, %r[.*?], body: "" }
+
+    it "serializes payment request" do
+      PagSeguro::PaymentRequest::Serializer
+        .should_receive(:new)
+        .with(payment)
+        .and_return(mock.as_null_object)
+
+      payment.register
+    end
+
+    it "performs request" do
+      params = mock
+      PagSeguro::PaymentRequest::Serializer.any_instance.stub to_params: params
+
+      PagSeguro::Request
+        .should_receive(:post)
+        .with(PagSeguro.api_url("checkout"), params)
+
+      payment.register
+    end
+
+    it "initializes response" do
+      response = mock
+      PagSeguro::Request.stub post: response
+
+      PagSeguro::PaymentRequest::Response
+        .should_receive(:new)
+        .with(response)
+
+      payment.register
+    end
+
+    it "returns response" do
+      response = mock
+      PagSeguro::PaymentRequest::Response.stub new: response
+
+      expect(payment.register).to eql(response)
+    end
+  end
 end

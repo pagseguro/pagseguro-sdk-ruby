@@ -20,12 +20,35 @@ describe PagSeguro do
   end
 
   context "default settings" do
-    before do
-      load "./lib/pagseguro.rb"
+    it { expect(PagSeguro.encoding).to eql("UTF-8") }
+    it { expect(PagSeguro.environment).to eql(:production) }
+  end
+
+  describe ".api_url" do
+    it "raises when environment has no endpoint" do
+      PagSeguro.environment = :invalid
+
+      expect {
+        PagSeguro.api_url("/")
+      }.to raise_exception(PagSeguro::InvalidEnvironmentError)
     end
 
-    it { expect(PagSeguro.encoding).to eql("UTF-8") }
-    it { expect(PagSeguro.endpoint).to eql("https://ws.pagseguro.uol.com.br/v2") }
-    it { expect(PagSeguro.environment).to eql("production") }
+    it "returns api url" do
+      expect(PagSeguro.api_url("/some/path")).to eql("https://ws.pagseguro.uol.com.br/v2/some/path")
+    end
+  end
+
+  describe ".site_url" do
+    it "raises when environment has no endpoint" do
+      PagSeguro.environment = :invalid
+
+      expect {
+        PagSeguro.site_url("/")
+      }.to raise_exception(PagSeguro::InvalidEnvironmentError)
+    end
+
+    it "returns site url" do
+      expect(PagSeguro.site_url("/some/path")).to eql("https://pagseguro.uol.com.br/v2/some/path")
+    end
   end
 end
