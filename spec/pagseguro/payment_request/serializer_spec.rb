@@ -27,6 +27,7 @@ describe PagSeguro::PaymentRequest::Serializer do
         extra_amount: 1234.56,
         redirect_url: "REDIRECT_URL",
         notification_url: "NOTIFICATION_URL",
+        abandon_url: "ABANDON_URL",
         max_uses: 5,
         max_age: 3600
       })
@@ -37,6 +38,7 @@ describe PagSeguro::PaymentRequest::Serializer do
     it { expect(params).to include(extraAmount: "1234.56") }
     it { expect(params).to include(redirectURL: "REDIRECT_URL") }
     it { expect(params).to include(notificationURL: "NOTIFICATION_URL") }
+    it { expect(params).to include(abandonURL: "ABANDON_URL") }
     it { expect(params).to include(maxUses: 5) }
     it { expect(params).to include(maxAge: 3600) }
   end
@@ -86,7 +88,8 @@ describe PagSeguro::PaymentRequest::Serializer do
     before do
       sender = PagSeguro::Sender.new({
         email: "EMAIL",
-        name: "NAME"
+        name: "NAME",
+        cpf: "CPF"
       })
 
       payment_request.stub(sender: sender)
@@ -94,6 +97,7 @@ describe PagSeguro::PaymentRequest::Serializer do
 
     it { expect(params).to include(senderEmail: "EMAIL") }
     it { expect(params).to include(senderName: "NAME") }
+    it { expect(params).to include(senderCPF: "CPF") }
   end
 
   context "phone serialization" do
@@ -125,12 +129,12 @@ describe PagSeguro::PaymentRequest::Serializer do
     end
 
     shared_examples_for "item serialization" do |index|
-      it { expect(params).to include("ItemId#{index}" => "ID#{index}") }
-      it { expect(params).to include("ItemDescription#{index}" => "DESC#{index}") }
-      it { expect(params).to include("ItemAmount#{index}" => "#{index}00.12") }
-      it { expect(params).to include("ItemShippingCost#{index}" => "#{index}00.34") }
-      it { expect(params).to include("ItemQuantity#{index}" => "QTY#{index}") }
-      it { expect(params).to include("ItemWeight#{index}" => "WEIGHT#{index}") }
+      it { expect(params).to include("itemId#{index}" => "ID#{index}") }
+      it { expect(params).to include("itemDescription#{index}" => "DESC#{index}") }
+      it { expect(params).to include("itemAmount#{index}" => "#{index}00.12") }
+      it { expect(params).to include("itemShippingCost#{index}" => "#{index}00.34") }
+      it { expect(params).to include("itemQuantity#{index}" => "QTY#{index}") }
+      it { expect(params).to include("itemWeight#{index}" => "WEIGHT#{index}") }
     end
 
     before do

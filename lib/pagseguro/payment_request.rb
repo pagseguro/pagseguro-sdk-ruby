@@ -47,6 +47,10 @@ module PagSeguro
     # order.
     attr_accessor :notification_url
 
+    # Determines for which url PagSeguro will send the buyer when he doesn't
+    # complete the payment.
+    attr_accessor :abandon_url
+
     # Products/items in this payment request.
     def items
       @items ||= Items.new

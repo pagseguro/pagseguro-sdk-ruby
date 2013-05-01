@@ -12,6 +12,9 @@ module PagSeguro
     # Set the sender e-mail.
     attr_accessor :email
 
+    # Set the CPF document.
+    attr_accessor :cpf
+
     # Set the sender phone.
     def phone=(phone)
       @phone = ensure_type(Phone, phone)

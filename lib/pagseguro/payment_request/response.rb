@@ -10,8 +10,12 @@ module PagSeguro
         @response = response
       end
 
+      def errors
+        @errors ||= Errors.new(response)
+      end
+
       def url
-        PagSeguro.site_url("checkout/payment.html?code=#{code}")
+        PagSeguro.site_url("checkout/payment.html?code=#{code}") if code
       end
 
       def code

@@ -1,0 +1,8 @@
+pt-BR:
+  pagseguro:
+    errors:
+      unauthorized: "Não foi possível realizar a autenticação."
+      "11024": "Ítens do checkout inválidos"
+      "11015": "O tipo de frete é obrigatório"
+      "11157": "O número de CPF é inválido"
+

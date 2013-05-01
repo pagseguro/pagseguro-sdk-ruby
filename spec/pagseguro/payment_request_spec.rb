@@ -8,6 +8,7 @@ describe PagSeguro::PaymentRequest do
   it_assigns_attribute :max_age
   it_assigns_attribute :max_uses
   it_assigns_attribute :notification_url
+  it_assigns_attribute :abandon_url
 
   it_ensures_type PagSeguro::Sender, :sender
   it_ensures_type PagSeguro::Shipping, :shipping

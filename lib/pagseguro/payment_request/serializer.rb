@@ -18,6 +18,7 @@ module PagSeguro
         params[:extraAmount] = to_amount(payment_request.extra_amount)
         params[:redirectURL] = payment_request.redirect_url
         params[:notificationURL] = payment_request.notification_url
+        params[:abandonURL] = payment_request.abandon_url
         params[:maxUses] = payment_request.max_uses
         params[:maxAge] = payment_request.max_age
         payment_request.items.each.with_index(1, &method(:serialize_item))
@@ -36,12 +37,12 @@ module PagSeguro
       end
 
       def serialize_item(item, index)
-        params["ItemId#{index}"] = item.id
-        params["ItemDescription#{index}"] = item.description
-        params["ItemAmount#{index}"] = to_amount(item.amount)
-        params["ItemQuantity#{index}"] = item.quantity
-        params["ItemShippingCost#{index}"] = to_amount(item.shipping_cost)
-        params["ItemWeight#{index}"] = item.weight if item.weight
+        params["itemId#{index}"] = item.id
+        params["itemDescription#{index}"] = item.description
+        params["itemAmount#{index}"] = to_amount(item.amount)
+        params["itemQuantity#{index}"] = item.quantity
+        params["itemShippingCost#{index}"] = to_amount(item.shipping_cost)
+        params["itemWeight#{index}"] = item.weight if item.weight
       end
 
       def serialize_sender(sender)
@@ -49,6 +50,7 @@ module PagSeguro
 
         params[:senderEmail] =  sender.email
         params[:senderName] = sender.name
+        params[:senderCPF] = sender.cpf
 
         serialize_phone(sender.phone)
       end

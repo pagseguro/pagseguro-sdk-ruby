@@ -1,10 +1,14 @@
 require "bigdecimal"
 require "forwardable"
+require "time"
 
 require "nokogiri"
 require "aitch"
+require "i18n"
 
+require "pagseguro/version"
 require "pagseguro/errors"
+require "pagseguro/exceptions"
 require "pagseguro/extensions/mass_assignment"
 require "pagseguro/extensions/ensure_type"
 require "pagseguro/address"
@@ -17,7 +21,8 @@ require "pagseguro/payment_request/serializer"
 require "pagseguro/payment_request/response"
 require "pagseguro/request"
 require "pagseguro/sender"
-require "pagseguro/version"
+
+I18n.load_path += Dir[File.expand_path("../../locales/*.yml", __FILE__)]
 
 module PagSeguro
   class << self

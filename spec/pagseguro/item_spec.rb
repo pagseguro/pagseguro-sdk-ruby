@@ -12,4 +12,9 @@ describe PagSeguro::Item do
     item = PagSeguro::Item.new
     expect(item.quantity).to eql(1)
   end
+
+  it "sets default weight" do
+    item = PagSeguro::Item.new
+    expect(item.weight).to be_zero
+  end
 end

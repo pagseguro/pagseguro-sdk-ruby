@@ -24,6 +24,7 @@ module PagSeguro
     private
     def before_initialize
       self.quantity = 1
+      self.weight = 0
     end
   end
 end
