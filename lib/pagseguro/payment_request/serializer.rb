@@ -9,10 +9,7 @@ module PagSeguro
       end
 
       def to_params
-        params[:charset] = PagSeguro.encoding
-        params[:email] = PagSeguro.email
         params[:receiverEmail] = PagSeguro.receiver_email
-        params[:token] = PagSeguro.token
         params[:currency] = payment_request.currency
         params[:reference] = payment_request.reference
         params[:extraAmount] = to_amount(payment_request.extra_amount)
@@ -85,7 +82,7 @@ module PagSeguro
       end
 
       def to_amount(amount)
-        BigDecimal(amount.to_s).round(2).to_s("F") if amount
+        "%.2f" % BigDecimal(amount.to_s).round(2).to_s("F") if amount
       end
     end
   end

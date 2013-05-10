@@ -49,7 +49,7 @@ describe PagSeguro::PaymentRequest do
 
       PagSeguro::Request
         .should_receive(:post)
-        .with(PagSeguro.api_url("checkout"), params)
+        .with("checkout", params)
 
       payment.register
     end

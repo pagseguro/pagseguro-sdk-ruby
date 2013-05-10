@@ -2,19 +2,20 @@
 require "./lib/pagseguro/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "pagseguro"
-  spec.version       = PagSeguro::VERSION
-  spec.authors       = ["Nando Vieira"]
-  spec.email         = ["fnando.vieira@gmail.com"]
-  spec.description   = ""
-  spec.summary       = ""
-  spec.homepage      = "http://pagseguro.com.br"
-  spec.license       = "MIT"
+  spec.required_ruby_version = ">= 1.9.3"
+  spec.name                  = "pagseguro"
+  spec.version               = PagSeguro::VERSION
+  spec.authors               = ["Nando Vieira"]
+  spec.email                 = ["fnando.vieira@gmail.com"]
+  spec.description           = ""
+  spec.summary               = ""
+  spec.homepage              = "http://pagseguro.com.br"
+  spec.license               = "MIT"
 
-  spec.files         = `git ls-files`.split($/)
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ["lib"]
+  spec.files                 = `git ls-files`.split($/)
+  spec.executables           = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files            = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths         = ["lib"]
 
   spec.add_dependency "aitch"
   spec.add_dependency "nokogiri"

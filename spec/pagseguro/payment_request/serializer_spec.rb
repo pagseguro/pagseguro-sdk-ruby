@@ -7,15 +7,9 @@ describe PagSeguro::PaymentRequest::Serializer do
 
   context "global configuration serialization" do
     before do
-      PagSeguro.email = "EMAIL"
       PagSeguro.receiver_email = "RECEIVER"
-      PagSeguro.token = "TOKEN"
-      PagSeguro.encoding = "UTF-8"
     end
 
-    it { expect(params).to include(charset: PagSeguro.encoding) }
-    it { expect(params).to include(email: PagSeguro.email) }
-    it { expect(params).to include(token: PagSeguro.token) }
     it { expect(params).to include(receiverEmail: PagSeguro.receiver_email) }
   end
 
@@ -24,7 +18,7 @@ describe PagSeguro::PaymentRequest::Serializer do
       payment_request.stub({
         currency: "BRL",
         reference: "REF123",
-        extra_amount: 1234.56,
+        extra_amount: 1234.50,
         redirect_url: "REDIRECT_URL",
         notification_url: "NOTIFICATION_URL",
         abandon_url: "ABANDON_URL",
@@ -35,7 +29,7 @@ describe PagSeguro::PaymentRequest::Serializer do
 
     it { expect(params).to include(currency: "BRL") }
     it { expect(params).to include(reference: "REF123") }
-    it { expect(params).to include(extraAmount: "1234.56") }
+    it { expect(params).to include(extraAmount: "1234.50") }
     it { expect(params).to include(redirectURL: "REDIRECT_URL") }
     it { expect(params).to include(notificationURL: "NOTIFICATION_URL") }
     it { expect(params).to include(abandonURL: "ABANDON_URL") }
