@@ -6,10 +6,20 @@ module PagSeguro
       end
 
       def serialize
-        process_success_response
+        if @response.success?
+          process_success_response
+        else
+          process_failed_response
+        end
       end
 
       private
+      def process_failed_response
+        {
+          errors: PagSeguro::Errors.new(@response)
+        }
+      end
+
       def process_success_response
         {}.tap do |data|
           data[:created_at] = Time.parse(xml.css("transaction > date").text)

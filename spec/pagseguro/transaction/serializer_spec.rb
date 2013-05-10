@@ -3,7 +3,7 @@ require "spec_helper"
 describe PagSeguro::Transaction::Serializer do
   context "for existing transactions" do
     let(:source) { File.read("./spec/fixtures/transactions/success.xml") }
-    let(:response) { stub(data: Nokogiri::XML(source)) }
+    let(:response) { stub(data: Nokogiri::XML(source), success?: true) }
     let(:serializer) { described_class.new(response) }
     subject(:data) { serializer.serialize }
 
@@ -50,11 +50,19 @@ describe PagSeguro::Transaction::Serializer do
 
   context "additional nodes" do
     let(:source) { File.read("./spec/fixtures/transactions/additional.xml") }
-    let(:response) { stub(data: Nokogiri::XML(source)) }
+    let(:response) { stub(data: Nokogiri::XML(source), success?: true) }
     let(:serializer) { described_class.new(response) }
     subject(:data) { serializer.serialize }
 
     it { expect(data).to include(cancellation_source: "PagSeguro") }
     it { expect(data).to include(escrow_end_date: Time.parse("2013-06-01T01:41:20.000-03:00")) }
+  end
+
+  context "when have errors" do
+    let(:response) { stub(success?: false).as_null_object }
+    let(:serializer) { described_class.new(response) }
+    subject(:data) { serializer.serialize }
+
+    it { expect(data[:errors]).to be_a(PagSeguro::Errors) }
   end
 end
