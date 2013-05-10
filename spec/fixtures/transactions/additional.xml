@@ -6,8 +6,8 @@
   <type>1</type>
   <status>1</status>
   <lastEventDate>2013-05-01T01:41:20.000-03:00</lastEventDate>
-  <!-- <cancellationSource>PagSeguro</cancellationSource> -->
-  <!-- <escrowEndDate>2013-06-01T01:41:20.000-03:00</escrowEndDate> -->
+  <cancellationSource>PagSeguro</cancellationSource>
+  <escrowEndDate>2013-06-01T01:41:20.000-03:00</escrowEndDate>
   <paymentMethod>
     <type>2</type>
     <code>202</code>

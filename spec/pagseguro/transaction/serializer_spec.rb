@@ -1,0 +1,60 @@
+require "spec_helper"
+
+describe PagSeguro::Transaction::Serializer do
+  context "for existing transactions" do
+    let(:source) { File.read("./spec/fixtures/transactions/success.xml") }
+    let(:response) { stub(data: Nokogiri::XML(source)) }
+    let(:serializer) { described_class.new(response) }
+    subject(:data) { serializer.serialize }
+
+    it { expect(data).to include(created_at: Time.parse("2013-05-01T01:40:27.000-03:00")) }
+    it { expect(data).to include(updated_at: Time.parse("2013-05-01T01:41:20.000-03:00")) }
+    it { expect(data).to include(code: "667A3914-4F9F-4705-0EB6-CA6FA0DF8A19") }
+    it { expect(data).to include(reference: "REF1234") }
+    it { expect(data).to include(type_id: "1") }
+    it { expect(data).to include(status_id: "1") }
+    it { expect(data).to include(payment_method: {type_id: "2", code: "202"}) }
+    it { expect(data).to include(payment_link: "https://pagseguro.uol.com.br/checkout/imprimeBoleto.jhtml?code=667D39144F9F47059FB6CA6FA0DF8A20") }
+    it { expect(data).to include(gross_amount: BigDecimal("459.50")) }
+    it { expect(data).to include(discount_amount: BigDecimal("0.00")) }
+    it { expect(data).to include(fee_amount: BigDecimal("13.73")) }
+    it { expect(data).to include(net_amount: BigDecimal("445.77")) }
+    it { expect(data).to include(extra_amount: BigDecimal("0.00")) }
+    it { expect(data).to include(installments: 1) }
+
+    it { expect(data.keys).not_to include(:cancellation_source) }
+    it { expect(data.keys).not_to include(:escrow_end_date) }
+
+    it { expect(data[:items]).to have(1).item }
+    it { expect(data[:items].first).to include(id: "1234") }
+    it { expect(data[:items].first).to include(description: "Some product") }
+    it { expect(data[:items].first).to include(quantity: 1) }
+    it { expect(data[:items].first).to include(amount: BigDecimal("459.50")) }
+
+    it { expect(data[:sender]).to include(name: "JOHN DOE") }
+    it { expect(data[:sender]).to include(email: "john@example.com") }
+    it { expect(data[:sender][:phone]).to include(area_code: "11") }
+    it { expect(data[:sender][:phone]).to include(number: "12345678") }
+
+    it { expect(data[:shipping]).to include(type_id: "2") }
+
+    it { expect(data[:shipping][:address]).to include(street: "AV. BRIG. FARIA LIMA") }
+    it { expect(data[:shipping][:address]).to include(number: "1384") }
+    it { expect(data[:shipping][:address]).to include(complement: "5º ANDAR") }
+    it { expect(data[:shipping][:address]).to include(district: "JARDIM PAULISTANO") }
+    it { expect(data[:shipping][:address]).to include(city: "SAO PAULO") }
+    it { expect(data[:shipping][:address]).to include(state: "SP") }
+    it { expect(data[:shipping][:address]).to include(country: "BRA") }
+    it { expect(data[:shipping][:address]).to include(postal_code: "01452002") }
+  end
+
+  context "additional nodes" do
+    let(:source) { File.read("./spec/fixtures/transactions/additional.xml") }
+    let(:response) { stub(data: Nokogiri::XML(source)) }
+    let(:serializer) { described_class.new(response) }
+    subject(:data) { serializer.serialize }
+
+    it { expect(data).to include(cancellation_source: "PagSeguro") }
+    it { expect(data).to include(escrow_end_date: Time.parse("2013-06-01T01:41:20.000-03:00")) }
+  end
+end

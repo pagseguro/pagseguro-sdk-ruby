@@ -6,10 +6,13 @@ module PagSeguro
       load_from_response Request.get("transactions/notifications/#{code}")
     end
 
-    def self.load_from_response(response)
+    # Serialize the HTTP response into data.
+    def self.load_from_response(response) # :nodoc:
       new Serializer.new(response).serialize
     end
 
+    # Initialize a new PagSeguro::Transaction instance with a Hash that
+    # contains all transaction data.
     def initialize(data)
 
     end
