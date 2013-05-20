@@ -27,7 +27,7 @@ module PagSeguro
           data[:reference] = xml.css("transaction > reference").text
           data[:type_id] = xml.css("transaction > type").text
           data[:updated_at] = Time.parse(xml.css("transaction > lastEventDate").text)
-          data[:status_id] = xml.css("transaction > status").text
+          data[:status] = xml.css("transaction > status").text
 
           cancellation_source = xml.css("transaction > cancellationSource")
           data[:cancellation_source] = cancellation_source.text if cancellation_source.any?

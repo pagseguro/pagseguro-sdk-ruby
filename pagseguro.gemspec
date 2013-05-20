@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "aitch"
   spec.add_dependency "nokogiri"
   spec.add_dependency "i18n"
+  spec.add_dependency "json"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"

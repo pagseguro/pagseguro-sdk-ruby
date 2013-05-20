@@ -13,7 +13,7 @@ describe PagSeguro::Transaction::Serializer do
     it { expect(data).to include(code: "667A3914-4F9F-4705-0EB6-CA6FA0DF8A19") }
     it { expect(data).to include(reference: "REF1234") }
     it { expect(data).to include(type_id: "1") }
-    it { expect(data).to include(status_id: "1") }
+    it { expect(data).to include(status: "1") }
     it { expect(data).to include(payment_method: {type_id: "2", code: "202"}) }
     it { expect(data).to include(payment_link: "https://pagseguro.uol.com.br/checkout/imprimeBoleto.jhtml?code=667D39144F9F47059FB6CA6FA0DF8A20") }
     it { expect(data).to include(gross_amount: BigDecimal("459.50")) }

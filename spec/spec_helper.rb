@@ -23,5 +23,6 @@ I18n.locale = ENV.fetch("LOCALE", I18n.default_locale)
 RSpec.configure do |config|
   config.before(:each) do
     load "./lib/pagseguro.rb"
+    FakeWeb.clean_registry
   end
 end
