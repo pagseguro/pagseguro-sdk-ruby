@@ -38,13 +38,13 @@ describe PagSeguro::PaymentRequest do
       PagSeguro::PaymentRequest::Serializer
         .should_receive(:new)
         .with(payment)
-        .and_return(mock.as_null_object)
+        .and_return(double.as_null_object)
 
       payment.register
     end
 
     it "performs request" do
-      params = mock
+      params = double
       PagSeguro::PaymentRequest::Serializer.any_instance.stub to_params: params
 
       PagSeguro::Request
@@ -55,7 +55,7 @@ describe PagSeguro::PaymentRequest do
     end
 
     it "initializes response" do
-      response = mock
+      response = double
       PagSeguro::Request.stub post: response
 
       PagSeguro::PaymentRequest::Response
@@ -66,7 +66,7 @@ describe PagSeguro::PaymentRequest do
     end
 
     it "returns response" do
-      response = mock
+      response = double
       PagSeguro::PaymentRequest::Response.stub new: response
 
       expect(payment.register).to eql(response)

@@ -1,7 +1,7 @@
 module EnsureTypeMacro
   def it_ensures_type(klass, attr)
     it "ensures that #{attr.inspect} coerces hash to #{klass}" do
-      options = mock(:options)
+      options = double(:options)
 
       klass
         .should_receive(:new)

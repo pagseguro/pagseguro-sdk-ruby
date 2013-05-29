@@ -45,15 +45,67 @@ module PagSeguro
     # The shipping information.
     attr_reader :shipping
 
+    # The cancellation source.
+    attr_accessor :cancellation_source
+
     # Find a transaction by its code.
     # Return a PagSeguro::Transaction instance.
     def self.find_by_code(code)
       load_from_response Request.get("transactions/notifications/#{code}")
     end
 
+    # Search transactions within a date range.
+    # Return a PagSeguro::Report instance.
+    #
+    # Options:
+    #
+    # # +starts_at+: the starting date. Defaults to the last 24-hours.
+    # # +ends_at+: the ending date.
+    # # +page+: the current page.
+    # # +per_page+: the result limit.
+    #
+    def self.find_by_date(options = {})
+      options = {
+        starts_at: Time.now - 86400,
+        ends_at: Time.now,
+        per_page: 50
+      }.merge(options)
+
+      Report.new(Transaction, "transactions", options)
+    end
+
+    # Get abandoned transactions.
+    # Return a PagSeguro::Report instance.
+    #
+    # Options:
+    #
+    # # +starts_at+: the starting date. Defaults to the last 24-hours.
+    # # +ends_at+: the ending date.
+    # # +page+: the current page.
+    # # +per_page+: the result limit.
+    #
+    def self.find_abandoned(options = {})
+      options = {
+        starts_at: Time.now - 86400,
+        ends_at: Time.now,
+        per_page: 50
+      }.merge(options)
+
+      Report.new(Transaction, "transactions/abandoned", options)
+    end
+
     # Serialize the HTTP response into data.
     def self.load_from_response(response) # :nodoc:
-      new Serializer.new(response).serialize
+      if response.success?
+        load_from_xml response.data.css("transaction").first
+      else
+        {errors: Errors.new(response)}
+      end
+    end
+
+    # Serialize the XML object.
+    def self.load_from_xml(xml) # :nodoc:
+      new Serializer.new(xml).serialize
     end
 
     # Normalize the sender object.

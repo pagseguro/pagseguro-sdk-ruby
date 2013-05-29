@@ -3,7 +3,7 @@ require "spec_helper"
 describe PagSeguro::PaymentRequest::Response do
   context "when payment requet is created" do
     def xml_response(path)
-      response = stub(
+      response = double(
         body: File.read("./spec/fixtures/#{path}"),
         code: 200,
         content_type: "text/xml",

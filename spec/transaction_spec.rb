@@ -8,7 +8,7 @@ describe PagSeguro::Transaction do
       PagSeguro::Request
         .should_receive(:get)
         .with("transactions/notifications/CODE")
-        .and_return(stub.as_null_object)
+        .and_return(double.as_null_object)
 
       PagSeguro::Transaction.find_by_code("CODE")
     end

@@ -61,7 +61,7 @@ describe PagSeguro::PaymentRequest::Serializer do
         complement: "COMPLEMENT"
       })
 
-      shipping = stub(address: address).as_null_object
+      shipping = double(address: address).as_null_object
 
       payment_request.stub(
         shipping: shipping

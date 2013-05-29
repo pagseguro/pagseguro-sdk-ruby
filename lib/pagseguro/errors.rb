@@ -3,7 +3,7 @@ module PagSeguro
     extend Forwardable
     include Enumerable
 
-    def_delegators :@messages, :each, :empty?, :any?
+    def_delegators :@messages, :each, :empty?, :any?, :join
 
     def initialize(response)
       @response = response

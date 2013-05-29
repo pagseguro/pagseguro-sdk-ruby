@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe PagSeguro::Errors do
-  let(:response) { stub }
+  let(:response) { double }
   subject(:errors) { PagSeguro::Errors.new(response) }
 
   context "when unauthorized" do
