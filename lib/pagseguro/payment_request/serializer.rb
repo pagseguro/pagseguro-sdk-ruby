@@ -18,7 +18,9 @@ module PagSeguro
         params[:abandonURL] = payment_request.abandon_url
         params[:maxUses] = payment_request.max_uses
         params[:maxAge] = payment_request.max_age
-        payment_request.items.each.with_index(1, &method(:serialize_item))
+        payment_request.items.each.with_index(1) do |item, index|
+          serialize_item(item, index)
+        end
 
         serialize_sender(payment_request.sender)
         serialize_shipping(payment_request.shipping)
