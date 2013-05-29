@@ -41,7 +41,7 @@ describe PagSeguro::Transaction::Serializer do
 
     it { expect(data[:shipping][:address]).to include(street: "AV. BRIG. FARIA LIMA") }
     it { expect(data[:shipping][:address]).to include(number: "1384") }
-    it { expect(data[:shipping][:address]).to include(complement: "5º ANDAR") }
+    it { expect(data[:shipping][:address]).to include(complement: "5 ANDAR") }
     it { expect(data[:shipping][:address]).to include(district: "JARDIM PAULISTANO") }
     it { expect(data[:shipping][:address]).to include(city: "SAO PAULO") }
     it { expect(data[:shipping][:address]).to include(state: "SP") }
