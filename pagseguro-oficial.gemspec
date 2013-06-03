@@ -3,12 +3,12 @@ require "./lib/pagseguro/version"
 
 Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 1.9.3"
-  spec.name                  = "pagseguro"
+  spec.name                  = "pagseguro-oficial"
   spec.version               = PagSeguro::VERSION
   spec.authors               = ["Nando Vieira"]
   spec.email                 = ["fnando.vieira@gmail.com"]
-  spec.description           = ""
-  spec.summary               = ""
+  spec.description           = "Official wrapper for the PagSeguro service."
+  spec.summary               = spec.description
   spec.homepage              = "http://pagseguro.com.br"
   spec.license               = "MIT"
 
