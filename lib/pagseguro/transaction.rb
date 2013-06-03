@@ -25,10 +25,19 @@ module PagSeguro
     # The payment method.
     attr_reader :payment_method
 
+    # The bank slip payment url.
     attr_accessor :payment_link
+
+    # The gross amount.
     attr_accessor :gross_amount
+
+    # The discount amount.
     attr_accessor :discount_amount
+
+    # The PagSeguro fee amount.
     attr_accessor :fee_amount
+
+    # The net amount.
     attr_accessor :net_amount
 
     # Set the extra amount applied to the transaction's total.
