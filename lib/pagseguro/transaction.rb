@@ -48,6 +48,9 @@ module PagSeguro
     # The cancellation source.
     attr_accessor :cancellation_source
 
+    # Set the transaction errors.
+    attr_reader :errors
+
     # Find a transaction by its code.
     # Return a PagSeguro::Transaction instance.
     def self.find_by_code(code)
@@ -99,7 +102,7 @@ module PagSeguro
       if response.success?
         load_from_xml response.data.css("transaction").first
       else
-        {errors: Errors.new(response)}
+        Response.new Errors.new(response)
       end
     end
 
@@ -136,6 +139,11 @@ module PagSeguro
     # Normalize the payment status.
     def status=(status)
       @status = ensure_type(PaymentStatus, status)
+    end
+
+    private
+    def after_initialize
+      @errors = Errors.new
     end
   end
 end

@@ -4,6 +4,13 @@ require "spec_helper"
 describe PagSeguro::Errors do
   let(:response) { double }
 
+  context "when have no response" do
+    it "returns errors" do
+      errors = PagSeguro::Errors.new
+      expect(errors).to be_empty
+    end
+  end
+
   context "when unauthorized" do
     subject(:errors) { PagSeguro::Errors.new(response) }
 

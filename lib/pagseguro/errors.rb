@@ -5,15 +5,16 @@ module PagSeguro
 
     def_delegators :@messages, :each, :empty?, :any?, :join, :include?
 
-    def initialize(response)
+    def initialize(response = nil)
       @response = response
       @messages = []
 
-      process_response
+      process_response if response
     end
 
     private
     def process_response
+
       @messages << error_message(:unauthorized, "Unauthorized") if @response.unauthorized?
 
       @response.data.css("errors > error").each do |error|
