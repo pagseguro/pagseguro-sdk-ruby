@@ -170,7 +170,7 @@ end
 payment.reference = "ref1234"
 ```
 
-#### Definindo informações de entrega.
+#### Definindo informações de entrega
 
 ```ruby
 payment = PagSeguro::PaymentRequest.new
@@ -189,7 +189,7 @@ payment.shipping = {
 }
 ```
 
-#### Alternativamente você pode definir uma instância da classe `PagSeguro::Shipping`.
+#### Alternativamente você pode definir uma instância da classe `PagSeguro::Shipping`
 
 ```ruby
 shipping = {
@@ -240,7 +240,7 @@ payment.notification_url = "http://example.org/notifications"
 payment.return_url = "http://example.org/processando"
 ```
 
-#### Definindo tempo de vida do código de pagamento 
+#### Definindo tempo de vida do código de pagamento
 
 ```ruby
 payment.max_uses = 100
@@ -264,6 +264,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
  - Certifique-se que o email e o token informados estejam relacionados a uma conta que possua o perfil de vendedor ou empresarial.
  - Certifique-se que tenha definido corretamente o charset de acordo com a codificação (ISO-8859-1 ou UTF-8) do seu sistema. Isso irá prevenir que as transações gerem possíveis erros ou quebras ou ainda que caracteres especiais possam ser apresentados de maneira diferente do habitual.
  - Para que ocorra normalmente a geração de logs, certifique-se que o diretório e o arquivo de log tenham permissões de leitura e escrita.
+```
 
 ## [Dúvidas?]
 
@@ -284,6 +285,7 @@ Achou e corrigiu um bug ou tem alguma feature em mente e deseja contribuir?
   [transações por intervalo de datas]: https://pagseguro.uol.com.br/v2/guia-de-integracao/consulta-de-transacoes-por-intervalo-de-datas.html
   [transações abandonadas]: https://pagseguro.uol.com.br/v2/guia-de-integracao/consulta-de-transacoes-abandonadas.html
   [Dúvidas?]: https://pagseguro.uol.com.br/desenvolvedor/comunidade.jhtml
-  [Ruby]: http://www.oracle.com/technetwork/java/index.html
-  [GitHub]: https://github.com/pagseguro/java/
+  [Ruby]: http://www.ruby-lang.org/pt/
+  [Rails]: http://rubyonrails.org/
+  [GitHub]: https://github.com/pagseguro/rails/
   [documentação oficial]: https://pagseguro.uol.com.br/v2/guia-de-integracao/tutorial-da-biblioteca-pagseguro-em-java.html
