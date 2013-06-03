@@ -14,6 +14,78 @@ describe PagSeguro::Transaction do
     end
   end
 
+  describe ".find_by_date" do
+    it "initializes report with default options" do
+      now = Time.now
+      Time.stub now: now
+
+      PagSeguro::Report
+        .should_receive(:new)
+        .with(
+          PagSeguro::Transaction,
+          "transactions",
+          hash_including(per_page: 50, starts_at: now - 86400, ends_at: now)
+        )
+
+      PagSeguro::Transaction.find_by_date
+    end
+
+    it "initializes report with given options" do
+      starts_at = Time.now - 3600
+      ends_at = starts_at + 180
+
+      PagSeguro::Report
+        .should_receive(:new)
+        .with(
+          PagSeguro::Transaction,
+          "transactions",
+          hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at)
+        )
+
+      PagSeguro::Transaction.find_by_date(
+        per_page: 10,
+        starts_at: starts_at,
+        ends_at: ends_at
+      )
+    end
+  end
+
+  describe ".find_abandoned" do
+    it "initializes report with default options" do
+      now = Time.now
+      Time.stub now: now
+
+      PagSeguro::Report
+        .should_receive(:new)
+        .with(
+          PagSeguro::Transaction,
+          "transactions/abandoned",
+          hash_including(per_page: 50, starts_at: now - 86400, ends_at: now - 900)
+        )
+
+      PagSeguro::Transaction.find_abandoned
+    end
+
+    it "initializes report with given options" do
+      starts_at = Time.now - 3600
+      ends_at = starts_at + 180
+
+      PagSeguro::Report
+        .should_receive(:new)
+        .with(
+          PagSeguro::Transaction,
+          "transactions/abandoned",
+          hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at)
+        )
+
+      PagSeguro::Transaction.find_abandoned(
+        per_page: 10,
+        starts_at: starts_at,
+        ends_at: ends_at
+      )
+    end
+  end
+
   describe "attributes" do
     before do
       body = File.read("./spec/fixtures/transactions/success.xml")

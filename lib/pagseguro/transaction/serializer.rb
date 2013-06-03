@@ -13,7 +13,10 @@ module PagSeguro
           data[:code] = xml.css(">code").text
           data[:reference] = xml.css("reference").text
           data[:type_id] = xml.css(">type").text
-          data[:updated_at] = Time.parse(xml.css("lastEventDate").text)
+
+          updated_at = xml.css("lastEventDate").text
+          data[:updated_at] = Time.parse(updated_at) unless updated_at.empty?
+
           data[:status] = xml.css("status").text
 
           cancellation_source = xml.css("cancellationSource")

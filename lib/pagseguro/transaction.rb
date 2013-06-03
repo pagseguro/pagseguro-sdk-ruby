@@ -80,14 +80,14 @@ module PagSeguro
     # Options:
     #
     # # +starts_at+: the starting date. Defaults to the last 24-hours.
-    # # +ends_at+: the ending date.
+    # # +ends_at+: the ending date. Defaults to 15 minutes ago. **Attention:** you have to set it this to <tt>Time.now - 15 minutes</tt>, otherwise the "finalDate must be lower than allowed limit" error will be returned.
     # # +page+: the current page.
     # # +per_page+: the result limit.
     #
     def self.find_abandoned(options = {})
       options = {
         starts_at: Time.now - 86400,
-        ends_at: Time.now,
+        ends_at: Time.now - 900,
         per_page: 50
       }.merge(options)
 
