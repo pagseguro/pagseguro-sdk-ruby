@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.description           = "Official wrapper for the PagSeguro service."
   spec.summary               = spec.description
   spec.homepage              = "http://pagseguro.com.br"
-  spec.license               = "MIT"
+  spec.license               = "ASL"
 
   spec.files                 = `git ls-files`.split($/)
   spec.executables           = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
