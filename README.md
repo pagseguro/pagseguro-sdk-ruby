@@ -1,4 +1,6 @@
-# Biblioteca de integração PagSeguro para Ruby on Rails
+# Biblioteca de integração PagSeguro para Ruby
+
+[![Build Status](https://travis-ci.org/pagseguro/rails.png)](https://travis-ci.org/pagseguro/rails)
 
 ## Descrição
 
@@ -14,7 +16,6 @@ A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilit
 ## Requisitos
 
  - [Ruby] 1.9.3+
- - [Rails] 3.2.x ou 4.x.x
 
 ## Instalação
 
@@ -266,10 +267,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
  - Para que ocorra normalmente a geração de logs, certifique-se que o diretório e o arquivo de log tenham permissões de leitura e escrita.
 ```
 
-## [Dúvidas?]
-
-Em caso de dúvidas mande um e-mail para desenvolvedores@pagseguro.com.br
-
 ## Contribuições
 
 Achou e corrigiu um bug ou tem alguma feature em mente e deseja contribuir?
@@ -286,6 +283,4 @@ Achou e corrigiu um bug ou tem alguma feature em mente e deseja contribuir?
   [transações abandonadas]: https://pagseguro.uol.com.br/v2/guia-de-integracao/consulta-de-transacoes-abandonadas.html
   [Dúvidas?]: https://pagseguro.uol.com.br/desenvolvedor/comunidade.jhtml
   [Ruby]: http://www.ruby-lang.org/pt/
-  [Rails]: http://rubyonrails.org/
   [GitHub]: https://github.com/pagseguro/rails/
-  [documentação oficial]: https://pagseguro.uol.com.br/v2/guia-de-integracao/tutorial-da-biblioteca-pagseguro-em-java.html

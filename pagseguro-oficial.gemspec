@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.email                 = ["fnando.vieira@gmail.com"]
   spec.description           = "Official wrapper for the PagSeguro service."
   spec.summary               = spec.description
-  spec.homepage              = "http://pagseguro.com.br"
-  spec.license               = "MIT"
+  spec.homepage              = "http://www.pagseguro.com.br"
+  spec.license               = "ASL"
 
   spec.files                 = `git ls-files`.split($/)
   spec.executables           = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
