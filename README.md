@@ -244,7 +244,7 @@ payment.return_url = "http://example.org/processando"
 
 ```ruby
 payment.max_uses = 100
-payment.max_age = 3600
+payment.max_age = 3600  # em segundos
 ```
 
 ## Changelog
