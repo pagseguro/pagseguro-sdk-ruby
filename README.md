@@ -1,6 +1,6 @@
 # Biblioteca de integração PagSeguro em Ruby
 
-[![Build Status](https://travis-ci.org/pagseguro/rails.png)](https://travis-ci.org/pagseguro/rails)
+[![Build Status](https://travis-ci.org/pagseguro/rails.png)](https://travis-ci.org/pagseguro/ruby)
 
 ## Descrição
 

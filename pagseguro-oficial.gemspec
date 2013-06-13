@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version               = PagSeguro::VERSION
   spec.authors               = ["Nando Vieira"]
   spec.email                 = ["fnando.vieira@gmail.com"]
-  spec.description           = "Official wrapper for the PagSeguro service."
+  spec.description           = "Biblioteca oficial de integração PagSeguro em Ruby"
   spec.summary               = spec.description
   spec.homepage              = "http://www.pagseguro.com.br"
   spec.license               = "ASL"
