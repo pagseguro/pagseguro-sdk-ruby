@@ -1,4 +1,4 @@
-# Biblioteca de integração PagSeguro para Ruby
+# Biblioteca de integração PagSeguro em Ruby
 
 [![Build Status](https://travis-ci.org/pagseguro/rails.png)](https://travis-ci.org/pagseguro/rails)
 
@@ -265,7 +265,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
  - Certifique-se que o email e o token informados estejam relacionados a uma conta que possua o perfil de vendedor ou empresarial.
  - Certifique-se que tenha definido corretamente o charset de acordo com a codificação (ISO-8859-1 ou UTF-8) do seu sistema. Isso irá prevenir que as transações gerem possíveis erros ou quebras ou ainda que caracteres especiais possam ser apresentados de maneira diferente do habitual.
  - Para que ocorra normalmente a geração de logs, certifique-se que o diretório e o arquivo de log tenham permissões de leitura e escrita.
-```
 
 ## Contribuições
 
@@ -283,4 +282,4 @@ Achou e corrigiu um bug ou tem alguma feature em mente e deseja contribuir?
   [transações abandonadas]: https://pagseguro.uol.com.br/v2/guia-de-integracao/consulta-de-transacoes-abandonadas.html
   [Dúvidas?]: https://pagseguro.uol.com.br/desenvolvedor/comunidade.jhtml
   [Ruby]: http://www.ruby-lang.org/pt/
-  [GitHub]: https://github.com/pagseguro/rails/
+  [GitHub]: https://github.com/pagseguro/ruby/

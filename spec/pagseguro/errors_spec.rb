@@ -63,6 +63,6 @@ describe PagSeguro::Errors do
       response.stub data: xml, unauthorized?: false, bad_request?: true
     end
 
-    it { expect(errors).to include("o parâmetro/valor não foi/foram informado(s)") }
+    it { expect(errors).to include("O parâmetro email deve ser informado.") }
   end
 end
