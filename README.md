@@ -177,7 +177,7 @@ payment.reference = "ref1234"
 ```ruby
 payment = PagSeguro::PaymentRequest.new
 payment.shipping = {
-  type: "sedex",
+  type_name: "sedex",
   cost: 20.00,
   address: {
     street: "Av. Brig. Faria Lima",
@@ -195,7 +195,7 @@ payment.shipping = {
 
 ```ruby
 shipping = {
-  type: "sedex",
+  type_name: "sedex",
   cost: 20.00,
   address: {
     street: "Av. Brig. Faria Lima",

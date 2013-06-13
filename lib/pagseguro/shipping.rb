@@ -17,7 +17,7 @@ module PagSeguro
     attr_reader :type_id
 
     # Get the shipping type name.
-    attr_reader :type
+    attr_reader :type_name
 
     # Get the address object.
     attr_reader :address
@@ -33,12 +33,12 @@ module PagSeguro
     # Set the shipping type.
     # It raises the PagSeguro::Shipping::InvalidShippingTypeError exception
     # when trying to assign an invalid type name.
-    def type=(type)
-      type = type.to_sym
-      @type_id = TYPE.fetch(type) {
-        raise InvalidShippingTypeError, "invalid #{type.inspect} type name"
+    def type_name=(type_name)
+      type_name = type_name.to_sym
+      @type_id = TYPE.fetch(type_name) {
+        raise InvalidShippingTypeError, "invalid #{type_name.inspect} type name"
       }
-      @type = type
+      @type_name = type_name
     end
 
     # Set the shipping type id.
@@ -51,7 +51,7 @@ module PagSeguro
         "invalid #{id.inspect} type id" unless TYPE.value?(type_id)
 
       @type_id = type_id
-      @type = TYPE.key(type_id)
+      @type_name = TYPE.key(type_id)
     end
   end
 end
