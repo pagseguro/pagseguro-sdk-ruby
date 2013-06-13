@@ -1,4 +1,4 @@
-# Biblioteca de integração PagSeguro para Ruby
+# Biblioteca de integração PagSeguro em Ruby
 
 [![Build Status](https://travis-ci.org/pagseguro/rails.png)](https://travis-ci.org/pagseguro/rails)
 
@@ -12,9 +12,11 @@ A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilit
  - Consultar [transações abandonadas]
  - Receber [notificações]
 
+
 ## Requisitos
 
  - [Ruby] 1.9.3+
+
 
 ## Instalação
 
@@ -285,5 +287,4 @@ Achou e corrigiu um bug ou tem alguma feature em mente e deseja contribuir?
   [transações abandonadas]: https://pagseguro.uol.com.br/v2/guia-de-integracao/consulta-de-transacoes-abandonadas.html
   [Dúvidas?]: https://pagseguro.uol.com.br/desenvolvedor/comunidade.jhtml
   [Ruby]: http://www.ruby-lang.org/pt/
-  [GitHub]: https://github.com/pagseguro/rails/
-
+  [GitHub]: https://github.com/pagseguro/ruby/
