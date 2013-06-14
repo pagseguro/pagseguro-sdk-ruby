@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/pagseguro/rails.png)](https://travis-ci.org/pagseguro/ruby)
 
+[![Code Climate](https://codeclimate.com/github/pagseguro/ruby.png)](https://codeclimate.com/github/pagseguro/ruby)
+
 ## Descrição
 
 A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilitam, para o desenvolvedor Ruby, a utilização das funcionalidades que o PagSeguro oferece na forma de APIs. Com a biblioteca instalada e configurada, você pode facilmente integrar funcionalidades como:
