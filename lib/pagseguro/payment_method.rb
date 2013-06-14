@@ -5,10 +5,10 @@ module PagSeguro
 
     TYPES = {
       "1" => :credit_card,
-      "2" => :bank_slip,
-      "3" => :tef,
-      "4" => :pagseguro,
-      "5" => :paggo
+      "2" => :boleto,
+      "3" => :online_transfer,
+      "4" => :balance,
+      "5" => :oi_paggo
     }.freeze
 
     # The payment method code.

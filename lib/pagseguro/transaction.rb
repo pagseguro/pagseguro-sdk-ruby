@@ -25,7 +25,7 @@ module PagSeguro
     # The payment method.
     attr_reader :payment_method
 
-    # The bank slip payment url.
+    # The boleto payment url.
     attr_accessor :payment_link
 
     # The gross amount.

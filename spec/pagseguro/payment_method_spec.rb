@@ -10,10 +10,10 @@ end
 describe PagSeguro::PaymentMethod do
   context "type mapping" do
     it_behaves_like "type mapping", 1, :credit_card
-    it_behaves_like "type mapping", 2, :bank_slip
-    it_behaves_like "type mapping", 3, :tef
-    it_behaves_like "type mapping", 4, :pagseguro
-    it_behaves_like "type mapping", 5, :paggo
+    it_behaves_like "type mapping", 2, :boleto
+    it_behaves_like "type mapping", 3, :online_transfer
+    it_behaves_like "type mapping", 4, :balance
+    it_behaves_like "type mapping", 5, :oi_paggo
 
     it "raises for invalid id" do
       expect {
@@ -24,10 +24,10 @@ describe PagSeguro::PaymentMethod do
 
   context "shortcuts" do
     it { expect(PagSeguro::PaymentMethod.new(type_id: 1)).to be_credit_card }
-    it { expect(PagSeguro::PaymentMethod.new(type_id: 2)).to be_bank_slip }
-    it { expect(PagSeguro::PaymentMethod.new(type_id: 3)).to be_tef }
-    it { expect(PagSeguro::PaymentMethod.new(type_id: 4)).to be_pagseguro }
-    it { expect(PagSeguro::PaymentMethod.new(type_id: 5)).to be_paggo }
+    it { expect(PagSeguro::PaymentMethod.new(type_id: 2)).to be_boleto }
+    it { expect(PagSeguro::PaymentMethod.new(type_id: 3)).to be_online_transfer }
+    it { expect(PagSeguro::PaymentMethod.new(type_id: 4)).to be_balance }
+    it { expect(PagSeguro::PaymentMethod.new(type_id: 5)).to be_oi_paggo }
 
     it { expect(PagSeguro::PaymentMethod.new(type_id: 5)).not_to be_credit_card }
   end

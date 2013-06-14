@@ -253,6 +253,13 @@ payment.max_age = 3600  # em segundos
 
 ## Changelog
 
+2.0.1
+
+ - Classes de domínios que representam pagamentos, notificações e transações.
+ - Criação de checkouts via API.
+ - Tratamento de notificações de pagamento enviadas pelo PagSeguro.
+ - Consulta de transações.
+
 ## Licença
 
 Copyright 2013 PagSeguro Internet LTDA.
@@ -268,7 +275,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
  - Certifique-se que o email e o token informados estejam relacionados a uma conta que possua o perfil de vendedor ou empresarial.
  - Certifique-se que tenha definido corretamente o charset de acordo com a codificação (ISO-8859-1 ou UTF-8) do seu sistema. Isso irá prevenir que as transações gerem possíveis erros ou quebras ou ainda que caracteres especiais possam ser apresentados de maneira diferente do habitual.
  - Para que ocorra normalmente a geração de logs, certifique-se que o diretório e o arquivo de log tenham permissões de leitura e escrita.
-```
 
 ## [Dúvidas?]
 
