@@ -21,4 +21,3 @@ describe PagSeguro::PaymentRequest::Response do
     it { expect(response.url).to eql("https://pagseguro.uol.com.br/v2/checkout/payment.html?code=8CF4BE7DCECEF0F004A6DFA0A8243412") }
   end
 end
-

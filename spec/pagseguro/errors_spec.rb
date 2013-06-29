@@ -65,4 +65,27 @@ describe PagSeguro::Errors do
 
     it { expect(errors).to include("O parâmetro email deve ser informado.") }
   end
+
+  context "when returning 404 status" do
+    let(:error) {
+      <<-XML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <errors>
+          <error>
+              <code>Malformed request XML: {0}.</code>
+              <message>Malformed request XML: XML document structures must start and end within the same entity..</message>
+          </error>
+        </errors>
+      XML
+    }
+
+    let(:xml) { Nokogiri::XML(error) }
+    subject(:errors) { PagSeguro::Errors.new(response) }
+
+    before do
+      response.stub data: xml, unauthorized?: false, bad_request?: true
+    end
+
+    it { expect(errors).to include("Malformed request XML: XML document structures must start and end within the same entity..") }
+  end
 end
