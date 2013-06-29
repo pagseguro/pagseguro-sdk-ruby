@@ -9,39 +9,48 @@ module PagSeguro
 
       def serialize
         {}.tap do |data|
-          data[:created_at] = Time.parse(xml.css("date").text)
-          data[:code] = xml.css(">code").text
-          data[:reference] = xml.css("reference").text
-          data[:type_id] = xml.css(">type").text
-
-          updated_at = xml.css("lastEventDate").text
-          data[:updated_at] = Time.parse(updated_at) unless updated_at.empty?
-
-          data[:status] = xml.css("status").text
-
-          cancellation_source = xml.css("cancellationSource")
-          data[:cancellation_source] = cancellation_source.text if cancellation_source.any?
-
-          escrow_end_date = xml.css("escrowEndDate")
-          data[:escrow_end_date] = Time.parse(escrow_end_date.text) if escrow_end_date.any?
-
-          data[:payment_method] = {
-            type_id: xml.css("paymentMethod > type").text,
-            code: xml.css("paymentMethod > code").text
-          }
-
-          data[:payment_link] = xml.css("paymentLink").text
-          data[:gross_amount] = BigDecimal(xml.css("grossAmount").text)
-          data[:discount_amount] = BigDecimal(xml.css("discountAmount").text)
-          data[:fee_amount] = BigDecimal(xml.css("feeAmount").text)
-          data[:net_amount] = BigDecimal(xml.css("netAmount").text)
-          data[:extra_amount] = BigDecimal(xml.css("extraAmount").text)
-          data[:installments] = xml.css("installmentCount").text.to_i
-
+          serialize_general(data)
+          serialize_amounts(data)
+          serialize_dates(data)
           serialize_items(data)
           serialize_sender(data)
           serialize_shipping(data) if xml.css("shipping").any?
         end
+      end
+
+      def serialize_general(data)
+        data[:code] = xml.css(">code").text
+        data[:reference] = xml.css("reference").text
+        data[:type_id] = xml.css(">type").text
+        data[:payment_link] = xml.css("paymentLink").text
+        data[:status] = xml.css("status").text
+
+        cancellation_source = xml.css("cancellationSource")
+        data[:cancellation_source] = cancellation_source.text if cancellation_source.any?
+
+        data[:payment_method] = {
+          type_id: xml.css("paymentMethod > type").text,
+          code: xml.css("paymentMethod > code").text
+        }
+      end
+
+      def serialize_dates(data)
+        data[:created_at] = Time.parse(xml.css("date").text)
+
+        updated_at = xml.css("lastEventDate").text
+        data[:updated_at] = Time.parse(updated_at) unless updated_at.empty?
+
+        escrow_end_date = xml.css("escrowEndDate")
+        data[:escrow_end_date] = Time.parse(escrow_end_date.text) if escrow_end_date.any?
+      end
+
+      def serialize_amounts(data)
+        data[:gross_amount] = BigDecimal(xml.css("grossAmount").text)
+        data[:discount_amount] = BigDecimal(xml.css("discountAmount").text)
+        data[:fee_amount] = BigDecimal(xml.css("feeAmount").text)
+        data[:net_amount] = BigDecimal(xml.css("netAmount").text)
+        data[:extra_amount] = BigDecimal(xml.css("extraAmount").text)
+        data[:installments] = xml.css("installmentCount").text.to_i
       end
 
       def serialize_items(data)
@@ -87,15 +96,19 @@ module PagSeguro
 
       def serialize_address(data)
         data[:address] = {
-          street: xml.css("shipping > address > street").text,
-          number: xml.css("shipping > address > number").text,
-          complement: xml.css("shipping > address > complement").text,
-          district: xml.css("shipping > address > district").text,
-          city: xml.css("shipping > address > city").text,
-          state: xml.css("shipping > address > state").text,
-          country: xml.css("shipping > address > country").text,
-          postal_code: xml.css("shipping > address > postalCode").text,
+          street: address_node.css("> street").text,
+          number: address_node.css("> number").text,
+          complement: address_node.css("> complement").text,
+          district: address_node.css("> district").text,
+          city: address_node.css("> city").text,
+          state: address_node.css("> state").text,
+          country: address_node.css("> country").text,
+          postal_code: address_node.css("> postalCode").text,
         }
+      end
+
+      def address_node
+        @address_node ||= xml.css("shipping > address")
       end
     end
   end
