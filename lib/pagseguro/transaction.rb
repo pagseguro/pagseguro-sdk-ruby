@@ -57,6 +57,9 @@ module PagSeguro
     # The cancellation source.
     attr_accessor :cancellation_source
 
+    # The escrow end date.
+    attr_accessor :escrow_end_date
+
     # Set the transaction errors.
     attr_reader :errors
 
