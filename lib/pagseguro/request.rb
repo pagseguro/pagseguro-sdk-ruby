@@ -71,7 +71,7 @@ module PagSeguro
 
   Request.configure do |config|
     config.default_headers = {
-      "lib-description"             => "ruby-v.#{PagSeguro::VERSION}",
+      "lib-description"             => "ruby:#{PagSeguro::VERSION}",
       "language-engine-description" => "ruby:#{RUBY_VERSION}"
     }
   end
