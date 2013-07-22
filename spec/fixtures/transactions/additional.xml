@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
 <transaction>
-  <date>2013-05-01T01:40:27.000-03:00</date>
-  <code>667A3914-4F9F-4705-0EB6-CA6FA0DF8A19</code>
-  <reference>REF1234</reference>
-  <type>1</type>
-  <status>1</status>
-  <lastEventDate>2013-05-01T01:41:20.000-03:00</lastEventDate>
-  <cancellationSource>PagSeguro</cancellationSource>
-  <escrowEndDate>2013-06-01T01:41:20.000-03:00</escrowEndDate>
-  <paymentMethod>
-    <type>2</type>
-    <code>202</code>
-  </paymentMethod>
-  <paymentLink>https://pagseguro.uol.com.br/checkout/imprimeBoleto.jhtml?code=667D39144F9F47059FB6CA6FA0DF8A20</paymentLink>
-  <grossAmount>459.50</grossAmount>
-  <discountAmount>0.00</discountAmount>
-  <feeAmount>13.73</feeAmount>
-  <netAmount>445.77</netAmount>
-  <extraAmount>0.00</extraAmount>
-  <installmentCount>1</installmentCount>
-  <itemCount>1</itemCount>
-  <items>
-    <item>
-      <id>1234</id>
-      <description>Some product</description>
-      <quantity>1</quantity>
-      <amount>459.50</amount>
-    </item>
-  </items>
-  <sender>
-    <name>JOHN DOE</name>
-    <email>john@example.com</email>
-    <phone>
-      <areaCode>11</areaCode>
-      <number>12345678</number>
-    </phone>
-  </sender>
-  <shipping>
-    <address>
-      <street>AV. BRIG. FARIA LIMA</street>
-      <number>1384</number>
-      <complement>5 ANDAR</complement>
-      <district>JARDIM PAULISTANO</district>
-      <city>SAO PAULO</city>
-      <state>SP</state>
-      <country>BRA</country>
-      <postalCode>01452002</postalCode>
-    </address>
-    <type>2</type>
-    <cost>0.00</cost>
-  </shipping>
+	<date>2013-05-01T01:40:27.000-03:00</date>
+	<code>667A3914-4F9F-4705-0EB6-CA6FA0DF8A19</code>
+	<reference>REF1234</reference>
+	<type>1</type>
+	<status>1</status>
+	<lastEventDate>2013-05-01T01:41:20.000-03:00</lastEventDate>
+	<cancellationSource>PagSeguro</cancellationSource>
+	<escrowEndDate>2013-06-01T01:41:20.000-03:00</escrowEndDate>
+	<paymentMethod>
+		<type>2</type>
+		<code>202</code>
+	</paymentMethod>
+	<paymentLink>https://pagseguro.uol.com.br/checkout/imprimeBoleto.jhtml?code=667D39144F9F47059FB6CA6FA0DF8A20</paymentLink>
+	<grossAmount>459.50</grossAmount>
+	<discountAmount>0.00</discountAmount>
+	<feeAmount>13.73</feeAmount>
+	<netAmount>445.77</netAmount>
+	<extraAmount>0.00</extraAmount>
+	<installmentCount>1</installmentCount>
+	<itemCount>1</itemCount>
+	<items>
+		<item>
+			<id>1234</id>
+			<description>Some product</description>
+			<quantity>1</quantity>
+			<amount>459.50</amount>
+		</item>
+	</items>
+	<sender>
+		<name>JOHN DOE</name>
+		<email>john@example.com</email>
+		<phone>
+			<areaCode>11</areaCode>
+			<number>12345678</number>
+		</phone>
+	</sender>
+	<shipping>
+		<address>
+			<street>AV. BRIG. FARIA LIMA</street>
+			<number>1384</number>
+			<complement>5 ANDAR</complement>
+			<district>JARDIM PAULISTANO</district>
+			<city>SAO PAULO</city>
+			<state>SP</state>
+			<country>BRA</country>
+			<postalCode>01452002</postalCode>
+		</address>
+		<type>2</type>
+		<cost>0.00</cost>
+	</shipping>
 </transaction>

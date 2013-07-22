@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
 <errors>
-  <error>
-    <code>13001</code>
-    <message>invalid notification code value: 999769-79C052C05280-55542D9FBB33-4AB2D0</message>
-  </error>
+	<error>
+		<code>13001</code>
+		<message>invalid notification code value: 999769-79C052C05280-55542D9FBB33-4AB2D0</message>
+	</error>
 </errors>
