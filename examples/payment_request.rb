@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require_relative "boot"
 
 payment = PagSeguro::PaymentRequest.new
@@ -24,7 +25,7 @@ payment.sender = {
 }
 
 payment.shipping = {
-  type: "sedex",
+  type_name: "sedex",
   address: {
     street: "R. Vergueiro",
     number: 1421,
