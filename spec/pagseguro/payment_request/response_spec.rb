@@ -10,7 +10,7 @@ describe PagSeguro::PaymentRequest::Response do
         "[]" => nil
       )
 
-      Aitch::Response.new(Aitch::Configuration.new, response)
+      Aitch::Response.new({xml_parser: Aitch::XMLParser}, response)
     end
 
     let(:http_response) { xml_response("payment_request/success.xml") }
