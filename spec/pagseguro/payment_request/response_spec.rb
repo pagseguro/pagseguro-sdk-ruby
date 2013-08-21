@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe PagSeguro::PaymentRequest::Response do
-  context "when payment requet is created" do
+  context "when payment request is created" do
     def xml_response(path)
       response = double(
         body: File.read("./spec/fixtures/#{path}"),
@@ -21,3 +21,4 @@ describe PagSeguro::PaymentRequest::Response do
     it { expect(response.url).to eql("https://pagseguro.uol.com.br/v2/checkout/payment.html?code=8CF4BE7DCECEF0F004A6DFA0A8243412") }
   end
 end
+
