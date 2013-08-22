@@ -100,7 +100,7 @@ pt-BR:
       "117": "Cartão de crédito Mais!"
       "118": "Cartão de crédito Avista"
       "119": "Cartão de crédito GRANDCARD"
-      "201": "Boleto Bradesco *"
+      "201": "Boleto Bradesco"
       "202": "Boleto Santander"
       "301": "Débito online Bradesco"
       "302": "Débito online Itaú"
@@ -111,3 +111,4 @@ pt-BR:
       "307": "Débito online HSBC"
       "401": "Saldo PagSeguro"
       "501": "Oi Paggo"
+      "701": "Depósito em conta Banco do Brasil"
