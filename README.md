@@ -252,6 +252,11 @@ payment.max_age = 3600  # em segundos
 
 ## Changelog
 
+2.0.2
+
+ - Atualização dos tipos e códigos de meio de pagamento.
+ - Correção do exemplo payment_request.
+
 2.0.1
 
  - Classes de domínios que representam pagamentos, notificações e transações.
