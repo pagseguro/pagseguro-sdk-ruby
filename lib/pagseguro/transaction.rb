@@ -79,14 +79,14 @@ module PagSeguro
     # # +page+: the current page.
     # # +per_page+: the result limit.
     #
-    def self.find_by_date(options = {})
+    def self.find_by_date(options = {}, page = 0)
       options = {
         starts_at: Time.now - 86400,
         ends_at: Time.now,
         per_page: 50
       }.merge(options)
 
-      Report.new(Transaction, "transactions", options)
+      Report.new(Transaction, "transactions", options, page)
     end
 
     # Get abandoned transactions.
