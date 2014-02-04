@@ -33,7 +33,8 @@ describe PagSeguro::Transaction do
         .with(
           PagSeguro::Transaction,
           "transactions",
-          hash_including(per_page: 50, starts_at: now - 86400, ends_at: now)
+          hash_including(per_page: 50, starts_at: now - 86400, ends_at: now),
+          0
         )
 
       PagSeguro::Transaction.find_by_date
@@ -42,19 +43,20 @@ describe PagSeguro::Transaction do
     it "initializes report with given options" do
       starts_at = Time.now - 3600
       ends_at = starts_at + 180
+      page = 1
 
       PagSeguro::Report
         .should_receive(:new)
         .with(
           PagSeguro::Transaction,
           "transactions",
-          hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at)
+          hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at),
+          page
         )
 
       PagSeguro::Transaction.find_by_date(
-        per_page: 10,
-        starts_at: starts_at,
-        ends_at: ends_at
+        {per_page: 10, starts_at: starts_at, ends_at: ends_at},
+        page
       )
     end
   end
@@ -69,7 +71,8 @@ describe PagSeguro::Transaction do
         .with(
           PagSeguro::Transaction,
           "transactions/abandoned",
-          hash_including(per_page: 50, starts_at: now - 86400, ends_at: now - 900)
+          hash_including(per_page: 50, starts_at: now - 86400, ends_at: now - 900),
+          0
         )
 
       PagSeguro::Transaction.find_abandoned
@@ -78,19 +81,20 @@ describe PagSeguro::Transaction do
     it "initializes report with given options" do
       starts_at = Time.now - 3600
       ends_at = starts_at + 180
+      page = 1
 
       PagSeguro::Report
         .should_receive(:new)
         .with(
           PagSeguro::Transaction,
           "transactions/abandoned",
-          hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at)
+          hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at),
+          page
         )
 
       PagSeguro::Transaction.find_abandoned(
-        per_page: 10,
-        starts_at: starts_at,
-        ends_at: ends_at
+        {per_page: 10, starts_at: starts_at, ends_at: ends_at},
+        page
       )
     end
   end
