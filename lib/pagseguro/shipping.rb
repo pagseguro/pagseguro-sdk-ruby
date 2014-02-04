@@ -4,7 +4,8 @@ module PagSeguro
     TYPE = {
       pac: 1,
       sedex: 2,
-      not_specified: 3
+      not_specified: 3,
+      blank: 0
     }
 
     # Define the error class for invalid type assignment.
