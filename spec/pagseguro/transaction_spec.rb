@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe PagSeguro::Transaction do
   describe ".find_by_notification_code" do
-    it "finds transaction by the given code" do
+    it "finds transaction by the given notificationCode" do
       PagSeguro::Transaction.stub :load_from_response
 
       PagSeguro::Request
@@ -10,13 +10,13 @@ describe PagSeguro::Transaction do
         .with("transactions/notifications/CODE")
         .and_return(double.as_null_object)
 
-      PagSeguro::Transaction.find_by_code("CODE")
+      PagSeguro::Transaction.find_by_notification_code("CODE")
     end
 
     it "returns response with errors when request fails" do
       body = %[<?xml version="1.0"?><errors><error><code>1234</code><message>Sample error</message></error></errors>]
       FakeWeb.register_uri :get, %r[.+], status: [400, "Bad Request"], body: body, content_type: "text/xml"
-      response = PagSeguro::Transaction.find_by_code("invalid")
+      response = PagSeguro::Transaction.find_by_notification_code("invalid")
 
       expect(response).to be_a(PagSeguro::Transaction::Response)
       expect(response.errors).to include("Sample error")
@@ -101,7 +101,7 @@ describe PagSeguro::Transaction do
       FakeWeb.register_uri :get, %r[.+], body: body, content_type: "text/xml"
     end
 
-    subject(:transaction) { PagSeguro::Transaction.find_by_code("CODE") }
+    subject(:transaction) { PagSeguro::Transaction.find_by_notification_code("CODE") }
 
     it { expect(transaction.sender).to be_a(PagSeguro::Sender) }
     it { expect(transaction.shipping).to be_a(PagSeguro::Shipping) }
