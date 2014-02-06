@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe PagSeguro::Transaction do
-  describe ".find_by_code" do
+  describe ".find_by_notification_code" do
     it "finds transaction by the given code" do
       PagSeguro::Transaction.stub :load_from_response
 
