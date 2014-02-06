@@ -63,9 +63,9 @@ module PagSeguro
     # Set the transaction errors.
     attr_reader :errors
 
-    # Find a transaction by its code.
+    # Find a transaction by its notificationCode.
     # Return a PagSeguro::Transaction instance.
-    def self.find_by_code(code)
+    def self.find_by_notification_code(code)
       load_from_response Request.get("transactions/notifications/#{code}")
     end
 

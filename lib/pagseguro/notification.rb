@@ -15,7 +15,7 @@ module PagSeguro
 
     # Fetch the transaction by its code.
     def transaction
-      Transaction.find_by_code(code)
+      Transaction.find_by_notification_code(code)
     end
   end
 end

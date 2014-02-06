@@ -10,7 +10,7 @@ describe PagSeguro::Notification do
 
   it "fetches transaction by its code" do
     PagSeguro::Transaction
-      .should_receive(:find_by_code)
+      .should_receive(:find_by_notification_code)
       .with("CODE")
 
     PagSeguro::Notification.new(code: "CODE").transaction

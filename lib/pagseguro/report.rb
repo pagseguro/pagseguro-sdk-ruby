@@ -24,7 +24,7 @@ module PagSeguro
     # Return the list of transactions.
     # Each item will be wrapped in a PagSeguro::Transaction instance.
     # Notice that transactions instantiated by the report won't have all attributes.
-    # If you need additional attributes, do a PagSeguro::Transaction.find_by_code
+    # If you need additional attributes, do a PagSeguro::Transaction.find_by_notification_code
     # call. Remember that this will perform an additional HTTP request.
     def transactions
       xml do |xml|
