@@ -195,7 +195,7 @@ payment.shipping = {
 #### Alternativamente você pode definir uma instância da classe `PagSeguro::Shipping`
 
 ```ruby
-shipping = {
+shipping_options = {
   type_name: "sedex",
   cost: 20.00,
   address: {
@@ -209,7 +209,7 @@ shipping = {
   }
 }
 
-payment.shipping = shipping
+payment.shipping = PagSeguro::Shipping.new(shipping_options)
 ```
 
 #### Definindo informações do comprador
