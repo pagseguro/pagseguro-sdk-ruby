@@ -14,11 +14,11 @@ module PagSeguro
     # Return the current page.
     attr_reader :page
 
-    def initialize(item_class, path, options)
+    def initialize(item_class, path, options, page = 0)
       @item_class = item_class
       @path = path
       @options = options
-      @page = 0
+      @page = page
     end
 
     # Return the list of transactions.

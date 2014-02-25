@@ -79,14 +79,14 @@ module PagSeguro
     # # +page+: the current page.
     # # +per_page+: the result limit.
     #
-    def self.find_by_date(options = {})
+    def self.find_by_date(options = {}, page = 0)
       options = {
         starts_at: Time.now - 86400,
         ends_at: Time.now,
         per_page: 50
       }.merge(options)
 
-      Report.new(Transaction, "transactions", options)
+      Report.new(Transaction, "transactions", options, page)
     end
 
     # Get abandoned transactions.
@@ -99,20 +99,20 @@ module PagSeguro
     # # +page+: the current page.
     # # +per_page+: the result limit.
     #
-    def self.find_abandoned(options = {})
+    def self.find_abandoned(options = {}, page = 0)
       options = {
         starts_at: Time.now - 86400,
         ends_at: Time.now - 900,
         per_page: 50
       }.merge(options)
 
-      Report.new(Transaction, "transactions/abandoned", options)
+      Report.new(Transaction, "transactions/abandoned", options, page)
     end
 
     # Serialize the HTTP response into data.
     def self.load_from_response(response) # :nodoc:
-      if response.success?
-        load_from_xml response.data.css("transaction").first
+      if response.success? and response.xml?
+        load_from_xml Nokogiri::XML(response.body).css("transaction").first
       else
         Response.new Errors.new(response)
       end
