@@ -252,6 +252,12 @@ payment.max_age = 3600  # em segundos
 
 ## Changelog
 
+2.0.3
+
+ - Ajuste no parser XML e paginação de relatórios.
+ - Incluindo parâmetro para indicar a página inicial em uma busca de transações.
+ - Correções de testes.
+ 
 2.0.2
 
  - Atualização dos tipos e códigos de meio de pagamento.
