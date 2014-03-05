@@ -45,8 +45,8 @@ module PagSeguro
 
     def extended_data(data)
       data.merge(
-        email: PagSeguro.email,
-        token: PagSeguro.token,
+        email: data[:email] || PagSeguro.email,
+        token: data[:token] || PagSeguro.token,
         charset: PagSeguro.encoding
       )
     end

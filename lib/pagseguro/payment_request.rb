@@ -51,6 +51,13 @@ module PagSeguro
     # complete the payment.
     attr_accessor :abandon_url
 
+    # The email that identifies the request. Defaults to PagSeguro.email
+    attr_accessor :email
+
+    # The token that identifies the request. Defaults to PagSeguro.token
+    attr_accessor :token
+
+
     # Products/items in this payment request.
     def items
       @items ||= Items.new
@@ -68,13 +75,18 @@ module PagSeguro
 
     # Calls the PagSeguro web service and register this request for payment.
     def register
-      params = Serializer.new(self).to_params
+      params = Serializer.new(self).to_params.merge({
+        email: email,
+        token: token
+      })
       Response.new Request.post("checkout", params)
     end
 
     private
     def before_initialize
       self.currency = "BRL"
+      self.email    = PagSeguro.email
+      self.token    = PagSeguro.token
     end
 
     def endpoint
