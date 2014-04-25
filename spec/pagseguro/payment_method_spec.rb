@@ -14,6 +14,7 @@ describe PagSeguro::PaymentMethod do
     it_behaves_like "type mapping", 3, :online_transfer
     it_behaves_like "type mapping", 4, :balance
     it_behaves_like "type mapping", 5, :oi_paggo
+    it_behaves_like "type mapping", 7, :direct_deposit
 
     it "raises for invalid id" do
       expect {
@@ -28,6 +29,7 @@ describe PagSeguro::PaymentMethod do
     it { expect(PagSeguro::PaymentMethod.new(type_id: 3)).to be_online_transfer }
     it { expect(PagSeguro::PaymentMethod.new(type_id: 4)).to be_balance }
     it { expect(PagSeguro::PaymentMethod.new(type_id: 5)).to be_oi_paggo }
+    it { expect(PagSeguro::PaymentMethod.new(type_id: 7)).to be_direct_deposit }
 
     it { expect(PagSeguro::PaymentMethod.new(type_id: 5)).not_to be_credit_card }
   end

@@ -35,7 +35,7 @@ describe PagSeguro::PaymentRequest do
   describe "#email" do
     before { PagSeguro.email = 'DEFAULT_EMAIL' }
 
-    it "returns the email set in the contstructor" do
+    it "returns the email set in the constructor" do
       expect(described_class.new(email: 'foo').email).to eq('foo')
     end
 
@@ -47,7 +47,7 @@ describe PagSeguro::PaymentRequest do
   describe "#token" do
     before { PagSeguro.token = 'DEFAULT_TOKEN' }
 
-    it "returns the token set in the contstructor" do
+    it "returns the token set in the constructor" do
       expect(described_class.new(token: 'foo').token).to eq('foo')
     end
 

@@ -258,6 +258,10 @@ payment.max_age = 3600  # em segundos
 
 ## Changelog
 
+2.0.4
+
+ - PaymentRequest com email e token alternativos
+
 2.0.3
 
  - Ajuste no parser XML e paginação de relatórios.
