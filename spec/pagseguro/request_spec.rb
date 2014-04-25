@@ -21,6 +21,14 @@ describe PagSeguro::Request do
       expect(FakeWeb.last_request.body).to include("email=EMAIL&token=TOKEN")
     end
 
+    it "includes custom credentials" do
+      PagSeguro.email = "EMAIL"
+      PagSeguro.token = "TOKEN"
+      PagSeguro::Request.post("checkout", email: 'foo', token: 'bar')
+
+      expect(FakeWeb.last_request.body).to include("email=foo&token=bar")
+    end
+
     it "includes encoding" do
       PagSeguro::Request.post("checkout")
       expect(FakeWeb.last_request.body).to include("charset=UTF-8")

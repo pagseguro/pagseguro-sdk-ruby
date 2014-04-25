@@ -56,6 +56,12 @@ class CheckoutController < ApplicationController
     order = Order.find(params[:id])
 
     payment = PagSeguro::PaymentRequest.new
+
+    # Você também pode fazer o request de pagamento usando credenciais 
+    # diferentes, como no exemplo abaixo
+
+    payment = PagSeguro::PaymentRequest.new(email: 'abc@email', token: 'token')
+
     payment.reference = order.id
     payment.notification_url = notifications_url
     payment.redirect_url = processing_url
