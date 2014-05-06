@@ -58,7 +58,7 @@ class CheckoutController < ApplicationController
 
     payment = PagSeguro::PaymentRequest.new
 
-    # Você também pode fazer o request de pagamento usando credenciais 
+    # Você também pode fazer o request de pagamento usando credenciais
     # diferentes, como no exemplo abaixo
 
     payment = PagSeguro::PaymentRequest.new(email: 'abc@email', token: 'token')
@@ -259,6 +259,10 @@ payment.max_age = 3600  # em segundos
 
 ## Changelog
 
+2.0.5
+
+ - Fixa a versão da biblioteca Aitch; a versão antiga não possui a mesma API utilizada nesta gem.
+
 2.0.4
 
  - PaymentRequest com email e token alternativos
@@ -268,7 +272,7 @@ payment.max_age = 3600  # em segundos
  - Ajuste no parser XML e paginação de relatórios.
  - Incluindo parâmetro para indicar a página inicial em uma busca de transações.
  - Correções de testes.
- 
+
 2.0.2
 
  - Atualização dos tipos e códigos de meio de pagamento.
