@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.test_files            = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths         = ["lib"]
 
-  spec.add_dependency "aitch"
+  spec.add_dependency "aitch", ">= 0.2.1"
   spec.add_dependency "nokogiri"
   spec.add_dependency "i18n"
   spec.add_dependency "json"
