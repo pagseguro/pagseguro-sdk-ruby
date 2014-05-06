@@ -18,6 +18,7 @@ A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilit
 ## Requisitos
 
  - [Ruby] 1.9.3+
+ - [Aitch] 0.2.1+
 
 
 ## Instalação
@@ -316,3 +317,4 @@ Achou e corrigiu um bug ou tem alguma feature em mente e deseja contribuir?
   [Dúvidas?]: https://pagseguro.uol.com.br/desenvolvedor/comunidade.jhtml
   [Ruby]: http://www.ruby-lang.org/pt/
   [GitHub]: https://github.com/pagseguro/ruby/
+  [Aitch]: https://github.com/fnando/aitch
