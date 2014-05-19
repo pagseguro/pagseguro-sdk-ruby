@@ -33,8 +33,20 @@ describe PagSeguro do
       }.to raise_exception(PagSeguro::InvalidEnvironmentError)
     end
 
-    it "returns api url" do
-      expect(PagSeguro.api_url("/some/path")).to eql("https://ws.pagseguro.uol.com.br/v2/some/path")
+    context 'when environment is production' do
+      it "returns api url" do
+        expect(PagSeguro.api_url("/some/path")).to eql("https://ws.pagseguro.uol.com.br/v2/some/path")
+      end
+    end
+
+    context 'when environment is sandbox' do
+      before do
+        PagSeguro.environment = :sandbox
+      end
+
+      it "returns sandbox's api url" do
+        expect(PagSeguro.api_url("/some/path")).to eql("https://ws.sandbox.pagseguro.uol.com.br/v2/some/path")
+      end
     end
   end
 
@@ -47,8 +59,20 @@ describe PagSeguro do
       }.to raise_exception(PagSeguro::InvalidEnvironmentError)
     end
 
-    it "returns site url" do
-      expect(PagSeguro.site_url("/some/path")).to eql("https://pagseguro.uol.com.br/v2/some/path")
+    context 'when environment is production' do
+      it "returns site url" do
+        expect(PagSeguro.site_url("/some/path")).to eql("https://pagseguro.uol.com.br/v2/some/path")
+      end
+    end
+
+    context 'when environment is sandbox' do
+      before do
+        PagSeguro.environment = :sandbox
+      end
+
+      it "returns sandbox's site url" do
+        expect(PagSeguro.site_url("/some/path")).to eql("https://sandbox.pagseguro.uol.com.br/v2/some/path")
+      end
     end
   end
 end

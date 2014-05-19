@@ -46,8 +46,7 @@ module PagSeguro
     # The encoding that will be used.
     attr_accessor :encoding
 
-    # The PagSeguro environment.
-    # Only +production+ for now.
+    # The PagSeguro environment. Available options are :production and :sandbox.
     attr_accessor :environment
   end
 
@@ -60,6 +59,10 @@ module PagSeguro
       production: {
         api: "https://ws.pagseguro.uol.com.br/v2",
         site: "https://pagseguro.uol.com.br/v2"
+      },
+      sandbox: {
+        api: "https://ws.sandbox.pagseguro.uol.com.br/v2",
+        site: "https://sandbox.pagseguro.uol.com.br/v2"
       }
     }
   end
