@@ -256,6 +256,9 @@ payment.return_url = "http://example.org/processando"
 payment.max_uses = 100
 payment.max_age = 3600  # em segundos
 ```
+## Dúvidas?
+
+Caso tenha dúvidas ou precise de suporte, acesse nosso [fórum].
 
 ## Changelog
 
@@ -301,9 +304,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
  - Certifique-se que tenha definido corretamente o charset de acordo com a codificação (ISO-8859-1 ou UTF-8) do seu sistema. Isso irá prevenir que as transações gerem possíveis erros ou quebras ou ainda que caracteres especiais possam ser apresentados de maneira diferente do habitual.
  - Para que ocorra normalmente a geração de logs, certifique-se que o diretório e o arquivo de log tenham permissões de leitura e escrita.
 
-## [Dúvidas?]
-
-
 ## Contribuições
 
 Achou e corrigiu um bug ou tem alguma feature em mente e deseja contribuir?
@@ -318,7 +318,7 @@ Achou e corrigiu um bug ou tem alguma feature em mente e deseja contribuir?
   [transações por código]: https://pagseguro.uol.com.br/v2/guia-de-integracao/consulta-de-transacoes-por-codigo.html
   [transações por intervalo de datas]: https://pagseguro.uol.com.br/v2/guia-de-integracao/consulta-de-transacoes-por-intervalo-de-datas.html
   [transações abandonadas]: https://pagseguro.uol.com.br/v2/guia-de-integracao/consulta-de-transacoes-abandonadas.html
-  [Dúvidas?]: https://pagseguro.uol.com.br/desenvolvedor/comunidade.jhtml
+  [fórum]: http://forum.pagseguro.uol.com.br/
   [Ruby]: http://www.ruby-lang.org/pt/
   [GitHub]: https://github.com/pagseguro/ruby/
   [Aitch]: https://github.com/fnando/aitch

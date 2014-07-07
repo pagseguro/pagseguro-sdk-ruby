@@ -18,3 +18,9 @@ Gemfile.lock
 .env
 *~
 .rvmrc
+
+#################
+## IntelliJ
+#################
+.idea/
+*.iml
