@@ -112,7 +112,7 @@ describe PagSeguro::Transaction do
     it { expect(transaction.items).to be_a(PagSeguro::Items) }
     it { expect(transaction.payment_method).to be_a(PagSeguro::PaymentMethod) }
     it { expect(transaction.status).to be_a(PagSeguro::PaymentStatus) }
-    it { expect(transaction.items).to have(1).item }
+    it { expect(transaction.items.size).to eq(1) }
     it { expect(transaction).to respond_to(:escrow_end_date) }
   end
 end

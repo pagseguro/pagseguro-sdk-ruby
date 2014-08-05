@@ -26,7 +26,7 @@ describe PagSeguro::Transaction::Serializer do
     it { expect(data.keys).not_to include(:cancellation_source) }
     it { expect(data.keys).not_to include(:escrow_end_date) }
 
-    it { expect(data[:items]).to have(1).item }
+    it { expect(data[:items].size).to eq(1) }
     it { expect(data[:items].first).to include(id: "1234") }
     it { expect(data[:items].first).to include(description: "Some product") }
     it { expect(data[:items].first).to include(quantity: 1) }

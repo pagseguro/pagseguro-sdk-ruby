@@ -18,6 +18,8 @@ Gemfile.lock
 .env
 *~
 .rvmrc
+.ruby-gemset
+.ruby-version
 
 #################
 ## IntelliJ

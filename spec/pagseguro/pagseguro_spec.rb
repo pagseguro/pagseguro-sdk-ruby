@@ -11,11 +11,27 @@ describe PagSeguro do
   it { expect(PagSeguro.token).to eql("TOKEN") }
   it { expect(PagSeguro.receiver_email).to eql("RECEIVER_EMAIL") }
 
+  context "config delegation" do
+    subject { PagSeguro }
+    it_behaves_like "a configuration"
+  end
+
   context "configuring library" do
     it "yields PagSeguro" do
       expect {|block|
         PagSeguro.configure(&block)
-      }.to yield_with_args(PagSeguro)
+      }.to yield_with_args(PagSeguro::Config)
+    end
+
+    it "is threadsafe" do
+      thread = Thread.new do
+        PagSeguro.configure do |config|
+          config.receiver_email = 'ANOTHER_RECEIVER_EMAIL'
+        end
+      end
+      thread.join
+
+      expect(PagSeguro.receiver_email).to eql("RECEIVER_EMAIL")
     end
   end
 
@@ -33,9 +49,16 @@ describe PagSeguro do
       }.to raise_exception(PagSeguro::InvalidEnvironmentError)
     end
 
-    it "returns api url" do
+    it "returns production api url when the environment is :production" do
       expect(PagSeguro.api_url("/some/path")).to eql("https://ws.pagseguro.uol.com.br/v2/some/path")
     end
+
+    it "returns sandbox api url when the environment is :sandbox" do
+      PagSeguro.environment = :sandbox
+
+      expect(PagSeguro.api_url("/some/path")).to eql("https://ws.sandbox.pagseguro.uol.com.br/v2/some/path")
+    end
+
   end
 
   describe ".site_url" do
@@ -47,8 +70,13 @@ describe PagSeguro do
       }.to raise_exception(PagSeguro::InvalidEnvironmentError)
     end
 
-    it "returns site url" do
+    it "returns production site url when the environment is production" do
       expect(PagSeguro.site_url("/some/path")).to eql("https://pagseguro.uol.com.br/v2/some/path")
+    end
+
+    it "returns sandbox site url when the environment is :sandbox" do
+      PagSeguro.environment = :sandbox
+      expect(PagSeguro.site_url("/some/path")).to eql("https://sandbox.pagseguro.uol.com.br/v2/some/path")
     end
   end
 end
