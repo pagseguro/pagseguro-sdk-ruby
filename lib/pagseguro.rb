@@ -43,7 +43,7 @@ module PagSeguro
     attr_accessor :encoding
 
     # The PagSeguro environment.
-    # Only +production+ for now.
+    # +production+ or +sandbox+.
     attr_accessor :environment
   end
 
@@ -57,7 +57,7 @@ module PagSeguro
         api: "https://ws.pagseguro.uol.com.br/v2",
         site: "https://pagseguro.uol.com.br/v2"
       },
-      test: {
+      sandbox: {
         site: 'https://sandbox.pagseguro.uol.com.br/v2',
         api:  'https://ws.sandbox.pagseguro.uol.com.br/v2'
       }

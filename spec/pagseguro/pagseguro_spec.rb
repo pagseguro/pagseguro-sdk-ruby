@@ -53,8 +53,8 @@ describe PagSeguro do
       expect(PagSeguro.api_url("/some/path")).to eql("https://ws.pagseguro.uol.com.br/v2/some/path")
     end
 
-    it "returns sandbox api url when the environment is :test" do
-      PagSeguro.environment = :test
+    it "returns sandbox api url when the environment is :sandbox" do
+      PagSeguro.environment = :sandbox
 
       expect(PagSeguro.api_url("/some/path")).to eql("https://ws.sandbox.pagseguro.uol.com.br/v2/some/path")
     end
@@ -74,8 +74,8 @@ describe PagSeguro do
       expect(PagSeguro.site_url("/some/path")).to eql("https://pagseguro.uol.com.br/v2/some/path")
     end
 
-    it "returns sandbox site url when the environment is :test" do
-      PagSeguro.environment = :test
+    it "returns sandbox site url when the environment is :sandbox" do
+      PagSeguro.environment = :sandbox
       expect(PagSeguro.site_url("/some/path")).to eql("https://sandbox.pagseguro.uol.com.br/v2/some/path")
     end
   end
