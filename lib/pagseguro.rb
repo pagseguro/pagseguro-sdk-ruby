@@ -7,6 +7,7 @@ require "aitch"
 require "i18n"
 
 require "pagseguro/version"
+require "pagseguro/config"
 require "pagseguro/errors"
 require "pagseguro/exceptions"
 require "pagseguro/extensions/mass_assignment"
@@ -33,15 +34,10 @@ I18n.load_path += Dir[File.expand_path("../../locales/*.yml", __FILE__)]
 
 module PagSeguro
   class << self
-    # Primary e-mail associated with this account.
-    attr_accessor :email
-
-    # The e-mail that will be displayed when sender is redirected
-    # to PagSeguro.
-    attr_accessor :receiver_email
-
-    # The API token associated with this account.
-    attr_accessor :token
+    # Delegates some calls to the config object
+    extend Forwardable
+    def_delegators :configuration, :email, :receiver_email, :token
+    def_delegators :configuration, :email=, :receiver_email=, :token=
 
     # The encoding that will be used.
     attr_accessor :encoding
@@ -71,6 +67,11 @@ module PagSeguro
     root[type.to_sym]
   end
 
+  # The configuration intance for the thread
+  def self.configuration
+    Thread.current[:pagseguro_config] ||= PagSeguro::Config.new
+  end
+
   # Set the global configuration.
   #
   #   PagSeguro.configure do |config|
@@ -79,7 +80,7 @@ module PagSeguro
   #   end
   #
   def self.configure(&block)
-    yield self
+    yield configuration
   end
 
   # The API endpoint.
