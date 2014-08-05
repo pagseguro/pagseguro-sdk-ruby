@@ -262,6 +262,10 @@ Caso tenha dúvidas ou precise de suporte, acesse nosso [fórum].
 
 ## Changelog
 
+2.0.6
+
+ - Adicionando environment sandbox, entre outras melhorias
+
 2.0.5
 
  - Fixa a versão da biblioteca Aitch; a versão antiga não possui a mesma API utilizada nesta gem.
