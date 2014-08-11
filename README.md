@@ -256,6 +256,14 @@ payment.return_url = "http://example.org/processando"
 payment.max_uses = 100
 payment.max_age = 3600  # em segundos
 ```
+
+#### Definindo environment e/ou encoding
+
+```ruby
+PagSeguro.environment = "production" # production ou sandbox
+PagSeguro.encoding = "UTF-8" # UTF-8 ou ISO-8859-1
+```
+
 ## Dúvidas?
 
 Caso tenha dúvidas ou precise de suporte, acesse nosso [fórum].
