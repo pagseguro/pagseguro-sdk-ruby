@@ -7,7 +7,7 @@ describe PagSeguro::Transaction do
 
       PagSeguro::Request
         .should_receive(:get)
-        .with("transactions/notifications/CODE")
+        .with("transactions/notifications/CODE", {})
         .and_return(double.as_null_object)
 
       PagSeguro::Transaction.find_by_notification_code("CODE")
@@ -20,6 +20,21 @@ describe PagSeguro::Transaction do
 
       expect(response).to be_a(PagSeguro::Transaction::Response)
       expect(response.errors).to include("Sample error")
+    end
+
+    it "finds transaction by the given notificationCode with another Token and Email configuration" do
+      _hash = {
+        :email => 'another@email.com',
+        :token => 'hash_token'
+      }
+      PagSeguro::Transaction.stub :load_from_response
+
+      PagSeguro::Request
+        .should_receive(:get)
+        .with("transactions/notifications/CODE", _hash)
+        .and_return(double.as_null_object)
+
+      PagSeguro::Transaction.find_by_notification_code("CODE", _hash)
     end
   end
 
