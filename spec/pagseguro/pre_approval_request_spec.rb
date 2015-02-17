@@ -9,7 +9,6 @@ describe PagSeguro::PreApprovalRequest do
   it_assigns_attribute :period
   it_assigns_attribute :max_payments_per_period
   it_assigns_attribute :max_amount_per_period
-  it_assigns_attribute :initial_date
   it_assigns_attribute :final_date
   it_assigns_attribute :max_total_amount
   it_assigns_attribute :redirect_url
@@ -56,7 +55,7 @@ describe PagSeguro::PreApprovalRequest do
 
       PagSeguro::Request
         .should_receive(:post)
-        .with("pre_approvals", params)
+        .with("pre_approval", params)
 
       pre_approval.register
     end

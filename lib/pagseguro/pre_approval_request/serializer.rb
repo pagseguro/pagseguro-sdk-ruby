@@ -10,22 +10,17 @@ module PagSeguro
 
       def to_params
         params[:receiverEmail] = PagSeguro.receiver_email
-        params[:charge] = pre_approval_request.charge
-        params[:name] = pre_approval_request.name
-        params[:details] = pre_approval_request.details
-        params[:amount_per_payment] = to_amount(pre_approval_request.amount_per_payment)
-        params[:max_amount_per_payment] = pre_approval_request.max_amount_per_payment
-        params[:period] = pre_approval_request.period
-        params[:max_payments_per_period] = pre_approval_request.max_payments_per_period
-        params[:max_amount_per_period] = pre_approval_request.max_amount_per_period
-        params[:initial_date] = to_date(pre_approval_request.initial_date)
-        params[:final_date] = to_date(pre_approval_request.final_date)
-        params[:max_total_amount] = to_amount(pre_approval_request.max_total_amount)
-        params[:max_amount_per_period] = pre_approval_request.max_amount_per_period
+        
+        params[:preApprovalCharge] = pre_approval_request.charge
+        params[:preApprovalName] = pre_approval_request.name
+        params[:preApprovalDetails] = pre_approval_request.details
+        params[:preApprovalAmountPerPayment] = to_amount(pre_approval_request.amount_per_payment)
+        params[:preApprovalPeriod] = pre_approval_request.period
+        params[:preApprovalFinalDate] = to_date(pre_approval_request.final_date)
+        params[:preApprovalMaxTotalAmount] = to_amount(pre_approval_request.max_total_amount)
         params[:reference] = pre_approval_request.reference
-        params[:review_url] = pre_approval_request.review_url
+        params[:reviewURL] = pre_approval_request.review_url
         params[:redirectURL] = pre_approval_request.redirect_url
-        params[:max_amount_per_period] = pre_approval_request.max_amount_per_period
       
         serialize_sender(pre_approval_request.sender)
 
@@ -75,7 +70,7 @@ module PagSeguro
       end
 
       def to_date(date)
-        date.iso8601(1) if date
+        Time.parse(date.to_s).iso8601(1) if date
       end
     end
   end

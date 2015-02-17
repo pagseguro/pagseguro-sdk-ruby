@@ -10,18 +10,20 @@ module PagSeguro
     attr_accessor :name
     attr_accessor :details
     attr_accessor :amount_per_payment
-    attr_accessor :max_amount_per_payment
     attr_accessor :period
-    attr_accessor :max_payments_per_period
-    attr_accessor :max_amount_per_period
-    attr_accessor :initial_date
     attr_accessor :final_date
-    attr_accessor :max_total_amount
+
     attr_accessor :redirect_url
     attr_accessor :reference
     attr_accessor :review_url
+
     attr_accessor :email
     attr_accessor :token
+
+    attr_accessor :max_amount_per_payment
+    attr_accessor :max_payments_per_period
+    attr_accessor :max_amount_per_period
+    attr_accessor :max_total_amount
 
     # Set the payment sender.
     def sender=(sender)
