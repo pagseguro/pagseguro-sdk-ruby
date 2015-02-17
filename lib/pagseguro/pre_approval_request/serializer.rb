@@ -24,6 +24,7 @@ module PagSeguro
         params[:max_amount_per_period] = pre_approval_request.max_amount_per_period
         params[:reference] = pre_approval_request.reference
         params[:review_url] = pre_approval_request.review_url
+        params[:redirectURL] = pre_approval_request.redirect_url
         params[:max_amount_per_period] = pre_approval_request.max_amount_per_period
       
         serialize_sender(pre_approval_request.sender)
