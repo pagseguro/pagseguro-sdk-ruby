@@ -15,15 +15,15 @@ module PagSeguro
       end
 
       def url
-        PagSeguro.site_url("checkout/payment.html?code=#{code}") if code
+        PagSeguro.site_url("pre-approvals/request.html?code=#{code}") if code
       end
 
       def code
-        @code ||= response.data.css("checkout > code").text if success?
+        @code ||= response.data.css("preApprovalRequest > code").text if success?
       end
 
       def created_at
-        @created_at ||= Time.parse(response.data.css("checkout > date").text) if success?
+        @created_at ||= Time.parse(response.data.css("preApprovalRequest > date").text) if success?
       end
     end
   end

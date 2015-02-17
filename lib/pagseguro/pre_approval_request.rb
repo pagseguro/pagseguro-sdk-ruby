@@ -34,7 +34,7 @@ module PagSeguro
         email: email,
         token: token
       })
-      Response.new Request.post("pre_approvals", params)
+      Response.new Request.post("pre_approval", params)
     end
 
     private
