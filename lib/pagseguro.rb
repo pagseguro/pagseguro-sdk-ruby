@@ -32,6 +32,9 @@ require "pagseguro/notification"
 require "pagseguro/transaction"
 require "pagseguro/transaction/response"
 require "pagseguro/transaction/serializer"
+require "pagseguro/pre_approval"
+require "pagseguro/pre_approval/response"
+require "pagseguro/pre_approval/serializer"
 
 I18n.load_path += Dir[File.expand_path("../../locales/*.yml", __FILE__)]
 
