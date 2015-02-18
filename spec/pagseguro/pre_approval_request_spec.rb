@@ -55,7 +55,7 @@ describe PagSeguro::PreApprovalRequest do
 
       PagSeguro::Request
         .should_receive(:post)
-        .with("pre_approval", params)
+        .with("pre_approvals", params)
 
       pre_approval.register
     end
