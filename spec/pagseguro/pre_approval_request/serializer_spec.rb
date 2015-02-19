@@ -34,7 +34,7 @@ describe PagSeguro::PreApprovalRequest::Serializer do
     it { expect(params).to include(preApprovalDetails: "DETAILS") }
     it { expect(params).to include(preApprovalAmountPerPayment: "100.99") }
     it { expect(params).to include(preApprovalPeriod: "MONTHLY") }
-    it { expect(params).to include(preApprovalFinalDate: "2015-02-17T00:00:00.0-03:00") }
+    it { expect(params).to include(preApprovalFinalDate: Time.parse("2015-02-17T00:00:00.0-03:00").iso8601(1) }
     it { expect(params).to include(preApprovalMaxTotalAmount: "10000.99") }
     it { expect(params).to include(reference: "REFERENCE") }
     it { expect(params).to include(redirectURL: "REDIRECT_URL") }
