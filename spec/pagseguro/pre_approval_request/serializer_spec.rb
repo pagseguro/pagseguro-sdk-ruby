@@ -21,7 +21,7 @@ describe PagSeguro::PreApprovalRequest::Serializer do
         details: "DETAILS",
         amount_per_payment: 100.99,
         period: "MONTHLY",
-        final_date: "2015-02-17T00:00:00-03:00",
+        final_date: "2015-02-17T00:00:00-02:00",
         max_total_amount: 10000.99,
         reference: "REFERENCE",
         redirect_url: "REDIRECT_URL",
