@@ -14,6 +14,9 @@ module PagSeguro
 
     attr_reader :sender
 
+    # Set the pre approval errors.
+    attr_reader :errors
+
     # Find a pre approval by its code
     # Return a PagSeguro::PreApproval instance
     def self.find_by_code(code)
@@ -24,6 +27,7 @@ module PagSeguro
     # Return a PagSeguro::PreApproval instance.
     def self.find_by_notification_code(code)
       load_from_response Request.get("pre-approvals/notifications/#{code}")
+
     end
 
     # Serialize the HTTP response into data.
@@ -45,5 +49,9 @@ module PagSeguro
       @sender = ensure_type(Sender, sender)
     end
 
+    private
+    def after_initialize
+      @errors = Errors.new
+    end
   end
 end

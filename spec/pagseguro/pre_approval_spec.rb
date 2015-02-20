@@ -8,6 +8,14 @@ describe PagSeguro::PreApproval do
       expect(PagSeguro::Request).to receive(:get).with("pre-approvals/notifications/CODE").and_return(double.as_null_object)
       PagSeguro::PreApproval.find_by_notification_code("CODE")
     end
+    it "returns response with errors when request fails" do
+      body = %[<?xml version="1.0"?><errors><error><code>1234</code><message>Sample error</message></error></errors>]
+      FakeWeb.register_uri :get, %r[.+], status: [400, "Bad Request"], body: body, content_type: "text/xml"
+      response = PagSeguro::PreApproval.find_by_notification_code("invalid")
+
+      expect(response).to be_a(PagSeguro::PreApproval::Response)
+      expect(response.errors).to include("Sample error")
+    end
   end
 
   describe ".find_by_notification_code" do
@@ -28,11 +36,5 @@ describe PagSeguro::PreApproval do
 
     it { expect(pre_approval).to be_a(PagSeguro::PreApproval) }
     it { expect(pre_approval.sender).to be_a(PagSeguro::Sender) }
-    # it { expect(pre_approval.shipping).to be_a(PagSeguro::Shipping) }
-    # it { expect(pre_approval.items).to be_a(PagSeguro::Items) }
-    # it { expect(pre_approval.payment_method).to be_a(PagSeguro::PaymentMethod) }
-    # it { expect(pre_approval.status).to be_a(PagSeguro::PaymentStatus) }
-    # it { expect(pre_approval.items.size).to eq(1) }
-    # it { expect(pre_approval).to respond_to(:escrow_end_date) }
   end
 end
