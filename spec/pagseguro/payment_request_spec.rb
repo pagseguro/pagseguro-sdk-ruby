@@ -104,4 +104,12 @@ describe PagSeguro::PaymentRequest do
       expect(payment.register).to eql(response)
     end
   end
+
+  describe "#add_parameter" do
+    it "adds an extra parameter" do
+      subject.add_parameter('extraParam', 'value')
+
+      expect(subject.extra_params).to eq([{extraParam: 'value'}])
+    end
+  end
 end
