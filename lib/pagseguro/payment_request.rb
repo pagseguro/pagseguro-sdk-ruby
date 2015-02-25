@@ -84,8 +84,15 @@ module PagSeguro
       Response.new Request.post("checkout", params)
     end
 
+    # Adds an extra parameter to payment request. It's useful when you need
+    # to send a parameter to api that's not mapped in the gem yet.
+    def add_parameter(name, value)
+      @extra_params << {name.to_sym => value}
+    end
+
     private
     def before_initialize
+      @extra_params = []
       self.currency = "BRL"
       self.email    = PagSeguro.email
       self.token    = PagSeguro.token
