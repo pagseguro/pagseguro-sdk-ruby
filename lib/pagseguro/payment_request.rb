@@ -57,6 +57,8 @@ module PagSeguro
     # The token that identifies the request. Defaults to PagSeguro.token
     attr_accessor :token
 
+    # Get the extra parameters
+    attr_reader :extra_params
 
     # Products/items in this payment request.
     def items

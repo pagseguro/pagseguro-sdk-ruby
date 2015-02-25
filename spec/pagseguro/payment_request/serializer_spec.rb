@@ -139,4 +139,18 @@ describe PagSeguro::PaymentRequest::Serializer do
     it_behaves_like "item serialization", 1
     it_behaves_like "item serialization", 2
   end
+
+  context "extra params serialization" do
+    before do
+      payment_request.stub({
+        extra_params: [
+          { extraParam: 'param_value' },
+          { newExtraParam: 'extra_param_value' }
+        ]
+      })
+    end
+
+    it { expect(params).to include(extraParam: 'param_value') }
+    it { expect(params).to include(newExtraParam: 'extra_param_value') }
+  end
 end
