@@ -97,12 +97,12 @@ module PagSeguro
   def self.uris
     @uris ||= {
       production: {
-        api: "https://ws.pagseguro.uol.com.br/v2",
-        site: "https://pagseguro.uol.com.br/v2"
+        api: "https://ws.pagseguro.uol.com.br/",
+        site: "https://pagseguro.uol.com.br/"
       },
       sandbox: {
-        site: 'https://sandbox.pagseguro.uol.com.br/v2',
-        api:  'https://ws.sandbox.pagseguro.uol.com.br/v2'
+        site: 'https://sandbox.pagseguro.uol.com.br/',
+        api:  'https://ws.sandbox.pagseguro.uol.com.br/'
       }
     }
   end
