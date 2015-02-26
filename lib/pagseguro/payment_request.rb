@@ -90,6 +90,12 @@ module PagSeguro
       self.extra_params << {name.to_sym => value}
     end
 
+    # Adds an extra parameter with index.
+    def add_indexed_parameter(name, value, index)
+      name_with_index = "#{name}#{index}"
+      add_parameter(name_with_index, value)
+    end
+
     private
     attr_writer :extra_params
 
