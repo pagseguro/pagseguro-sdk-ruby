@@ -81,7 +81,7 @@ describe PagSeguro::PaymentRequest do
 
       PagSeguro::Request
         .should_receive(:post)
-        .with("checkout", params)
+        .with("checkout", "v2", params)
 
       payment.register
     end

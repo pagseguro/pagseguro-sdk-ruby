@@ -16,7 +16,7 @@ describe PagSeguro::Request do
     it "includes credentials" do
       PagSeguro.email = "EMAIL"
       PagSeguro.token = "TOKEN"
-      PagSeguro::Request.post("checkout")
+      PagSeguro::Request.post("checkout", "v3")
 
       expect(FakeWeb.last_request.body).to include("email=EMAIL&token=TOKEN")
     end
@@ -24,18 +24,18 @@ describe PagSeguro::Request do
     it "includes custom credentials" do
       PagSeguro.email = "EMAIL"
       PagSeguro.token = "TOKEN"
-      PagSeguro::Request.post("checkout", email: 'foo', token: 'bar')
+      PagSeguro::Request.post("checkout", "v3", email: 'foo', token: 'bar')
 
       expect(FakeWeb.last_request.body).to include("email=foo&token=bar")
     end
 
     it "includes encoding" do
-      PagSeguro::Request.post("checkout")
+      PagSeguro::Request.post("checkout", "v3")
       expect(FakeWeb.last_request.body).to include("charset=UTF-8")
     end
 
     it "include request headers" do
-      PagSeguro::Request.post("checkout")
+      PagSeguro::Request.post("checkout", "v3")
       request = FakeWeb.last_request
 
       expect(request["Accept-Charset"]).to eql("UTF-8")
@@ -53,18 +53,18 @@ describe PagSeguro::Request do
     it "includes credentials" do
       PagSeguro.email = "EMAIL"
       PagSeguro.token = "TOKEN"
-      PagSeguro::Request.get("checkout")
+      PagSeguro::Request.get("checkout", "v3")
 
       expect(FakeWeb.last_request.path).to include("email=EMAIL&token=TOKEN")
     end
 
     it "includes encoding" do
-      PagSeguro::Request.get("checkout")
+      PagSeguro::Request.get("checkout", "v3")
       expect(FakeWeb.last_request.path).to include("charset=UTF-8")
     end
 
     it "include request headers" do
-      PagSeguro::Request.get("checkout")
+      PagSeguro::Request.get("checkout", "v3")
       request = FakeWeb.last_request
 
       expect(request["Accept-Charset"]).to eql("UTF-8")
