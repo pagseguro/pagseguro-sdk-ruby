@@ -57,6 +57,13 @@ module PagSeguro
     # The token that identifies the request. Defaults to PagSeguro.token
     attr_accessor :token
 
+    # Determines which PagSeguro API version the request will use. Defaults to v2
+    attr_writer :api_version
+
+    # The default PagSeguro API version
+    def api_version
+      @api_version ||= 'v2'
+    end
 
     # Products/items in this payment request.
     def items
@@ -79,7 +86,7 @@ module PagSeguro
         email: email,
         token: token
       })
-      Response.new Request.post("checkout", params)
+      Response.new Request.post("checkout", api_version, params)
     end
 
     private
