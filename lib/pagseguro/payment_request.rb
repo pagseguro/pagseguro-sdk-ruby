@@ -81,7 +81,7 @@ module PagSeguro
         email: email,
         token: token
       })
-      Response.new Request.post("checkout", params)
+      Response.new Request.post("checkout", api_version, params)
     end
 
     private
