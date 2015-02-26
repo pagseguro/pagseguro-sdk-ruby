@@ -15,7 +15,7 @@ module PagSeguro
       end
 
       def url
-        PagSeguro.site_url("checkout/payment.html?code=#{code}") if code
+        PagSeguro.site_url("#{api_version}/checkout/payment.html?code=#{code}") if code
       end
 
       def code
@@ -24,6 +24,10 @@ module PagSeguro
 
       def created_at
         @created_at ||= Time.parse(response.data.css("checkout > date").text) if success?
+      end
+
+      def api_version
+        @api_version ||= 'v2'
       end
     end
   end

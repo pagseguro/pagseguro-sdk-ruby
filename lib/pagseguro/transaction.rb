@@ -68,7 +68,7 @@ module PagSeguro
     attr_writer :api_version
 
     # The default PagSeguro API version
-    def api_version
+    def self.api_version
       @api_version ||= 'v3'
     end
 
