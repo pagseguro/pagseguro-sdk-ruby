@@ -112,4 +112,14 @@ describe PagSeguro::PaymentRequest do
       expect(subject.extra_params).to eq([{extraParam: 'value'}])
     end
   end
+
+  describe "#add_indexed_parameter" do
+    it "adds an indexed extra parameter" do
+      subject.add_indexed_parameter('extraParam', 'value', 1)
+      subject.add_indexed_parameter('extraParam', 'value', 2)
+
+      expect(subject.extra_params).to include(extraParam1: 'value')
+      expect(subject.extra_params).to include(extraParam2: 'value')
+    end
+  end
 end
