@@ -10,29 +10,31 @@ module PagSeguro
     # Perform a GET request.
     #
     # # +path+: the path that will be requested. Must be something like <tt>"transactions/code/739D69-79C052C05280-55542D9FBB33-CAB2B1"</tt>.
+    # # +api_version+: the current PagSeguro API version of the requested service
     # # +data+: the data that will be sent as query string. Must be a Hash.
     # # +headers+: any additional header that will be sent through the request.
     #
-    def get(path, data = {}, headers = {})
-      execute :get, path, data, headers
+    def get(path, api_version, data = {}, headers = {})
+      execute :get, path, api_version, data, headers
     end
 
     # Perform a POST request.
     #
     # # +path+: the path that will be requested. Must be something like <tt>"checkout"</tt>.
+    # # +api_version+: the current PagSeguro API version of the requested service
     # # +data+: the data that will be sent as body data. Must be a Hash.
     # # +headers+: any additional header that will be sent through the request.
     #
-    def post(path, data = {}, headers = {})
-      execute :post, path, data, headers
+    def post(path, api_version, data = {}, headers = {})
+      execute :post, path, api_version, data, headers
     end
 
     # Perform the specified HTTP request. It will include the API credentials,
-    # encoding and additional headers.
-    def execute(request_method, path, data, headers) # :nodoc:
+    # api_version, encoding and additional headers.
+    def execute(request_method, api_version, path, data, headers) # :nodoc:
       request.public_send(
         request_method,
-        PagSeguro.api_url(path),
+        PagSeguro.api_url("#{api_version}/#{path}"),
         extended_data(data),
         extended_headers(request_method, headers)
       )
