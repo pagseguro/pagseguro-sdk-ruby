@@ -64,16 +64,24 @@ module PagSeguro
     # Set the transaction errors.
     attr_reader :errors
 
+    # Determines which PagSeguro API version the request will use. Defaults to v2
+    attr_writer :api_version
+
+    # The default PagSeguro API version
+    def api_version
+      @api_version ||= 'v3'
+    end
+
     # Find a transaction by its transactionCode
     # Return a PagSeguro::Transaction instance
-    def self.find_by_code(code, options = {})
-      load_from_response Request.get("transactions/#{code}", options)
+    def self.find_by_code(code)
+      load_from_response Request.get("transactions/#{code}", api_version)
     end
 
     # Find a transaction by its notificationCode.
     # Return a PagSeguro::Transaction instance.
-    def self.find_by_notification_code(code, options = {})
-      load_from_response Request.get("transactions/notifications/#{code}", options)
+    def self.find_by_notification_code(code)
+      load_from_response Request.get("transactions/notifications/#{code}", api_version)
     end
 
     # Search transactions within a date range.
