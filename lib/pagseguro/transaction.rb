@@ -64,24 +64,16 @@ module PagSeguro
     # Set the transaction errors.
     attr_reader :errors
 
-    # Determines which PagSeguro API version the request will use. Defaults to v2
-    attr_writer :api_version
-
-    # The default PagSeguro API version
-    def self.api_version
-      @api_version ||= 'v3'
-    end
-
     # Find a transaction by its transactionCode
     # Return a PagSeguro::Transaction instance
     def self.find_by_code(code)
-      load_from_response Request.get("transactions/#{code}", api_version)
+      load_from_response send_request("transactions/#{code}")
     end
 
     # Find a transaction by its notificationCode.
     # Return a PagSeguro::Transaction instance.
     def self.find_by_notification_code(code)
-      load_from_response Request.get("transactions/notifications/#{code}", api_version)
+      load_from_response send_request("transactions/notifications/#{code}")
     end
 
     # Search transactions within a date range.
@@ -131,6 +123,11 @@ module PagSeguro
       else
         Response.new Errors.new(response)
       end
+    end
+
+    # Send a get request to v3 API version, with the path given
+    def self.send_request(path)
+      Request.get(path, 'v3')
     end
 
     # Serialize the XML object.
