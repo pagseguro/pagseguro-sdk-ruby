@@ -14,14 +14,6 @@ module PagSeguro
     # Return the current page.
     attr_reader :page
 
-    # Determines which PagSeguro API version the request will use. Defaults to v2
-    attr_writer :api_version
-
-    # The default PagSeguro API version
-    def api_version
-      @api_version ||= 'v3'
-    end
-
     def initialize(item_class, path, options, page = 0)
       @item_class = item_class
       @path = path
@@ -103,6 +95,11 @@ module PagSeguro
       })
 
       @errors = Errors.new(@response)
+    end
+
+    # The default PagSeguro API version
+    def api_version
+      'v3'
     end
 
     def fetched?
