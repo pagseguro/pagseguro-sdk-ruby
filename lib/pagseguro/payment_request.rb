@@ -57,8 +57,8 @@ module PagSeguro
     # The token that identifies the request. Defaults to PagSeguro.token
     attr_accessor :token
 
-    # Get the extra parameters
-    attr_reader :extra_params
+    # The extra parameters for payment request
+    attr_accessor :extra_params
 
     # Products/items in this payment request.
     def items
@@ -84,21 +84,7 @@ module PagSeguro
       Response.new Request.post("checkout", params)
     end
 
-    # Adds an extra parameter to payment request. It's useful when you need
-    # to send a parameter to api that's not mapped in the gem yet.
-    def add_parameter(name, value)
-      self.extra_params << {name.to_sym => value}
-    end
-
-    # Adds an extra parameter with index.
-    def add_indexed_parameter(name, value, index)
-      name_with_index = "#{name}#{index}"
-      add_parameter(name_with_index, value)
-    end
-
     private
-    attr_writer :extra_params
-
     def before_initialize
       self.extra_params = []
       self.currency = "BRL"

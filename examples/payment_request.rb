@@ -36,9 +36,9 @@ payment.shipping = {
   }
 }
 
-# Add extra params to request
-# payment.add_parameter(:extraParam, 'valor')
-# payment.add_indexed_parameter(:itemExtra, 'valor', 1)
+# Add extras params to request
+# payment.extra_params << { extraParam: 'value' }
+# payment.extra_params << { itemExtra1: 'value1' }
 
 puts "=> REQUEST"
 puts PagSeguro::PaymentRequest::Serializer.new(payment).to_params
