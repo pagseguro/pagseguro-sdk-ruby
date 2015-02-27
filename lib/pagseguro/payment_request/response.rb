@@ -27,7 +27,7 @@ module PagSeguro
       end
 
       def api_version
-        @api_version ||= 'v2'
+        'v2'
       end
     end
   end

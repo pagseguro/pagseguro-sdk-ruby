@@ -85,5 +85,10 @@ module PagSeguro
     def endpoint
       PagSeguro.api_url("checkout")
     end
+
+    # The default PagSeguro API version
+    def api_version
+      'v2'
+    end
   end
 end
