@@ -26,6 +26,7 @@ module PagSeguro
         @created_at ||= Time.parse(response.data.css("checkout > date").text) if success?
       end
 
+      # Default PagSeguro API version for payments
       def api_version
         'v2'
       end
