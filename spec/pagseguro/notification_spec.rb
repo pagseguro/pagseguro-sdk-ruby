@@ -8,6 +8,11 @@ describe PagSeguro::Notification do
     expect(PagSeguro::Notification.new(type: "transaction")).to be_transaction
   end
 
+  it "detects notification as preApproval" do
+    expect(PagSeguro::Notification.new(type: "preApproval")).to be_pre_approval
+  end
+
+
   it "fetches transaction by its notificationCode" do
     PagSeguro::Transaction
       .should_receive(:find_by_notification_code)

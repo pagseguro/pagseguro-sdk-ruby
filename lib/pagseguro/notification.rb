@@ -13,9 +13,18 @@ module PagSeguro
       type == "transaction"
     end
 
+    def pre_approval?
+      type == "preApproval"
+    end
+
     # Fetch the transaction by its notificationCode.
     def transaction
       Transaction.find_by_notification_code(code)
     end
+
+    def preApproval
+      PreApproval.find_by_notification_code(code)
+    end
+
   end
 end
