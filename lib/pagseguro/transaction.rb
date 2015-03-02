@@ -62,17 +62,17 @@ module PagSeguro
 
     # Set the transaction errors.
     attr_reader :errors
-    
+
     # Find a transaction by its transactionCode
     # Return a PagSeguro::Transaction instance
     def self.find_by_code(code)
-      load_from_response Request.get("transactions/#{code}")
+      load_from_response send_request("transactions/#{code}")
     end
 
     # Find a transaction by its notificationCode.
     # Return a PagSeguro::Transaction instance.
     def self.find_by_notification_code(code)
-      load_from_response Request.get("transactions/notifications/#{code}")
+      load_from_response send_request("transactions/notifications/#{code}")
     end
 
     # Search transactions within a date range.
@@ -122,6 +122,11 @@ module PagSeguro
       else
         Response.new Errors.new(response)
       end
+    end
+
+    # Send a get request to v3 API version, with the path given
+    def self.send_request(path)
+      Request.get(path, 'v3')
     end
 
     # Serialize the XML object.

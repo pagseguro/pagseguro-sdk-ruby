@@ -86,7 +86,8 @@ module PagSeguro
 
     private
     def perform_request_and_serialize
-      @response = Request.get(@path, {
+      @response = Request.get(@path, api_version,
+      {
         initialDate: options[:starts_at].xmlschema,
         finalDate: options[:ends_at].xmlschema,
         page: page,
@@ -94,6 +95,11 @@ module PagSeguro
       })
 
       @errors = Errors.new(@response)
+    end
+
+    # The default PagSeguro API version
+    def api_version
+      'v3'
     end
 
     def fetched?
