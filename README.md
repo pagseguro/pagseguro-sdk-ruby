@@ -311,35 +311,7 @@ Caso tenha dúvidas ou precise de suporte, acesse nosso [fórum].
 
 ## Changelog
 
-2.0.6
-
- - Adicionando environment sandbox, entre outras melhorias
-
-2.0.5
-
- - Fixa a versão da biblioteca Aitch; a versão antiga não possui a mesma API utilizada nesta gem.
-
-2.0.4
-
- - PaymentRequest com email e token alternativos
-
-2.0.3
-
- - Ajuste no parser XML e paginação de relatórios.
- - Incluindo parâmetro para indicar a página inicial em uma busca de transações.
- - Correções de testes.
-
-2.0.2
-
- - Atualização dos tipos e códigos de meio de pagamento.
- - Correção do exemplo payment_request.
-
-2.0.1
-
- - Classes de domínios que representam pagamentos, notificações e transações.
- - Criação de checkouts via API.
- - Tratamento de notificações de pagamento enviadas pelo PagSeguro.
- - Consulta de transações.
+https://github.com/pagseguro/ruby/blob/master/CHANGELOG.md
 
 ## Licença
 
@@ -361,9 +333,15 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 Achou e corrigiu um bug ou tem alguma feature em mente e deseja contribuir?
 
-* Faça um fork.
-* Adicione sua feature ou correção de bug.
-* Envie um pull request no [GitHub].
+* Faça um fork
+* Adicione sua feature ou correção de bug (`git checkout -b my-new-feature`)
+* Commit suas mudanças (`git commit -am 'Added some feature'`)
+* Rode um push para o branch (`git push origin my-new-feature`)
+* Envie um Pull Request
+
+O código, os commits e os comentários devem ser em inglês.
+Adicione exemplos para sua nova feature.
+Se seu Pull Request for relacionado a uma versão específica, o Pull Request não deve ser enviado para o branch master e sim para o branch correspondente a versão.
 
 
   [requisições de pagamentos]: https://pagseguro.uol.com.br/v2/guia-de-integracao/api-de-pagamentos.html

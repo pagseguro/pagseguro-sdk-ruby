@@ -8,6 +8,5 @@ rvm:
 
 notifications:
   email:
-    - fnando.vieira@gmail.com
     - lucas.renan@codeminer42.com
-    - vinicius.palma@codeminer42.com
+    - vitor.kusiaki@codeminer42.com
