@@ -104,4 +104,20 @@ describe PagSeguro::PaymentRequest do
       expect(payment.register).to eql(response)
     end
   end
+
+  describe "#extra_params" do
+    it "is empty before initialization" do
+      expect(subject.extra_params).to eql([])
+    end
+
+    it "allows extra parameter addition" do
+      subject.extra_params << { extraParam: 'value' }
+      subject.extra_params << { itemParam1: 'value1' }
+
+      expect(subject.extra_params).to eql([
+        { extraParam: 'value' },
+        { itemParam1: 'value1' }
+      ])
+    end
+  end
 end

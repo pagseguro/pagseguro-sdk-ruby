@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*- 
+# -*- encoding : utf-8 -*-
 require_relative "boot"
 
 payment = PagSeguro::PaymentRequest.new
@@ -35,6 +35,10 @@ payment.shipping = {
     district: "Vila Mariana"
   }
 }
+
+# Add extras params to request
+# payment.extra_params << { extraParam: 'value' }
+# payment.extra_params << { itemExtra1: 'value1' }
 
 puts "=> REQUEST"
 puts PagSeguro::PaymentRequest::Serializer.new(payment).to_params

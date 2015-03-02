@@ -24,6 +24,7 @@ module PagSeguro
 
         serialize_sender(payment_request.sender)
         serialize_shipping(payment_request.shipping)
+        serialize_extra_params(payment_request.extra_params)
 
         params.delete_if {|key, value| value.nil? }
 
@@ -81,6 +82,14 @@ module PagSeguro
         params[:shippingAddressStreet] = address.street
         params[:shippingAddressNumber] = address.number
         params[:shippingAddressComplement] = address.complement
+      end
+
+      def serialize_extra_params(extra_params)
+        return unless extra_params
+
+        extra_params.each do |extra_param|
+          params[extra_param.keys.first] = extra_param.values.first
+        end
       end
 
       def to_amount(amount)
