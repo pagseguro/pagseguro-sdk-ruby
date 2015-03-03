@@ -15,7 +15,10 @@
 	<paymentLink>https://pagseguro.uol.com.br/checkout/imprimeBoleto.jhtml?code=667D39144F9F47059FB6CA6FA0DF8A20</paymentLink>
 	<grossAmount>459.50</grossAmount>
 	<discountAmount>0.00</discountAmount>
-	<feeAmount>13.73</feeAmount>
+  <creditorFees>
+    <intermediationRateAmount>0.40</intermediationRateAmount>
+    <intermediationFeeAmount>1644.80</intermediationFeeAmount>
+	</creditorFees>
 	<netAmount>445.77</netAmount>
 	<extraAmount>0.00</extraAmount>
 	<installmentCount>1</installmentCount>
@@ -42,10 +45,10 @@
 			<number>1384</number>
 			<complement>5 ANDAR</complement>
 			<district>JARDIM PAULISTANO</district>
+			<postalCode>01452002</postalCode>
 			<city>SAO PAULO</city>
 			<state>SP</state>
 			<country>BRA</country>
-			<postalCode>01452002</postalCode>
 		</address>
 		<type>2</type>
 		<cost>0.00</cost>
