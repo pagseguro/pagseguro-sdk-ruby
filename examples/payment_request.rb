@@ -37,8 +37,9 @@ payment.shipping = {
 }
 
 # Add extras params to request
-# payment.extra_params << { extraParam: 'value' }
-# payment.extra_params << { itemExtra1: 'value1' }
+# payment.extra_params << { paramName: 'paramValue' }
+# payment.extra_params << { senderBirthDate: '07/05/1981' }
+# payment.extra_params << { extraAmount: '-15.00' }
 
 puts "=> REQUEST"
 puts PagSeguro::PaymentRequest::Serializer.new(payment).to_params
