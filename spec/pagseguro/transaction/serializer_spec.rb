@@ -18,13 +18,15 @@ describe PagSeguro::Transaction::Serializer do
     it { expect(data).to include(payment_link: "https://pagseguro.uol.com.br/checkout/imprimeBoleto.jhtml?code=667D39144F9F47059FB6CA6FA0DF8A20") }
     it { expect(data).to include(gross_amount: BigDecimal("459.50")) }
     it { expect(data).to include(discount_amount: BigDecimal("0.00")) }
-    it { expect(data).to include(fee_amount: BigDecimal("13.73")) }
     it { expect(data).to include(net_amount: BigDecimal("445.77")) }
     it { expect(data).to include(extra_amount: BigDecimal("0.00")) }
     it { expect(data).to include(installments: 1) }
 
     it { expect(data.keys).not_to include(:cancellation_source) }
     it { expect(data.keys).not_to include(:escrow_end_date) }
+
+    it { expect(data[:creditor_fees]).to include(intermediation_rate_amount: BigDecimal("0.40")) }
+    it { expect(data[:creditor_fees]).to include(intermediation_fee_amount: BigDecimal("1644.80")) }
 
     it { expect(data[:items].size).to eq(1) }
     it { expect(data[:items].first).to include(id: "1234") }
