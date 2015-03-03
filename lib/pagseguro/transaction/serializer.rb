@@ -12,6 +12,7 @@ module PagSeguro
           serialize_general(data)
           serialize_amounts(data)
           serialize_dates(data)
+          serialize_creditor(data)
           serialize_items(data)
           serialize_sender(data)
           serialize_shipping(data) if xml.css("shipping").any?
@@ -47,10 +48,18 @@ module PagSeguro
       def serialize_amounts(data)
         data[:gross_amount] = BigDecimal(xml.css("grossAmount").text)
         data[:discount_amount] = BigDecimal(xml.css("discountAmount").text)
-        data[:fee_amount] = BigDecimal(xml.css("feeAmount").text)
         data[:net_amount] = BigDecimal(xml.css("netAmount").text)
         data[:extra_amount] = BigDecimal(xml.css("extraAmount").text)
         data[:installments] = xml.css("installmentCount").text.to_i
+      end
+
+      def serialize_creditor(data)
+        data[:creditor_fees] = {
+          intermediation_rate_amount: BigDecimal(xml.css("creditorFees > intermediationRateAmount").text),
+          intermediation_fee_amount: BigDecimal(xml.css("creditorFees > intermediationFeeAmount").text),
+          installment_fee_amount: BigDecimal(xml.css("creditorFees > installmentFeeAmount").text),
+          operational_fee_amount: BigDecimal(xml.css("creditorFees > operationalFeeAmount").text)
+        }
       end
 
       def serialize_items(data)
