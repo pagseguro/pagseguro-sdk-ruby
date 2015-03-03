@@ -76,6 +76,13 @@ class CheckoutController < ApplicationController
       }
     end
 
+    # Caso você precise passar parâmetros para a api que ainda não foram
+    # mapeados na gem, você pode fazer de maneira dinâmica utilizando um
+    # simples hash.
+    payment.extra_params << { paramName: 'paramValue' }
+    payment.extra_params << { senderBirthDate: '07/05/1981' }
+    payment.extra_params << { extraAmount: '-15.00' }
+
     response = payment.register
 
     # Caso o processo de checkout tenha dado errado, lança uma exceção.

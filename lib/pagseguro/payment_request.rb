@@ -57,6 +57,8 @@ module PagSeguro
     # The token that identifies the request. Defaults to PagSeguro.token
     attr_accessor :token
 
+    # The extra parameters for payment request
+    attr_accessor :extra_params
 
     # Products/items in this payment request.
     def items
@@ -84,6 +86,7 @@ module PagSeguro
 
     private
     def before_initialize
+      self.extra_params = []
       self.currency = "BRL"
       self.email    = PagSeguro.email
       self.token    = PagSeguro.token
