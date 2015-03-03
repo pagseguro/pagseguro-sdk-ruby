@@ -34,8 +34,8 @@ module PagSeguro
     # The discount amount.
     attr_accessor :discount_amount
 
-    # The PagSeguro fee amount.
-    attr_accessor :fee_amount
+    # The charged fees.
+    attr_accessor :creditor_fees
 
     # The net amount.
     attr_accessor :net_amount
@@ -62,7 +62,7 @@ module PagSeguro
 
     # Set the transaction errors.
     attr_reader :errors
-    
+
     # Find a transaction by its transactionCode
     # Return a PagSeguro::Transaction instance
     def self.find_by_code(code)
