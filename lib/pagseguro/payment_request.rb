@@ -82,10 +82,6 @@ module PagSeguro
       self.currency = "BRL"
     end
 
-    def endpoint
-      PagSeguro.api_url("checkout")
-    end
-
     # The default PagSeguro API version
     def api_version
       'v2'
