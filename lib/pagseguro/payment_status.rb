@@ -9,6 +9,8 @@ module PagSeguro
       "5" => :in_dispute,
       "6" => :refunded,
       "7" => :cancelled,
+      "8" => :chargeback_charged,
+      "9" => :contested
     }.freeze
 
     # The payment status id.
