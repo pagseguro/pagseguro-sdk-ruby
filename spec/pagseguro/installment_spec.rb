@@ -2,6 +2,10 @@ require "spec_helper"
 
 describe PagSeguro::Installment do
   it_assigns_attribute :credit_card_brand
+  it_assigns_attribute :quantity
+  it_assigns_attribute :amount
+  it_assigns_attribute :total_amount
+  it_assigns_attribute :interest_free
 
   describe ".find" do
     context "when request succeeds" do
