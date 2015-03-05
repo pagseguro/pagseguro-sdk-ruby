@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<errors>
+  <error>
+    <code>11024</code>
+    <message>Items invalid quantity.</message>
+  </error>
+</errors>
