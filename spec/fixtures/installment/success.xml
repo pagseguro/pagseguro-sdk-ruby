@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<installments>
+  <installment>
+    <cardBrand>visa</cardBrand>
+    <quantity>1</quantity>
+    <amount>500.00</amount>
+    <totalAmount>500.00</totalAmount>
+    <interestFree>true</interestFree>
+  </installment>
+  <installment>
+    <cardBrand>visa</cardBrand>
+    <quantity>2</quantity>
+    <amount>261.28</amount>
+    <totalAmount>522.55</totalAmount>
+    <interestFree>false</interestFree>
+  </installment>
+  <installment>
+    <cardBrand>visa</cardBrand>
+    <quantity>3</quantity>
+    <amount>176.73</amount>
+    <totalAmount>530.20</totalAmount>
+    <interestFree>false</interestFree>
+  </installment>
+</installments>
