@@ -8,12 +8,11 @@
 
 A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilitam, para o desenvolvedor Ruby, a utilização das funcionalidades que o PagSeguro oferece na forma de APIs. Com a biblioteca instalada e configurada, você pode facilmente integrar funcionalidades como:
 
- - Criar [requisições de pagamentos]
- - Consultar [transações por código]
- - Consultar [transações por intervalo de datas]
- - Consultar [transações abandonadas]
- - Consultar opções de parcelamento
- - Receber [notificações]
+ - Criar [requisições de pagamentos] \(este serviço utiliza a versão **V2** da API\)
+ - Consultar [transações por código] \(este serviço utiliza a versão **V3** da API\)
+ - Consultar [transações por intervalo de datas] \(este serviço utiliza a versão **V3** da API)
+ - Consultar [transações abandonadas] \(este serviço utiliza a versão **V3** da API\)
+ - Receber [notificações] \(este serviço utiliza a versão V3 da API\)
 
 
 ## Requisitos
@@ -45,7 +44,7 @@ end
 
 O token de segurança está disponível em sua [conta do PagSeguro](https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml).
 
-## Pagamentos
+## Pagamentos (API V2)
 
 Para iniciar uma requisição de pagamento, você precisa instanciar a classe `PagSeguro::PaymentRequest`. Isso normalmente será feito em seu controller de checkout.
 
@@ -100,7 +99,7 @@ class CheckoutController < ApplicationController
 end
 ```
 
-## Notificações
+## Notificações (API V3)
 
 O PagSeguro irá notificar a URL informada no processo de checkout. Isso é feito através do método `PagSeguro::PaymentRequest#notification_url`. Esta URL irá receber o código da notificação e tipo de notificação. Com estas informações, podemos recuperar as informações detalhadas sobre o pagamento.
 
@@ -122,7 +121,7 @@ class NotificationsController < ApplicationController
 end
 ```
 
-## Consultas
+## Consultas (API V3)
 
 ### Transações abandonadas
 
@@ -203,7 +202,7 @@ end
 
 ## API
 
-### PagSeguro::PaymentRequest
+### PagSeguro::PaymentRequest (utiliza versão V2)
 
 #### Definindo identificador do pedido
 
