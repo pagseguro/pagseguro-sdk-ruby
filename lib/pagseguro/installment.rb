@@ -18,8 +18,10 @@ module PagSeguro
     attr_accessor :interest_free
 
     # Find installment options by a given amount
-    def self.find(amount)
-      load_from_response Request.get("installments?amount=#{amount}")
+    def self.find(amount, credit_card_brand = nil)
+      string = "installments?amount=#{amount}"
+      string += "&creditCardBrand=#{credit_card_brand}" if credit_card_brand
+      load_from_response Request.get(string)
     end
 
     # Serialize the HTTP response into data.

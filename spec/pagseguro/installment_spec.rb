@@ -20,6 +20,16 @@ describe PagSeguro::Installment do
 
         PagSeguro::Installment.find(100)
       end
+
+      it "find installments by amount and credit card brand" do
+        expect(PagSeguro::Request).to receive(:get)
+          .with("installments?amount=100&creditCardBrand=visa")
+          .and_return(request)
+        expect(PagSeguro::Installment).to receive(:load_from_response)
+          .with(request)
+
+        PagSeguro::Installment.find(100, :visa)
+      end
     end
 
     context "when request fails" do
