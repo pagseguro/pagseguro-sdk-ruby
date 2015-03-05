@@ -2,11 +2,20 @@ module PagSeguro
   class Installment
     include Extensions::MassAssignment
 
-    # Set the amount
+    # Set the credit card brand.
+    attr_accessor :credit_card_brand
+
+    # Set the installments quantity.
+    attr_accessor :quantity
+
+    # Set the amount.
     attr_accessor :amount
 
-    # Set the credit card brand
-    attr_accessor :credit_card_brand
+    # Set total amount.
+    attr_accessor :total_amount
+
+    # Set interest free.
+    attr_accessor :interest_free
 
     # Find installment options by a given amount
     def self.find(amount)
