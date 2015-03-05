@@ -13,22 +13,22 @@ describe PagSeguro::Installment do
 
       it "finds installments by the given amount" do
         expect(PagSeguro::Request).to receive(:get)
-          .with("installments?amount=100")
+          .with("installments?amount=100.00")
           .and_return(request)
         expect(PagSeguro::Installment).to receive(:load_from_response)
           .with(request)
 
-        PagSeguro::Installment.find(100)
+        PagSeguro::Installment.find("100.00")
       end
 
       it "find installments by amount and credit card brand" do
         expect(PagSeguro::Request).to receive(:get)
-          .with("installments?amount=100&creditCardBrand=visa")
+          .with("installments?amount=100.00&creditCardBrand=visa")
           .and_return(request)
         expect(PagSeguro::Installment).to receive(:load_from_response)
           .with(request)
 
-        PagSeguro::Installment.find(100, :visa)
+        PagSeguro::Installment.find("100.00", :visa)
       end
     end
 
