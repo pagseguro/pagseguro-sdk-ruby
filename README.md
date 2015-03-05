@@ -12,7 +12,7 @@ A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilit
  - Consultar [transações por código] \(este serviço utiliza a versão **V3** da API\)
  - Consultar [transações por intervalo de datas] \(este serviço utiliza a versão **V3** da API)
  - Consultar [transações abandonadas] \(este serviço utiliza a versão **V3** da API\)
- - Receber [notificações] \(este serviço utiliza a versão V3 da API\)
+ - Receber [notificações] \(este serviço utiliza a versão **V3** da API\)
 
 
 ## Requisitos
