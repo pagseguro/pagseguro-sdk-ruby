@@ -10,7 +10,7 @@ module PagSeguro
 
       def serialize
         {}.tap do |data|
-          data[:credit_card_brand] = xml.css("cardBrand").text
+          data[:card_brand] = xml.css("cardBrand").text
           data[:quantity] = xml.css("quantity").text
           data[:amount] = xml.css("amount").text
           data[:total_amount] = xml.css("totalAmount").text

@@ -3,7 +3,7 @@ module PagSeguro
     include Extensions::MassAssignment
 
     # Set the credit card brand.
-    attr_accessor :credit_card_brand
+    attr_accessor :card_brand
 
     # Set the installments quantity.
     attr_accessor :quantity
@@ -21,9 +21,9 @@ module PagSeguro
     # Find installment options by a given amount
     # Optional. Credit card brand
     # Return an Array of PagSeguro::Installment instances
-    def self.find(amount, credit_card_brand = nil)
+    def self.find(amount, card_brand = nil)
       string = "installments?amount=#{amount}"
-      string += "&creditCardBrand=#{credit_card_brand}" if credit_card_brand
+      string += "&cardBrand=#{card_brand}" if card_brand
       load_from_response Request.get(string)
     end
 
