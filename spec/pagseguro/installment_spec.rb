@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe PagSeguro::Installment do
-  it_assigns_attribute :credit_card_brand
+  it_assigns_attribute :card_brand
   it_assigns_attribute :quantity
   it_assigns_attribute :amount
   it_assigns_attribute :total_amount
@@ -23,7 +23,7 @@ describe PagSeguro::Installment do
 
       it "find installments by amount and credit card brand" do
         expect(PagSeguro::Request).to receive(:get)
-          .with("installments?amount=100.00&creditCardBrand=visa")
+          .with("installments?amount=100.00&cardBrand=visa")
           .and_return(request)
         expect(PagSeguro::Installment).to receive(:load_from_response)
           .with(request)
