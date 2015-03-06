@@ -5,7 +5,7 @@ describe PagSeguro::Installment::Serializer do
     let(:source) { File.read("./spec/fixtures/installment/success.xml") }
     let(:xml) { Nokogiri::XML(source) }
     subject(:data) do
-      xml.css("installments installment").map do |xml|
+      xml.css("installments > installment").map do |xml|
         described_class.new(xml).serialize
       end
     end
