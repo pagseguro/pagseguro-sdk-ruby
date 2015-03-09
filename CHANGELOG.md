@@ -14,6 +14,9 @@
 
 - Consulta de opções de parcelamento
 
+## Stable
+
+>>>>>>> Updates changelog, next release 2.2.0
 2.0.7
 
  - Suporte para adicionar parâmetros dinamicamente na criação de requisições de pagamentos (isso possibilita a utilização de parâmetros da api que ainda não foram mapeados na gem)
