@@ -41,14 +41,10 @@ describe PagSeguro::Transaction do
       now = Time.now
       Time.stub now: now
 
-      PagSeguro::Report
+      PagSeguro::SearchByDate
         .should_receive(:new)
-        .with(
-          PagSeguro::Transaction,
-          "transactions",
-          hash_including(per_page: 50, starts_at: now - 86400, ends_at: now),
-          0
-        )
+        .with("transactions",
+          hash_including(starts_at: now - 86400, ends_at: now, per_page: 50), 1)
 
       PagSeguro::Transaction.find_by_date
     end
@@ -58,10 +54,9 @@ describe PagSeguro::Transaction do
       ends_at = starts_at + 180
       page = 1
 
-      PagSeguro::Report
+      PagSeguro::SearchByDate
         .should_receive(:new)
         .with(
-          PagSeguro::Transaction,
           "transactions",
           hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at),
           page
@@ -79,13 +74,12 @@ describe PagSeguro::Transaction do
       now = Time.now
       Time.stub now: now
 
-      PagSeguro::Report
+      PagSeguro::SearchByDate
         .should_receive(:new)
         .with(
-          PagSeguro::Transaction,
           "transactions/abandoned",
           hash_including(per_page: 50, starts_at: now - 86400, ends_at: now - 900),
-          0
+          1
         )
 
       PagSeguro::Transaction.find_abandoned
@@ -96,10 +90,9 @@ describe PagSeguro::Transaction do
       ends_at = starts_at + 180
       page = 1
 
-      PagSeguro::Report
+      PagSeguro::SearchByDate
         .should_receive(:new)
         .with(
-          PagSeguro::Transaction,
           "transactions/abandoned",
           hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at),
           page
