@@ -24,7 +24,7 @@ describe PagSeguro::Transaction do
   end
 
   describe ".find_by_date" do
-    it "initializes report with default options" do
+    it "initializes search with default options" do
       now = Time.now
       Time.stub now: now
 
@@ -36,7 +36,7 @@ describe PagSeguro::Transaction do
       PagSeguro::Transaction.find_by_date
     end
 
-    it "initializes report with given options" do
+    it "initializes search with given options" do
       starts_at = Time.now - 3600
       ends_at = starts_at + 180
       page = 1
@@ -56,8 +56,24 @@ describe PagSeguro::Transaction do
     end
   end
 
+  describe ".find_by_reference" do
+    it 'initializes search with given reference code' do
+      now = Time.now
+      Time.stub now: now
+
+      PagSeguro::SearchByReference
+        .should_receive(:new)
+        .with(
+          "transactions",
+          hash_including(reference: 'ref1234'),
+        )
+
+      PagSeguro::Transaction.find_by_reference('ref1234')
+    end
+  end
+
   describe ".find_abandoned" do
-    it "initializes report with default options" do
+    it "initializes search with default options" do
       now = Time.now
       Time.stub now: now
 
@@ -72,7 +88,7 @@ describe PagSeguro::Transaction do
       PagSeguro::Transaction.find_abandoned
     end
 
-    it "initializes report with given options" do
+    it "initializes search with given options" do
       starts_at = Time.now - 3600
       ends_at = starts_at + 180
       page = 1
