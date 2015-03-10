@@ -90,7 +90,7 @@ module PagSeguro
         ends_at: Time.now,
         per_page: 50
       }.merge(options)
-      Transaction::Search::SearchByDate.new("transactions", options)
+      SearchByDate.new("transactions", options)
     end
 
     # Search a transaction by its reference code
@@ -100,7 +100,7 @@ module PagSeguro
     #
     def self.find_by_reference(reference)
       options = { reference: reference }
-      Transaction::Search::SearchByReference.new("transactions", options)
+      SearchByReference.new("transactions", options)
     end
 
     # Get abandoned transactions.
@@ -120,7 +120,7 @@ module PagSeguro
         per_page: 50
       }.merge(options)
 
-      Transaction::Search.new("transactions/abandoned", options)
+      Search.new("transactions/abandoned", options)
     end
 
     # Serialize the HTTP response into data.

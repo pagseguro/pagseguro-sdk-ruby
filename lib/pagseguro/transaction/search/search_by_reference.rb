@@ -1,5 +1,5 @@
-module PagSeguro::Transaction::Search
-  class SearchByReference < PagSeguro::Transaction::Search
+module PagSeguro
+  class SearchByReference < PagSeguro::Search
     private
     def perform_request_and_serialize
       @response = Request.get(@path, api_version,
