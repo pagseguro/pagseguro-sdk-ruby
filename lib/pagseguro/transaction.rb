@@ -76,7 +76,6 @@ module PagSeguro
     end
 
     # Search transactions within a date range.
-    # Return a PagSeguro::Report instance.
     #
     # Options:
     #
@@ -91,8 +90,17 @@ module PagSeguro
         ends_at: Time.now,
         per_page: 50
       }.merge(options)
-
       Transaction::Search::SearchByDate.new("transactions", options)
+    end
+
+    # Search a transaction by its reference code
+    # Options:
+    #
+    # # +reference+: the transaction reference code
+    #
+    def self.find_by_reference(reference)
+      options = { reference: reference }
+      Transaction::Search::SearchByReference.new("transactions", options)
     end
 
     # Get abandoned transactions.
