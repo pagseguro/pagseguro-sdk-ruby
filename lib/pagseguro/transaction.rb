@@ -92,7 +92,7 @@ module PagSeguro
         per_page: 50
       }.merge(options)
 
-      Transaction::Search.new("transactions", options)
+      Transaction::Search::SearchByDate.new("transactions", options)
     end
 
     # Get abandoned transactions.
