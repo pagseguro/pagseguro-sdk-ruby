@@ -84,13 +84,13 @@ module PagSeguro
     # # +page+: the current page.
     # # +per_page+: the result limit.
     #
-    def self.find_by_date(options = {}, page = 0)
+    def self.find_by_date(options = {}, page = 1)
       options = {
         starts_at: Time.now - 86400,
         ends_at: Time.now,
         per_page: 50
       }.merge(options)
-      SearchByDate.new("transactions", options)
+      SearchByDate.new("transactions", options, page)
     end
 
     # Search a transaction by its reference code
