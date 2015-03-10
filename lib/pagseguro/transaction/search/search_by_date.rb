@@ -1,5 +1,5 @@
-module PagSeguro::Transaction::Search
-  class SearchByDate < PagSeguro::Transaction::Search
+module PagSeguro
+  class SearchByDate < PagSeguro::Search
     private
     def perform_request_and_serialize
       @response = Request.get(@path, api_version,

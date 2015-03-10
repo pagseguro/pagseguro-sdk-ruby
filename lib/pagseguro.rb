@@ -39,7 +39,6 @@ require "pagseguro/payment_request/response"
 require "pagseguro/payment_status"
 require "pagseguro/permission"
 require "pagseguro/request"
-require "pagseguro/report"
 require "pagseguro/sender"
 require "pagseguro/notification"
 require "pagseguro/notification/authorization"
@@ -47,6 +46,9 @@ require "pagseguro/notification/transaction"
 require "pagseguro/transaction"
 require "pagseguro/transaction/response"
 require "pagseguro/transaction/serializer"
+require "pagseguro/transaction/search"
+require "pagseguro/transaction/search/search_by_date"
+require "pagseguro/transaction/search/search_by_reference"
 
 I18n.load_path += Dir[File.expand_path("../../locales/*.yml", __FILE__)]
 
