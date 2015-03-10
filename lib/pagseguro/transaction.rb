@@ -113,14 +113,14 @@ module PagSeguro
     # # +page+: the current page.
     # # +per_page+: the result limit.
     #
-    def self.find_abandoned(options = {}, page = 0)
+    def self.find_abandoned(options = {}, page = 1)
       options = {
         starts_at: Time.now - 86400,
         ends_at: Time.now - 900,
         per_page: 50
       }.merge(options)
 
-      Search.new("transactions/abandoned", options)
+      SearchByDate.new("transactions/abandoned", options, page)
     end
 
     # Serialize the HTTP response into data.
