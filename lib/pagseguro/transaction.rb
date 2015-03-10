@@ -93,7 +93,7 @@ module PagSeguro
         per_page: 50
       }.merge(options)
 
-      Report.new(Transaction, "transactions", options, page)
+      Transaction::Search.new("transactions", options)
     end
 
     # Get abandoned transactions.
@@ -113,7 +113,7 @@ module PagSeguro
         per_page: 50
       }.merge(options)
 
-      Report.new(Transaction, "transactions/abandoned", options, page)
+      Transaction::Search.new("transactions/abandoned", options)
     end
 
     # Serialize the HTTP response into data.
