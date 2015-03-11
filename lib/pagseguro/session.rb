@@ -14,10 +14,15 @@ module PagSeguro
     # Serialize the HTTP response into data.
     def self.load_from_response(response) # :nodoc:
       if response.success? and response.xml?
-        Nokogiri::XML(response.body).css("session").first
+        load_from_xml Nokogiri::XML(response.body).css("session").first
       else
         "error: #{response.inspect}"
       end
+    end
+
+    # Serialize the XML object.
+    def self.load_from_xml(xml) # :nodoc:
+      new Serializer.new(xml).serialize
     end
   end
 end
