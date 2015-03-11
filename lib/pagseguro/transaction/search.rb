@@ -14,7 +14,7 @@ module PagSeguro
     # Return the current page.
     attr_reader :page
 
-    def initialize(path, options, page = 1)
+    def initialize(path, options, page = 0)
       @path = path
       @options = options
       @page = page

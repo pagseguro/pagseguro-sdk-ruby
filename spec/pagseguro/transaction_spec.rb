@@ -44,7 +44,7 @@ describe PagSeguro::Transaction do
       PagSeguro::SearchByDate
         .should_receive(:new)
         .with("transactions",
-          hash_including(starts_at: now - 86400, ends_at: now, per_page: 50), 1)
+          hash_including(starts_at: now - 86400, ends_at: now, per_page: 50), 0)
 
       PagSeguro::Transaction.find_by_date
     end
@@ -52,7 +52,7 @@ describe PagSeguro::Transaction do
     it "initializes search with given options" do
       starts_at = Time.now - 3600
       ends_at = starts_at + 180
-      page = 1
+      page = 0
 
       PagSeguro::SearchByDate
         .should_receive(:new)
@@ -95,7 +95,7 @@ describe PagSeguro::Transaction do
         .with(
           "transactions/abandoned",
           hash_including(per_page: 50, starts_at: now - 86400, ends_at: now - 900),
-          1
+          0
         )
 
       PagSeguro::Transaction.find_abandoned
