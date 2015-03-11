@@ -5,6 +5,9 @@ module PagSeguro
     # The session id.
     attr_accessor :id
 
+    # Set the transaction errors.
+    attr_reader :errors
+
     # Create a payment session.
     # Return a PagSeguro::Session instance.
     def self.create
@@ -16,13 +19,18 @@ module PagSeguro
       if response.success? and response.xml?
         load_from_xml Nokogiri::XML(response.body).css("session").first
       else
-        "error: #{response.inspect}"
+        Response.new Errors.new(response)
       end
     end
 
     # Serialize the XML object.
     def self.load_from_xml(xml) # :nodoc:
       new Serializer.new(xml).serialize
+    end
+
+    private
+    def after_initialize
+      @errors = Errors.new
     end
   end
 end
