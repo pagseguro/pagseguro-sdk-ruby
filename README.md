@@ -26,7 +26,7 @@ A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilit
  - Adicione a biblioteca ao seu Gemfile.
 
 ```ruby
-gem "pagseguro-oficial", git: "git://github.com/pagseguro/ruby.git"
+gem "pagseguro-oficial", "~> 2.0.7"
 ```
 
  - Execute o comando `bundle install`.
