@@ -20,6 +20,7 @@ while report.next_page?
     puts "   payment method: #{transaction.payment_method.type}"
     puts "   gross amount: #{transaction.gross_amount}"
     puts "   updated at: #{transaction.updated_at}"
+    puts "   status: #{transaction.status.status}"
     puts
   end
 end
