@@ -2,4 +2,9 @@ require_relative "boot"
 
 session = PagSeguro::Session.create
 
-puts session.inspect
+if session.errors.any?
+  puts session.errors.join("\n")
+else
+  puts "=> SESSION"
+  puts session.inspect
+end
