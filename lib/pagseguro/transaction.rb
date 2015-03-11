@@ -76,6 +76,7 @@ module PagSeguro
     end
 
     # Search transactions within a date range.
+    # Return a PagSeguro::SearchByDate instance
     #
     # Options:
     #
@@ -94,6 +95,8 @@ module PagSeguro
     end
 
     # Search a transaction by its reference code
+    # Return a PagSeguro::SearchByReference instance
+    #
     # Options:
     #
     # # +reference+: the transaction reference code
@@ -104,7 +107,7 @@ module PagSeguro
     end
 
     # Get abandoned transactions.
-    # Return a PagSeguro::Report instance.
+    # Return a PagSeguro::SearchByDate instance
     #
     # Options:
     #
