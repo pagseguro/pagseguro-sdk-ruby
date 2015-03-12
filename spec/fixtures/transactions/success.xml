@@ -22,6 +22,15 @@
 	<netAmount>445.77</netAmount>
 	<extraAmount>0.00</extraAmount>
 	<installmentCount>1</installmentCount>
+	<paymentReleases>
+    <paymentRelease>
+      <installment>1</installment>
+      <totalAmount>202.92</totalAmount>
+      <releaseAmount>202.92</releaseAmount>
+      <status>OPENED</status>
+      <releaseDate>2015-03-25T16:14:23-03:00</releaseDate>
+    </paymentRelease>
+  </paymentReleases>
 	<itemCount>1</itemCount>
 	<items>
 		<item>
