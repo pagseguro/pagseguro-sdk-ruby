@@ -16,8 +16,12 @@
 	<grossAmount>459.50</grossAmount>
 	<discountAmount>0.00</discountAmount>
   <creditorFees>
+		<operationalFeeAmount>0.00</operationalFeeAmount>
+    <installmentFeeAmount>0.00</installmentFeeAmount>
     <intermediationRateAmount>0.40</intermediationRateAmount>
     <intermediationFeeAmount>1644.80</intermediationFeeAmount>
+    <commissionFeeAmount>1.98</commissionFeeAmount>
+    <efrete>1.98</efrete>
 	</creditorFees>
 	<netAmount>445.77</netAmount>
 	<extraAmount>0.00</extraAmount>
