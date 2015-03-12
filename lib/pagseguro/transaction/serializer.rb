@@ -20,11 +20,11 @@ module PagSeguro
       end
 
       def serialize_general(data)
-        data[:code] = xml.css(">code").text
+        data[:code] = xml.css("> code").text
         data[:reference] = xml.css("reference").text
-        data[:type_id] = xml.css(">type").text
+        data[:type_id] = xml.css("> type").text
         data[:payment_link] = xml.css("paymentLink").text
-        data[:status] = xml.css("status").text
+        data[:status] = xml.css("> status").text
 
         cancellation_source = xml.css("cancellationSource")
         data[:cancellation_source] = cancellation_source.text if cancellation_source.any?
@@ -59,7 +59,7 @@ module PagSeguro
           intermediation_fee_amount: BigDecimal(xml.css("creditorFees > intermediationFeeAmount").text),
           installment_fee_amount: BigDecimal(xml.css("creditorFees > installmentFeeAmount").text),
           operational_fee_amount: BigDecimal(xml.css("creditorFees > operationalFeeAmount").text),
-          comission_fee_amount: BigDecimal(xml.css("creditorFees > comissionFeeAmount").text),
+          commission_fee_amount: BigDecimal(xml.css("creditorFees > commissionFeeAmount").text),
           efrete: BigDecimal(xml.css("creditorFees > efrete").text)
         }
       end
