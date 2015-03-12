@@ -35,7 +35,7 @@ module PagSeguro
     attr_accessor :discount_amount
 
     # The charged fees.
-    attr_accessor :creditor_fees
+    attr_reader :creditor_fees
 
     # The informations about payment releases
     attr_accessor :payment_releases
@@ -146,6 +146,10 @@ module PagSeguro
     # Serialize the XML object.
     def self.load_from_xml(xml) # :nodoc:
       new Serializer.new(xml).serialize
+    end
+
+    def creditor_fees=(creditor_fees)
+      @creditor_fees = ensure_type(CreditorFee, creditor_fees)
     end
 
     # Normalize the sender object.
