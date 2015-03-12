@@ -13,6 +13,7 @@ module PagSeguro
           serialize_amounts(data)
           serialize_dates(data)
           serialize_creditor(data)
+          serialize_payments(data)
           serialize_items(data)
           serialize_sender(data)
           serialize_shipping(data) if xml.css("shipping").any?
@@ -62,6 +63,21 @@ module PagSeguro
           commission_fee_amount: BigDecimal(xml.css("creditorFees > commissionFeeAmount").text),
           efrete: BigDecimal(xml.css("creditorFees > efrete").text)
         }
+      end
+
+      def serialize_payments(data)
+        data[:payment_releases] = []
+
+        xml.css("paymentReleases > paymentRelease").each do |node|
+          payment_release = {}
+          payment_release[:installment] = node.css("installment").text
+          payment_release[:total_amount] = BigDecimal(node.css("totalAmount").text)
+          payment_release[:release_amount] = BigDecimal(node.css("releaseAmount").text)
+          payment_release[:status] = node.css("status").text
+          payment_release[:release_date] = Time.parse(node.css("releaseDate").text)
+
+          data[:payment_releases] << payment_release
+        end
       end
 
       def serialize_items(data)
