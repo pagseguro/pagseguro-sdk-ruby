@@ -12,6 +12,7 @@ A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilit
  - Consultar [transações por código]
  - Consultar [transações por intervalo de datas]
  - Consultar [transações abandonadas]
+ - Consultar opções de parcelamento
  - Receber [notificações]
 
 
@@ -26,7 +27,7 @@ A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilit
  - Adicione a biblioteca ao seu Gemfile.
 
 ```ruby
-gem "pagseguro-oficial", "~> 2.0.7"
+gem "pagseguro-oficial", "~> 2.0.8"
 ```
 
  - Execute o comando `bundle install`.
@@ -174,6 +175,29 @@ while report.next_page?
     puts "   updated at: #{transaction.updated_at}"
     puts
   end
+end
+```
+
+### Consultar opções de parcelamento
+
+Você pode consultar as opções de parcelamento para um determinado valor.
+
+```ruby
+installments = PagSeguro::Installment.find("100.00")
+
+puts "=> INSTALLMENTS"
+puts
+installments.each do |installment|
+  puts installment.inspect
+end
+
+visa_installments = PagSeguro::Installment.find("100.00", "visa")
+
+puts
+puts "=> VISA INSTALLMENTS"
+puts
+visa_installments.each do |installment|
+  puts installment.inspect
 end
 ```
 
