@@ -38,6 +38,9 @@ module PagSeguro
     # The charged fees.
     attr_accessor :creditor_fees
 
+    # The informations about payment releases
+    attr_accessor :payment_releases
+
     # The net amount.
     attr_accessor :net_amount
 
