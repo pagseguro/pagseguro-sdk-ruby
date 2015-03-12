@@ -58,7 +58,9 @@ module PagSeguro
           intermediation_rate_amount: BigDecimal(xml.css("creditorFees > intermediationRateAmount").text),
           intermediation_fee_amount: BigDecimal(xml.css("creditorFees > intermediationFeeAmount").text),
           installment_fee_amount: BigDecimal(xml.css("creditorFees > installmentFeeAmount").text),
-          operational_fee_amount: BigDecimal(xml.css("creditorFees > operationalFeeAmount").text)
+          operational_fee_amount: BigDecimal(xml.css("creditorFees > operationalFeeAmount").text),
+          comission_fee_amount: BigDecimal(xml.css("creditorFees > comissionFeeAmount").text),
+          efrete: BigDecimal(xml.css("creditorFees > efrete").text)
         }
       end
 
