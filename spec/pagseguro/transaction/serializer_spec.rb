@@ -27,6 +27,10 @@ describe PagSeguro::Transaction::Serializer do
 
     it { expect(data[:creditor_fees]).to include(intermediation_rate_amount: BigDecimal("0.40")) }
     it { expect(data[:creditor_fees]).to include(intermediation_fee_amount: BigDecimal("1644.80")) }
+    it { expect(data[:creditor_fees]).to include(installment_fee_amount: BigDecimal("0.00")) }
+    it { expect(data[:creditor_fees]).to include(operational_fee_amount: BigDecimal("0.00")) }
+    it { expect(data[:creditor_fees]).to include(commission_fee_amount: BigDecimal("1.98")) }
+    it { expect(data[:creditor_fees]).to include(efrete: BigDecimal("1.98")) }
 
     it { expect(data[:items].size).to eq(1) }
     it { expect(data[:items].first).to include(id: "1234") }
