@@ -149,7 +149,7 @@ module PagSeguro
     end
 
     def payment_releases
-      @payment_releases || = PaymentReleases.new
+      @payment_releases ||= PaymentReleases.new
     end
 
     def payment_releases=(_payments)
