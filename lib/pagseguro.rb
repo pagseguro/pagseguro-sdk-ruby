@@ -64,8 +64,8 @@ module PagSeguro
   class << self
     # Delegates some calls to the config object
     extend Forwardable
-    def_delegators :configuration, :email, :receiver_email, :token
-    def_delegators :configuration, :email=, :receiver_email=, :token=
+    def_delegators :configuration, :email, :receiver_email, :token, :environment
+    def_delegators :configuration, :email=, :receiver_email=, :token=, :environment=
 
     # The encoding that will be used.
     attr_accessor :encoding
@@ -99,7 +99,7 @@ module PagSeguro
     root[type.to_sym]
   end
 
-  # The configuration intance for the thread
+  # The configuration instance for the thread
   def self.configuration
     Thread.current[:pagseguro_config] ||= PagSeguro::Config.new
   end
@@ -109,6 +109,7 @@ module PagSeguro
   #   PagSeguro.configure do |config|
   #     config.email = "john@example.com"
   #     config.token = "abc"
+  #     config.environment = :sandbox
   #   end
   #
   def self.configure(&block)
