@@ -1,7 +1,10 @@
 module PagSeguro
   class PaymentReleases
     include Enumerable
+    extend Forwardable
     include Extensions::EnsureType
+
+    def_delegators :@payments, :each, :size
 
     def initialize
       @payments = []
