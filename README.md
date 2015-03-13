@@ -37,8 +37,9 @@ Para fazer a autenticação, você precisará configurar as credenciais do PagSe
 
 ```ruby
 PagSeguro.configure do |config|
-  config.token = "seu token"
-  config.email = "seu e-mail"
+  config.token       = "seu token"
+  config.email       = "seu e-mail"
+  config.environemnt = :sandbox if not Rails.production? # production ou sandbox
 end
 ```
 
@@ -287,10 +288,9 @@ payment.max_uses = 100
 payment.max_age = 3600  # em segundos
 ```
 
-#### Definindo environment e/ou encoding
+#### Definindo encoding
 
 ```ruby
-PagSeguro.environment = "production" # production ou sandbox
 PagSeguro.encoding = "UTF-8" # UTF-8 ou ISO-8859-1
 ```
 
