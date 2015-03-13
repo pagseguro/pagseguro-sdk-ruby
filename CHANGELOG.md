@@ -1,12 +1,20 @@
-## Next release - 2.0.8
+## Next release - 2.1.0
+
+- Checkout transparente
+
+## Next release - 2.1.0
+
+- Utilização da versão 3 da api de notificações e consultas
+
+## Stable
+
+2.0.8
 
 - Consulta de opções de parcelamento
 
-## Next release - 2.0.7
+2.0.7
 
  - Suporte para adicionar parâmetros dinamicamente na criação de requisições de pagamentos (isso possibilita a utilização de parâmetros da api que ainda não foram mapeados na gem)
-
-## Stable
 
 2.0.6
 
