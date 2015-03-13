@@ -38,9 +38,6 @@ module PagSeguro
     # The charged fees.
     attr_reader :creditor_fees
 
-    # The informations about payment releases
-    attr_accessor :payment_releases
-
     # The net amount.
     attr_accessor :net_amount
 
@@ -161,6 +158,14 @@ module PagSeguro
     # Normalize the shipping object.
     def shipping=(shipping)
       @shipping = ensure_type(Shipping, shipping)
+    end
+
+    def payment_releases
+      @payment_releases || = PaymentReleases.new
+    end
+
+    def payment_releases=(_payments)
+      _payments.each { |payment| payment_releases << payment }
     end
 
     # Hold the transaction's items.
