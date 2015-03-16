@@ -146,6 +146,7 @@ module PagSeguro
       new Serializer.new(xml).serialize
     end
 
+    # Normalize creditor fees object
     def creditor_fees=(creditor_fees)
       @creditor_fees = ensure_type(CreditorFee, creditor_fees)
     end
