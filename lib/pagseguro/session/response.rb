@@ -1,7 +1,7 @@
 module PagSeguro
   class Session
     class Response
-      # Set the response errors.
+      # The response errors.
       attr_reader :errors
 
       def initialize(errors = Errors.new)
