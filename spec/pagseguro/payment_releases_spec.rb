@@ -21,7 +21,7 @@ describe PagSeguro::PaymentReleases do
   it "sets payment releases from Hash" do
     payment = PagSeguro::PaymentRelease.new(installment: 1)
 
-    allow(PagSeguro::PaymentRelease).to(
+    expect(PagSeguro::PaymentRelease).to(
       receive(:new)
       .with({installment: 1})
       .and_return(payment))
