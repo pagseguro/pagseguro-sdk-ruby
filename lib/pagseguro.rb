@@ -6,11 +6,11 @@ require "nokogiri"
 require "aitch"
 require "i18n"
 
-require "pagseguro/extensions/mass_assignment"
-require "pagseguro/extensions/ensure_type"
-
 require "pagseguro/version"
 require "pagseguro/config"
+
+require "pagseguro/extensions/mass_assignment"
+require "pagseguro/extensions/ensure_type"
 
 require "pagseguro/creditor_fee"
 require "pagseguro/errors"
