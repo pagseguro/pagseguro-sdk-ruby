@@ -1,4 +1,4 @@
-## Next release - 2.1.0
+## Next release - 2.2.0
 
 - Checkout transparente
 
