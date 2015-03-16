@@ -1,5 +1,5 @@
 module PagSeguro
-  class Transaction
+  class Session
     class Response
       # The response errors.
       attr_reader :errors
