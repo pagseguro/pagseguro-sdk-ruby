@@ -1,3 +1,7 @@
+## Next release - 2.3.0
+
+- Modelo de aplicações (autenticação na api como vendedor ou como aplicação)
+
 ## Next release - 2.2.0
 
 - Checkout transparente
