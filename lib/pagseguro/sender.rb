@@ -15,9 +15,17 @@ module PagSeguro
     # Set the CPF document.
     attr_accessor :cpf
 
+    # Get the address object.
+    attr_reader :address
+
     # Set the sender phone.
     def phone=(phone)
       @phone = ensure_type(Phone, phone)
+    end
+
+    # Set the shipping address info.
+    def address=(address)
+      @address = ensure_type(Address, address)
     end
   end
 end

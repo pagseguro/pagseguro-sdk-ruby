@@ -9,6 +9,7 @@
 A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilitam, para o desenvolvedor Ruby, a utilização das funcionalidades que o PagSeguro oferece na forma de APIs. Com a biblioteca instalada e configurada, você pode facilmente integrar funcionalidades como:
 
  - Criar [requisições de pagamentos]
+ - Criar [requisições de assinaturas]
  - Consultar [transações por código]
  - Consultar [transações por intervalo de datas]
  - Consultar [transações abandonadas]
@@ -85,6 +86,46 @@ class CheckoutController < ApplicationController
     payment.extra_params << { extraAmount: '-15.00' }
 
     response = payment.register
+
+    # Caso o processo de checkout tenha dado errado, lança uma exceção.
+    # Assim, um serviço de rastreamento de exceções ou até mesmo a gem
+    # exception_notification poderá notificar sobre o ocorrido.
+    #
+    # Se estiver tudo certo, redireciona o comprador para o PagSeguro.
+    if response.errors.any?
+      raise response.errors.join("\n")
+    else
+      redirect_to response.url
+    end
+  end
+end
+```
+
+## Assinaturas
+
+Para iniciar uma requisição de pagamento, você precisa instanciar a classe `PagSeguro::PreApprovalRequest`. Isso normalmente será feito em seu controller de checkout.
+
+```ruby
+class CheckoutController < ApplicationController
+  def create
+    # O modo como você irá armazenar a assinatura que esta sendo comprada
+    # depende de você. Neste caso, temos um modelo Subscription que referência 
+    # a assinatura que esta sendo comprada.
+    subscription = Subscription.find(params[:id])
+
+    pre_approval = PagSeguro::PreApprovalRequest.new
+
+    pre_approval.reference = subscription.id
+    pre_approval.charge = "auto" #auto/manual
+    pre_approval.name = subscription.name
+    pre_approval.amount_per_payment = subscription.amount
+    pre_approval.period = "MONTHLY"
+    pre_approval.final_date = 1.year.from_now.to_s
+    pre_approval.max_total_amount = 9999
+    pre_approval.review_url = review_url
+    pre_approval.redirect_url = processing_url
+
+    response = pre_approval.register
 
     # Caso o processo de checkout tenha dado errado, lança uma exceção.
     # Assim, um serviço de rastreamento de exceções ou até mesmo a gem
@@ -343,3 +384,4 @@ Se seu Pull Request for relacionado a uma versão específica, o Pull Request n�
   [Ruby]: http://www.ruby-lang.org/pt/
   [GitHub]: https://github.com/pagseguro/ruby/
   [Aitch]: https://github.com/fnando/aitch
+  [requisições de assinaturas]: http://download.uol.com.br/pagseguro/docs/pagseguro-assinatura-automatica.pdf
