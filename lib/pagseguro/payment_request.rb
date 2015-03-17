@@ -81,7 +81,7 @@ module PagSeguro
         email: email,
         token: token
       })
-      Response.new Request.post("checkout", params)
+      Response.new Request.post("checkout", api_version, params)
     end
 
     private
@@ -92,8 +92,9 @@ module PagSeguro
       self.token    = PagSeguro.token
     end
 
-    def endpoint
-      PagSeguro.api_url("checkout")
+    # The default PagSeguro API version
+    def api_version
+      'v2'
     end
   end
 end

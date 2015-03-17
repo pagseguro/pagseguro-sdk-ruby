@@ -8,10 +8,13 @@ require "i18n"
 
 require "pagseguro/version"
 require "pagseguro/config"
-require "pagseguro/errors"
-require "pagseguro/exceptions"
+
 require "pagseguro/extensions/mass_assignment"
 require "pagseguro/extensions/ensure_type"
+
+require "pagseguro/creditor_fee"
+require "pagseguro/errors"
+require "pagseguro/exceptions"
 require "pagseguro/address"
 require "pagseguro/shipping"
 require "pagseguro/phone"
@@ -21,17 +24,21 @@ require "pagseguro/installment/serializer"
 require "pagseguro/item"
 require "pagseguro/items"
 require "pagseguro/payment_method"
+require "pagseguro/payment_release"
+require "pagseguro/payment_releases"
 require "pagseguro/payment_request"
 require "pagseguro/payment_request/serializer"
 require "pagseguro/payment_request/response"
 require "pagseguro/payment_status"
 require "pagseguro/request"
-require "pagseguro/report"
 require "pagseguro/sender"
 require "pagseguro/notification"
 require "pagseguro/transaction"
 require "pagseguro/transaction/response"
 require "pagseguro/transaction/serializer"
+require "pagseguro/transaction/search"
+require "pagseguro/transaction/search/search_by_date"
+require "pagseguro/transaction/search/search_by_reference"
 
 I18n.load_path += Dir[File.expand_path("../../locales/*.yml", __FILE__)]
 
@@ -57,12 +64,12 @@ module PagSeguro
   def self.uris
     @uris ||= {
       production: {
-        api: "https://ws.pagseguro.uol.com.br/v2",
-        site: "https://pagseguro.uol.com.br/v2"
+        api: "https://ws.pagseguro.uol.com.br/",
+        site: "https://pagseguro.uol.com.br/"
       },
       sandbox: {
-        site: 'https://sandbox.pagseguro.uol.com.br/v2',
-        api:  'https://ws.sandbox.pagseguro.uol.com.br/v2'
+        site: 'https://sandbox.pagseguro.uol.com.br/',
+        api:  'https://ws.sandbox.pagseguro.uol.com.br/'
       }
     }
   end
