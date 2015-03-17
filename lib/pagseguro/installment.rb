@@ -24,7 +24,7 @@ module PagSeguro
     def self.find(amount, card_brand = nil)
       string = "installments?amount=#{amount}"
       string += "&cardBrand=#{card_brand}" if card_brand
-      load_from_response Request.get(string)
+      load_from_response Request.get(string, 'v2')
     end
 
     # Serialize the HTTP response into data.
