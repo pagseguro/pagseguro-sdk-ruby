@@ -10,10 +10,11 @@ describe PagSeguro::Installment do
   describe ".find" do
     context "when request succeeds" do
       let(:request) { double("request") }
+      let(:version) { 'v2' }
 
       it "finds installments by the given amount" do
         expect(PagSeguro::Request).to receive(:get)
-          .with("installments?amount=100.00", {})
+          .with("installments?amount=100.00", version)
           .and_return(request)
         expect(PagSeguro::Installment).to receive(:load_from_response)
           .with(request)
@@ -23,7 +24,7 @@ describe PagSeguro::Installment do
 
       it "find installments by amount and credit card brand" do
         expect(PagSeguro::Request).to receive(:get)
-          .with("installments?amount=100.00&cardBrand=visa", {})
+          .with("installments?amount=100.00&cardBrand=visa", version)
           .and_return(request)
         expect(PagSeguro::Installment).to receive(:load_from_response)
           .with(request)
