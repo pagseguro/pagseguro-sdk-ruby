@@ -6,6 +6,7 @@
 
 - Utilização da versão 3 da api de notificações e consultas
 - O serviço de parcelas (installment) usará fixamente a versão 2 da api
+- Correção de um bug que concatenava o status da transação com o status de um pagamento
 
 ## Stable
 
