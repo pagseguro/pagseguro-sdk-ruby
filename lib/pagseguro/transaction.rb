@@ -124,7 +124,7 @@ module PagSeguro
         per_page: 50
       }.merge(options)
 
-      SearchByDate.new("transactions/abandoned", options, page)
+      SearchAbandoned.new("transactions/abandoned", options, page)
     end
 
     # Serialize the HTTP response into data.
