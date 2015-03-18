@@ -161,10 +161,12 @@ module PagSeguro
       @shipping = ensure_type(Shipping, shipping)
     end
 
+    # Hold the transaction's payments
     def payment_releases
       @payment_releases ||= PaymentReleases.new
     end
 
+    # Normalize the transaction's payments list
     def payment_releases=(_payments)
       _payments.each { |payment| payment_releases << payment }
     end
