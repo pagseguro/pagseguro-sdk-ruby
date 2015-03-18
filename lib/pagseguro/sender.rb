@@ -19,5 +19,15 @@ module PagSeguro
     def phone=(phone)
       @phone = ensure_type(Phone, phone)
     end
+
+    # Hold the sender's documents.
+    def documents
+      @documents ||= Documents.new
+    end
+
+    # Normalize the documents list.
+    def documents=(_documents)
+      _documents.each { |document| documents << document }
+    end
   end
 end
