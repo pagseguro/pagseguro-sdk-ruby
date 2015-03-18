@@ -101,7 +101,20 @@ module PagSeguro
         }
 
         serialize_phone(sender)
+        serialize_documents(sender)
         data[:sender] = sender
+      end
+
+      def serialize_documents(data)
+        data[:documents] = []
+
+        xml.css("documents > document").each do |node|
+          document = {}
+          document[:type] = node.css("type").text
+          document[:value] = node.css("value").text
+
+          data[:documents] << document
+        end
       end
 
       def serialize_phone(data)
