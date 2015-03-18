@@ -39,6 +39,7 @@ require "pagseguro/transaction/serializer"
 require "pagseguro/transaction/search"
 require "pagseguro/transaction/search/search_by_date"
 require "pagseguro/transaction/search/search_by_reference"
+require "pagseguro/transaction/search/search_abandoned"
 
 I18n.load_path += Dir[File.expand_path("../../locales/*.yml", __FILE__)]
 
