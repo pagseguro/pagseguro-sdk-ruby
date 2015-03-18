@@ -48,6 +48,12 @@ puts "      name: #{transaction.sender.name}"
 puts "      email: #{transaction.sender.email}"
 puts "      phone: (#{transaction.sender.phone.area_code}) #{transaction.sender.phone.number}"
 
+puts "      => Documents"
+transaction.sender.documents.each do |document|
+  puts "        type: #{document.type}"
+  puts "        value: #{document.value}"
+end
+
 puts "    => Shipping"
 puts "      street: #{transaction.shipping.address.street}, #{transaction.shipping.address.number}"
 puts "      complement: #{transaction.shipping.address.complement}"
