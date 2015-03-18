@@ -6,4 +6,5 @@ I18n.locale = "pt-BR"
 PagSeguro.configure do |config|
   config.token = ENV.fetch("PAGSEGURO_TOKEN")
   config.email = ENV.fetch("PAGSEGURO_EMAIL")
+  config.environment = :sandbox
 end
