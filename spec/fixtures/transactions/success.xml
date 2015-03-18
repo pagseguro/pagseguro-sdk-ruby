@@ -51,6 +51,12 @@
 			<areaCode>11</areaCode>
 			<number>12345678</number>
 		</phone>
+    <documents>
+      <document>
+        <type>CPF</type>
+        <value>65647162142</value>
+      </document>
+    </documents>
 	</sender>
 	<shipping>
 		<address>
