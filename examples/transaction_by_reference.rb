@@ -15,7 +15,7 @@ while transaction.next_page?
     puts "   code: #{transaction.code}"
     puts "   cancellation_source: #{transaction.cancellation_source}"
     puts "   payment method: #{transaction.payment_method.type}"
-    puts "   gross amount: #{transaction.gross_amount}"
+    puts "   gross amount: #{transaction.gross_amount.to_f}"
     puts "   updated at: #{transaction.updated_at}"
     puts "   status: #{transaction.status.status}"
     puts
