@@ -49,9 +49,8 @@ describe PagSeguro::Transaction::Serializer do
     it { expect(data[:sender]).to include(email: "john@example.com") }
     it { expect(data[:sender][:phone]).to include(area_code: "11") }
     it { expect(data[:sender][:phone]).to include(number: "12345678") }
-    it { expect(data[:sender][:documents].size).to eq(1) }
-    it { expect(data[:sender][:documents].first).to include(type: "CPF") }
-    it { expect(data[:sender][:documents].first).to include(value: "65647162142") }
+    it { expect(data[:sender][:document]).to include(type: "CPF") }
+    it { expect(data[:sender][:document]).to include(value: "65647162142") }
 
     it { expect(data[:shipping]).to include(type_id: "2") }
 
