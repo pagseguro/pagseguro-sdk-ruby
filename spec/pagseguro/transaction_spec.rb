@@ -77,7 +77,7 @@ describe PagSeguro::Transaction do
       now = Time.now
       Time.stub now: now
 
-      PagSeguro::SearchByDate
+      PagSeguro::SearchAbandoned
         .should_receive(:new)
         .with(
           "transactions/abandoned",
@@ -93,7 +93,7 @@ describe PagSeguro::Transaction do
       ends_at = starts_at + 180
       page = 1
 
-      PagSeguro::SearchByDate
+      PagSeguro::SearchAbandoned
         .should_receive(:new)
         .with(
           "transactions/abandoned",
@@ -102,7 +102,7 @@ describe PagSeguro::Transaction do
         )
 
       PagSeguro::Transaction.find_abandoned(
-        {per_page: 10, starts_at: starts_at, ends_at: ends_at},
+        { per_page: 10, starts_at: starts_at, ends_at: ends_at },
         page
       )
     end
