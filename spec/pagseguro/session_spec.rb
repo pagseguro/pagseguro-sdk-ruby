@@ -9,7 +9,7 @@ describe PagSeguro::Session do |variable|
 
       it "creates a payment session" do
         expect(PagSeguro::Request).to receive(:post)
-          .with("sessions")
+          .with("sessions", "v2")
           .and_return(request)
         expect(PagSeguro::Session).to receive(:load_from_response).with(request)
 
