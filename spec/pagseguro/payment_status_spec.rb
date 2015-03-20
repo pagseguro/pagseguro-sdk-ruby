@@ -20,5 +20,7 @@ describe PagSeguro::PaymentStatus do
     it_behaves_like "payment status mapping", 5, :in_dispute
     it_behaves_like "payment status mapping", 6, :refunded
     it_behaves_like "payment status mapping", 7, :cancelled
+    it_behaves_like "payment status mapping", 8, :chargeback_charged
+    it_behaves_like "payment status mapping", 9, :contested
   end
 end

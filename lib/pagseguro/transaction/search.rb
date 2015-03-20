@@ -1,5 +1,5 @@
 module PagSeguro
-  class Report
+  class Search
     # Set the report options.
     #
     # # +per_page+: the page size.
@@ -14,8 +14,7 @@ module PagSeguro
     # Return the current page.
     attr_reader :page
 
-    def initialize(item_class, path, options, page = 0)
-      @item_class = item_class
+    def initialize(path, options, page = 0)
       @path = path
       @options = options
       @page = page
@@ -86,14 +85,12 @@ module PagSeguro
 
     private
     def perform_request_and_serialize
-      @response = Request.get(@path, {
-        initialDate: options[:starts_at].xmlschema,
-        finalDate: options[:ends_at].xmlschema,
-        page: page,
-        maxPageResults: options.fetch(:per_page, 50)
-      })
+      raise NotImplementedError.new("'.perform_request_and_serialize' must be implemented in specific search class")
+    end
 
-      @errors = Errors.new(@response)
+    # The default PagSeguro API version
+    def api_version
+      'v3'
     end
 
     def fetched?

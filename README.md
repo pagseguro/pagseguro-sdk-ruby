@@ -8,12 +8,11 @@
 
 A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilitam, para o desenvolvedor Ruby, a utilização das funcionalidades que o PagSeguro oferece na forma de APIs. Com a biblioteca instalada e configurada, você pode facilmente integrar funcionalidades como:
 
- - Criar [requisições de pagamentos]
- - Consultar [transações por código]
- - Consultar [transações por intervalo de datas]
- - Consultar [transações abandonadas]
- - Consultar opções de parcelamento
- - Receber [notificações]
+ - Criar [requisições de pagamentos] \(este serviço utiliza a versão **V2** da API\)
+ - Consultar [transações por código] \(este serviço utiliza a versão **V3** da API\)
+ - Consultar [transações por intervalo de datas] \(este serviço utiliza a versão **V3** da API)
+ - Consultar [transações abandonadas] \(este serviço utiliza a versão **V2** da API\)
+ - Receber [notificações] \(este serviço utiliza a versão **V3** da API\)
 
 
 ## Requisitos
@@ -27,7 +26,7 @@ A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilit
  - Adicione a biblioteca ao seu Gemfile.
 
 ```ruby
-gem "pagseguro-oficial", "~> 2.0.8"
+gem "pagseguro-oficial", "~> 2.1.0"
 ```
 
  - Execute o comando `bundle install`.
@@ -45,7 +44,7 @@ end
 
 O token de segurança está disponível em sua [conta do PagSeguro](https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml).
 
-## Pagamentos
+## Pagamentos (API V2)
 
 Para iniciar uma requisição de pagamento, você precisa instanciar a classe `PagSeguro::PaymentRequest`. Isso normalmente será feito em seu controller de checkout.
 
@@ -100,7 +99,7 @@ class CheckoutController < ApplicationController
 end
 ```
 
-## Notificações
+## Notificações (API V3)
 
 O PagSeguro irá notificar a URL informada no processo de checkout. Isso é feito através do método `PagSeguro::PaymentRequest#notification_url`. Esta URL irá receber o código da notificação e tipo de notificação. Com estas informações, podemos recuperar as informações detalhadas sobre o pagamento.
 
@@ -122,9 +121,9 @@ class NotificationsController < ApplicationController
 end
 ```
 
-## Consultas
+## Consultas (API V3)
 
-### Transações abandonadas
+### Transações abandonadas (API V2)
 
 Para quantificar o número de transações abandonadas, você pode solicitar uma lista com histórico dessas transações.
 
@@ -203,7 +202,7 @@ end
 
 ## API
 
-### PagSeguro::PaymentRequest
+### PagSeguro::PaymentRequest (utiliza versão V2)
 
 #### Definindo identificador do pedido
 
@@ -335,10 +334,10 @@ Se seu Pull Request for relacionado a uma versão específica, o Pull Request n�
 
 
   [requisições de pagamentos]: https://pagseguro.uol.com.br/v2/guia-de-integracao/api-de-pagamentos.html
-  [notificações]: https://pagseguro.uol.com.br/v2/guia-de-integracao/api-de-notificacoes.html
-  [transações por código]: https://pagseguro.uol.com.br/v2/guia-de-integracao/consulta-de-transacoes-por-codigo.html
-  [transações por intervalo de datas]: https://pagseguro.uol.com.br/v2/guia-de-integracao/consulta-de-transacoes-por-intervalo-de-datas.html
-  [transações abandonadas]: https://pagseguro.uol.com.br/v2/guia-de-integracao/consulta-de-transacoes-abandonadas.html
+  [notificações]: https://pagseguro.uol.com.br/v3/guia-de-integracao/api-de-notificacoes.html
+  [transações por código]: https://pagseguro.uol.com.br/v3/guia-de-integracao/consulta-de-transacoes-por-codigo.html
+  [transações por intervalo de datas]: https://pagseguro.uol.com.br/v3/guia-de-integracao/consulta-de-transacoes-por-intervalo-de-datas.html
+  [transações abandonadas]: https://pagseguro.uol.com.br/v3/guia-de-integracao/consulta-de-transacoes-abandonadas.html
   [fórum]: http://forum.pagseguro.uol.com.br/
   [Ruby]: http://www.ruby-lang.org/pt/
   [GitHub]: https://github.com/pagseguro/ruby/

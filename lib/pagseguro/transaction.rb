@@ -34,8 +34,8 @@ module PagSeguro
     # The discount amount.
     attr_accessor :discount_amount
 
-    # The PagSeguro fee amount.
-    attr_accessor :fee_amount
+    # The charged fees.
+    attr_reader :creditor_fees
 
     # The net amount.
     attr_accessor :net_amount
@@ -62,21 +62,21 @@ module PagSeguro
 
     # Set the transaction errors.
     attr_reader :errors
-    
+
     # Find a transaction by its transactionCode
     # Return a PagSeguro::Transaction instance
     def self.find_by_code(code)
-      load_from_response Request.get("transactions/#{code}")
+      load_from_response send_request("transactions/#{code}")
     end
 
     # Find a transaction by its notificationCode.
     # Return a PagSeguro::Transaction instance.
     def self.find_by_notification_code(code)
-      load_from_response Request.get("transactions/notifications/#{code}")
+      load_from_response send_request("transactions/notifications/#{code}")
     end
 
     # Search transactions within a date range.
-    # Return a PagSeguro::Report instance.
+    # Return a PagSeguro::SearchByDate instance
     #
     # Options:
     #
@@ -91,12 +91,23 @@ module PagSeguro
         ends_at: Time.now,
         per_page: 50
       }.merge(options)
+      SearchByDate.new("transactions", options, page)
+    end
 
-      Report.new(Transaction, "transactions", options, page)
+    # Search a transaction by its reference code
+    # Return a PagSeguro::SearchByReference instance
+    #
+    # Options:
+    #
+    # # +reference+: the transaction reference code
+    #
+    def self.find_by_reference(reference)
+      options = { reference: reference }
+      SearchByReference.new("transactions", options)
     end
 
     # Get abandoned transactions.
-    # Return a PagSeguro::Report instance.
+    # Return a PagSeguro::SearchByDate instance
     #
     # Options:
     #
@@ -112,7 +123,7 @@ module PagSeguro
         per_page: 50
       }.merge(options)
 
-      Report.new(Transaction, "transactions/abandoned", options, page)
+      SearchAbandoned.new("transactions/abandoned", options, page)
     end
 
     # Serialize the HTTP response into data.
@@ -124,9 +135,19 @@ module PagSeguro
       end
     end
 
+    # Send a get request to v3 API version, with the path given
+    def self.send_request(path)
+      Request.get(path, 'v3')
+    end
+
     # Serialize the XML object.
     def self.load_from_xml(xml) # :nodoc:
       new Serializer.new(xml).serialize
+    end
+
+    # Normalize creditor fees object
+    def creditor_fees=(creditor_fees)
+      @creditor_fees = ensure_type(CreditorFee, creditor_fees)
     end
 
     # Normalize the sender object.
@@ -137,6 +158,16 @@ module PagSeguro
     # Normalize the shipping object.
     def shipping=(shipping)
       @shipping = ensure_type(Shipping, shipping)
+    end
+
+    # Hold the transaction's payments
+    def payment_releases
+      @payment_releases ||= PaymentReleases.new
+    end
+
+    # Normalize the transaction's payments list
+    def payment_releases=(_payments)
+      _payments.each { |payment| payment_releases << payment }
     end
 
     # Hold the transaction's items.
