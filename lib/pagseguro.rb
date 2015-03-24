@@ -9,6 +9,9 @@ require "i18n"
 require "pagseguro/version"
 require "pagseguro/config"
 
+require "pagseguro/credentials"
+require "pagseguro/errors"
+require "pagseguro/exceptions"
 require "pagseguro/extensions/mass_assignment"
 require "pagseguro/extensions/ensure_type"
 
