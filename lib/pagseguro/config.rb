@@ -10,5 +10,8 @@ module PagSeguro
 
     # The API token associated with this account.
     attr_accessor :token
+
+    # The environment the gem is running at.
+    attr_accessor :environment
   end
 end
