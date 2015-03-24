@@ -24,7 +24,10 @@ module PagSeguro
     end
 
     def credentials
-      "appId=#{app_id}&appKey=#{app_key}"
+      {
+        "appId" => app_id,
+        "appKey" => app_key
+      }
     end
   end
 end
