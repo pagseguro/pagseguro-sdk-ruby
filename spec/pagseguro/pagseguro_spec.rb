@@ -17,21 +17,10 @@ describe PagSeguro do
   end
 
   context "configuring library" do
-    it "yields PagSeguro" do
+    it "yields PagSeguro::Config" do
       expect {|block|
         PagSeguro.configure(&block)
       }.to yield_with_args(PagSeguro::Config)
-    end
-
-    it "is threadsafe" do
-      thread = Thread.new do
-        PagSeguro.configure do |config|
-          config.receiver_email = 'ANOTHER_RECEIVER_EMAIL'
-        end
-      end
-      thread.join
-
-      expect(PagSeguro.receiver_email).to eql("RECEIVER_EMAIL")
     end
   end
 
