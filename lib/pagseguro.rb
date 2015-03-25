@@ -83,9 +83,9 @@ module PagSeguro
     root[type.to_sym]
   end
 
-  # The configuration instance for the thread
+  # The configuration instance
   def self.configuration
-    Thread.current[:pagseguro_config] ||= PagSeguro::Config.new
+    @@configuration ||= PagSeguro::Config.new
   end
 
   # Set the global configuration.
