@@ -7,6 +7,10 @@ describe PagSeguro do
     PagSeguro.receiver_email = "RECEIVER_EMAIL"
   end
 
+  after do
+    PagSeguro.environment = :production
+  end
+
   it { expect(PagSeguro.email).to eql("EMAIL") }
   it { expect(PagSeguro.token).to eql("TOKEN") }
   it { expect(PagSeguro.receiver_email).to eql("RECEIVER_EMAIL") }
@@ -17,21 +21,10 @@ describe PagSeguro do
   end
 
   context "configuring library" do
-    it "yields PagSeguro" do
+    it "yields PagSeguro::Config" do
       expect {|block|
         PagSeguro.configure(&block)
       }.to yield_with_args(PagSeguro::Config)
-    end
-
-    it "is threadsafe" do
-      thread = Thread.new do
-        PagSeguro.configure do |config|
-          config.receiver_email = 'ANOTHER_RECEIVER_EMAIL'
-        end
-      end
-      thread.join
-
-      expect(PagSeguro.receiver_email).to eql("RECEIVER_EMAIL")
     end
   end
 
@@ -55,10 +48,8 @@ describe PagSeguro do
 
     it "returns sandbox api url when the environment is :sandbox" do
       PagSeguro.environment = :sandbox
-
       expect(PagSeguro.api_url("/some/path")).to eql("https://ws.sandbox.pagseguro.uol.com.br/v2/some/path")
     end
-
   end
 
   describe ".site_url" do

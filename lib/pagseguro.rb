@@ -39,19 +39,34 @@ module PagSeguro
   class << self
     # Delegates some calls to the config object
     extend Forwardable
-    def_delegators :configuration, :email, :receiver_email, :token, :environment
-    def_delegators :configuration, :email=, :receiver_email=, :token=, :environment=
+    def_delegators :configuration, :email, :receiver_email, :token,
+      :environment, :encoding
 
-    # The encoding that will be used.
-    attr_accessor :encoding
+    def email=(email)
+      warn "[DEPRECATION] `email=` is deprecated and will be removed. Please use configuration block instead."
+      configuration.email = email
+    end
 
-    # The PagSeguro environment.
-    # +production+ or +sandbox+.
-    attr_accessor :environment
+    def receiver_email=(receiver_email)
+      warn "[DEPRECATION] `receiver_email=` is deprecated and will be removed. Please use configuration block instead."
+      configuration.receiver_email = receiver_email
+    end
+
+    def token=(token)
+      warn "[DEPRECATION] `token=` is deprecated and will be removed. Please use configuration block instead."
+      configuration.token = token
+    end
+
+    def environment=(environment)
+      warn "[DEPRECATION] `environment=` is deprecated and will be removed. Please use configuration block instead."
+      configuration.environment = environment
+    end
+
+    def encoding=(encoding)
+      warn "[DEPRECATION] `encoding=` is deprecated and will be removed. Please use configuration block instead."
+      configuration.encoding = encoding
+    end
   end
-
-  self.encoding = "UTF-8"
-  self.environment = :production
 
   # Register endpoints by environment.
   def self.uris
@@ -74,9 +89,9 @@ module PagSeguro
     root[type.to_sym]
   end
 
-  # The configuration instance for the thread
+  # The configuration instance
   def self.configuration
-    Thread.current[:pagseguro_config] ||= PagSeguro::Config.new
+    @configuration ||= PagSeguro::Config.new
   end
 
   # Set the global configuration.
