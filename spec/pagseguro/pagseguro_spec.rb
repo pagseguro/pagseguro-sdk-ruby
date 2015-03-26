@@ -7,6 +7,10 @@ describe PagSeguro do
     PagSeguro.receiver_email = "RECEIVER_EMAIL"
   end
 
+  after do
+    PagSeguro.environment = :production
+  end
+
   it { expect(PagSeguro.email).to eql("EMAIL") }
   it { expect(PagSeguro.token).to eql("TOKEN") }
   it { expect(PagSeguro.receiver_email).to eql("RECEIVER_EMAIL") }
@@ -47,7 +51,6 @@ describe PagSeguro do
 
       expect(PagSeguro.api_url("v2/some/path")).to eql("https://ws.sandbox.pagseguro.uol.com.br/v2/some/path")
     end
-
   end
 
   describe ".site_url" do
