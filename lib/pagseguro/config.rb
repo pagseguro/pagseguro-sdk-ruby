@@ -11,7 +11,16 @@ module PagSeguro
     # The API token associated with this account.
     attr_accessor :token
 
-    # The environment the gem is running at.
+    # The PagSeguro environment.
+    # +production+ or +sandbox+.
     attr_accessor :environment
+
+    # The encoding that will be used.
+    attr_accessor :encoding
+
+    def initialize
+      @environment = :production
+      @encoding = "UTF-8"
+    end
   end
 end
