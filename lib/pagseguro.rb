@@ -6,6 +6,7 @@ require "nokogiri"
 require "aitch"
 require "i18n"
 
+require "pagseguro/authorization"
 require "pagseguro/version"
 require "pagseguro/config"
 require "pagseguro/credentials"
