@@ -38,7 +38,8 @@ Para fazer a autenticação, você precisará configurar as credenciais do PagSe
 PagSeguro.configure do |config|
   config.token       = "seu token"
   config.email       = "seu e-mail"
-  config.environemnt = :sandbox if not Rails.production? # production ou sandbox
+  config.environment = :production # ou :sandbox. O padrão é production.
+  config.encoding    = "UTF-8" # ou ISO-8859-1. O padrão é UTF-8.
 end
 ```
 
