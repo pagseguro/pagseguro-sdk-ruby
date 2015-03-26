@@ -13,9 +13,11 @@ module PagSeguro
 
     # The PagSeguro environment.
     # +production+ or +sandbox+.
+    # Defaults to +production+.
     attr_accessor :environment
 
     # The encoding that will be used.
+    # Defaults to +UTF-8+.
     attr_accessor :encoding
 
     def initialize
