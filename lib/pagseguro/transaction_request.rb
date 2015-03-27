@@ -50,6 +50,9 @@ module PagSeguro
     # Get billing address info.
     attr_reader :billing_address
 
+    # Get installment info.
+    attr_reader :installment
+
     # The extra parameters for payment request
     attr_accessor :extra_params
 
@@ -80,9 +83,14 @@ module PagSeguro
       @holder = ensure_type(Holder, holder)
     end
 
-    # Set the billing address
+    # Set the billing address.
     def billing_address=(address)
       @billing_address = ensure_type(Address, address)
+    end
+
+    # Set the installment
+    def installment=(installment)
+      @installment = ensure_type(TransactionInstallment, installment)
     end
 
     # Calls the PagSeguro web service and register this request for payment.

@@ -26,6 +26,7 @@ module PagSeguro
         serialize_billing_address(transaction_request.billing_address)
         serialize_sender(transaction_request.sender)
         serialize_shipping(transaction_request.shipping)
+        serialize_installment(transaction_request.installment)
         serialize_extra_params(transaction_request.extra_params)
 
         params.delete_if {|key, value| value.nil? }
@@ -89,6 +90,7 @@ module PagSeguro
         params[:senderEmail] =  sender.email
         params[:senderName] = sender.name
         params[:senderCPF] = sender.cpf
+        params[:senderHash] = sender.hash
 
         serialize_sender_phone(sender.phone)
       end
@@ -120,6 +122,13 @@ module PagSeguro
         params[:shippingAddressStreet] = address.street
         params[:shippingAddressNumber] = address.number
         params[:shippingAddressComplement] = address.complement
+      end
+
+      def serialize_installment(installment)
+        return unless installment
+
+        params[:installmentValue] = to_amount(installment.value)
+        params[:installmentQuantity] = installment.quantity
       end
 
       def serialize_extra_params(extra_params)
