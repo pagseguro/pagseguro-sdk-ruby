@@ -3,7 +3,7 @@ require_relative "boot"
 payment = PagSeguro::TransactionRequest.new
 payment.notification_url = "http://www.meusite.com.br/notification"
 payment.payment_method = "creditCard"
-payment.payment_mode = "default"
+payment.payment_mode = "gateway"
 
 payment.items << {
   id: 1234,
@@ -14,6 +14,7 @@ payment.items << {
 
 payment.reference = "REF1234"
 payment.sender = {
+  hash: "0db5776271490042a3b89f7f54d7e54244cf74d469695aa67c49e11c8a56c2c4",
   name: "Joao Comprador",
   email: "joao@comprador.com.br",
   cpf: "75073461100",
@@ -58,6 +59,11 @@ payment.holder = {
     area_code: 11,
     number: "123456789"
   }
+}
+
+payment.installment = {
+  value: 459.50,
+  quantity: 1
 }
 
 # Add extras params to request

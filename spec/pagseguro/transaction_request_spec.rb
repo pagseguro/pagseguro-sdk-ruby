@@ -51,6 +51,13 @@ describe PagSeguro::TransactionRequest do |variable|
     expect(payment.billing_address).to eql(address)
   end
 
+  it "sets the transaction installment" do
+    installment = PagSeguro::TransactionInstallment.new
+    payment = PagSeguro::TransactionRequest.new(installment: installment)
+
+    expect(payment.installment).to eql(installment)
+  end
+
   it "sets the items" do
     payment = PagSeguro::TransactionRequest.new
     expect(payment.items).to be_a(PagSeguro::Items)

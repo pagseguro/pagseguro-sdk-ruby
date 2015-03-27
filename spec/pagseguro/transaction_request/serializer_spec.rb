@@ -126,6 +126,7 @@ describe PagSeguro::TransactionRequest::Serializer do
   context "sender serialization" do
     before do
       sender = PagSeguro::Sender.new({
+        hash: "HASH",
         email: "EMAIL",
         name: "NAME",
         cpf: "CPF",
@@ -138,6 +139,7 @@ describe PagSeguro::TransactionRequest::Serializer do
       transaction_request.stub(sender: sender)
     end
 
+    it { expect(params).to include(senderHash: "HASH") }
     it { expect(params).to include(senderEmail: "EMAIL") }
     it { expect(params).to include(senderName: "NAME") }
     it { expect(params).to include(senderCPF: "CPF") }
@@ -172,6 +174,18 @@ describe PagSeguro::TransactionRequest::Serializer do
     it { expect(params).to include(shippingAddressDistrict: "DISTRICT") }
     it { expect(params).to include(shippingAddressNumber: "NUMBER") }
     it { expect(params).to include(shippingAddressComplement: "COMPLEMENT") }
+  end
+
+  context "installment serialization" do
+    before do
+      transaction_request.installment = PagSeguro::TransactionInstallment.new({
+        value: "459.50",
+        quantity: "1"
+      })
+    end
+
+    it { expect(params).to include(installmentValue: "459.50") }
+    it { expect(params).to include(installmentQuantity: "1") }
   end
 
   context "extra params serialization" do
