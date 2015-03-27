@@ -11,6 +11,7 @@ module PagSeguro
 
     def self.authorize(credentials, permissions = PERMISSIONS_SYMBOLS)
       permissions = set_permissions(permissions)
+      Request.post('/authorizations/request', 'v2', permissions)
     end
 
     private
