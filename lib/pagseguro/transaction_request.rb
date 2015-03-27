@@ -85,10 +85,24 @@ module PagSeguro
       @billing_address = ensure_type(Address, address)
     end
 
+    # Calls the PagSeguro web service and register this request for payment.
+    def register
+      Response.new(Request.post("transactions", api_version, params))
+    end
+
     private
     def before_initialize
       self.currency = "BRL"
       self.extra_params = []
+    end
+
+    def params
+      Serializer.new(self).to_params
+    end
+
+    # The default PagSeguro API version
+    def api_version
+      'v2'
     end
   end
 end
