@@ -7,6 +7,7 @@ require "aitch"
 require "i18n"
 
 require "pagseguro/authorization"
+require "pagseguro/authorization/serializer"
 require "pagseguro/version"
 require "pagseguro/config"
 require "pagseguro/credentials"
