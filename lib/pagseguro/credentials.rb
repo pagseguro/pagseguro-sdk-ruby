@@ -6,28 +6,15 @@ module PagSeguro
     # The application key
     attr_accessor :app_key
 
-    def initialize(app_id, app_key)
-      @app_id, @app_key = app_id, app_key
-    end
+    attr_accessor :notification_url
 
-    def authorize
-      Request.post(path, api_version, credentials)
-    end
+    attr_accessor :redirect_url
 
-    private
-    def path
-      'authorizations/request'
-    end
-
-    def api_version
-      'v2'
-    end
-
-    def credentials
-      {
-        "appId" => app_id,
-        "appKey" => app_key
-      }
+    def initialize(app_id, app_key, notification_url, redirect_url)
+      @app_id = app_id
+      @app_key = app_key
+      @notification_url = notification_url
+      @redirect_url = redirect_url
     end
   end
 end
