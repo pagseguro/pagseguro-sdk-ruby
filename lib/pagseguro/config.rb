@@ -11,6 +11,12 @@ module PagSeguro
     # The API token associated with this account.
     attr_accessor :token
 
+    # The application id
+    attr_accessor :app_id
+
+    # A token related to the application that is making the requests
+    attr_accessor :app_key
+
     # The PagSeguro environment.
     # +production+ or +sandbox+.
     # Defaults to +production+.
