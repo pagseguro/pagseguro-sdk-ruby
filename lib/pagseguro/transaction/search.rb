@@ -27,7 +27,7 @@ module PagSeguro
     # call. Remember that this will perform an additional HTTP request.
     def transactions
       xml do |xml|
-        @transactions ||= xml.css("transactionSearchResult transaction").map do |node|
+        xml.css("transactionSearchResult transaction").map do |node|
           Transaction.load_from_xml(node)
         end
       end
