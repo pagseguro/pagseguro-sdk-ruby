@@ -9,7 +9,7 @@ describe PagSeguro::Authorization::Serializer do
       'www.bar.io'
     )
   end
-  let(:permissions) { %i(checkouts notifications) }
+  let(:permissions) { [:checkouts, :notifications] }
   let(:serializer) { described_class.new(credentials, permissions) }
   let(:params) { serializer.to_params }
 
