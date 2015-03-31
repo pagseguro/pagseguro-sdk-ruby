@@ -46,11 +46,19 @@ module PagSeguro
     end
 
     def extended_data(data)
-      data.merge(
-        email: data[:email] || PagSeguro.email,
-        token: data[:token] || PagSeguro.token,
-        charset: PagSeguro.encoding
-      )
+      if PagSeguro.app_id && PagSeguro.app_key
+        data.merge(
+          appId: PagSeguro.app_id,
+          appKey: PagSeguro.app_key,
+          charset: PagSeguro.encoding
+        )
+      else
+        data.merge(
+          email: data[:email] || PagSeguro.email,
+          token: data[:token] || PagSeguro.token,
+          charset: PagSeguro.encoding
+        )
+      end
     end
 
     def extended_headers(request_method, headers)
