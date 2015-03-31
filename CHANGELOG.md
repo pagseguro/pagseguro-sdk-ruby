@@ -4,9 +4,13 @@
 - Removendo utilização de threads para armazenar o objeto de configuração (a abordagem com threads não funciona no Rails 4, que é threadsafe)
 - Adicionando deprecation warnings para configuration writers do módulo PagSeguro. Será removido no futuro. Utilizar o bloco de configuração.
 
-## Next release - 2.2.0
+2.2.0
 
 - Checkout transparente
+
+2.1.1
+
+- Correção de bug na busca de transações por data
 
 2.1.0
 
