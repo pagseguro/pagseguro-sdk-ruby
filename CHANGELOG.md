@@ -4,6 +4,10 @@
 
 ## Stable
 
+2.1.1
+
+- Correção de bug na busca de transações por data
+
 2.1.0
 
 - Utilização da versão 3 da api de notificações e consultas (OBS.: o serviço de consulta a transações abandonadas ainda utiliza a versão 2)
