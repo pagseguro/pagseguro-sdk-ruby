@@ -6,6 +6,9 @@ require "nokogiri"
 require "aitch"
 require "i18n"
 
+require "pagseguro/authorization"
+require "pagseguro/authorization/serializer"
+require "pagseguro/authorization/response"
 require "pagseguro/version"
 require "pagseguro/config"
 require "pagseguro/errors"
@@ -40,7 +43,7 @@ module PagSeguro
     # Delegates some calls to the config object
     extend Forwardable
     def_delegators :configuration, :email, :receiver_email, :token,
-      :environment, :encoding
+      :environment, :encoding, :app_id, :app_key
 
     def email=(email)
       warn "[DEPRECATION] `email=` is deprecated and will be removed. Please use configuration block instead."
@@ -99,6 +102,8 @@ module PagSeguro
   #   PagSeguro.configure do |config|
   #     config.email = "john@example.com"
   #     config.token = "abc"
+  #     config.app_id = "app12345"
+  #     config.app_key = "adju3cmADc52C"
   #     config.environment = :sandbox
   #   end
   #
