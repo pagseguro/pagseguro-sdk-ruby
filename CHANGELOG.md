@@ -2,11 +2,11 @@
 
 - Checkout transparente
 
-## Next release - 2.1.1
+## Stable
+
+2.1.1
 
 - Correção de bug na busca de transações por data
-
-## Stable
 
 2.1.0
 
