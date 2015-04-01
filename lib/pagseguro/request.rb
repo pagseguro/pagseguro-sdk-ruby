@@ -45,18 +45,11 @@ module PagSeguro
 
     def extended_data(data)
       if PagSeguro.app_id && PagSeguro.app_key
-        data.merge(
-          appId: PagSeguro.app_id,
-          appKey: PagSeguro.app_key,
-          charset: PagSeguro.encoding
-        )
+        data.merge!(app_credentials)
       else
-        data.merge(
-          email: data[:email] || PagSeguro.email,
-          token: data[:token] || PagSeguro.token,
-          charset: PagSeguro.encoding
-        )
+        data.merge!(account_credentials(data))
       end
+      data.merge({ charset: PagSeguro.encoding })
     end
 
     def extended_headers(request_method, headers)
@@ -73,6 +66,20 @@ module PagSeguro
     def headers_for_get
       {
         "Accept-Charset" => PagSeguro.encoding
+      }
+    end
+
+    def app_credentials
+      {
+        appId: PagSeguro.app_id,
+        appKey: PagSeguro.app_key
+      }
+    end
+
+    def account_credentials(data)
+      {
+        email: data[:email] || PagSeguro.email,
+        token: data[:token] || PagSeguro.token
       }
     end
   end
