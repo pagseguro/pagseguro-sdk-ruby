@@ -1,22 +1,19 @@
 module PagSeguro
   class Authorization
     class Serializer
-      attr_reader :notification_url
+      attr_reader :authorization, :notification_url, :redirect_url
 
-      attr_reader :redirect_url
-
-      attr_reader :permissions
-
-      def initialize(notification_url, redirect_url, permissions)
+      def initialize(authorization, notification_url, redirect_url)
+        @authorization = authorization
         @notification_url = notification_url
         @redirect_url = redirect_url
-        @permissions = permissions
       end
 
       def to_params
         params[:notificationURL] = notification_url
         params[:redirectURL] = redirect_url
-        params[:permissions] = serialize_permissions(permissions)
+        params[:permissions] = serialize_permissions(authorization.permissions)
+        params[:reference] = authorization.reference if authorization.reference
 
         params
       end
