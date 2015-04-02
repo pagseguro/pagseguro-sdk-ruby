@@ -10,6 +10,8 @@ module PagSeguro
       end
 
       def to_params
+        params[:appId] = authorization.app_id
+        params[:appKey] = authorization.app_key
         params[:notificationURL] = notification_url
         params[:redirectURL] = redirect_url
         params[:permissions] = serialize_permissions(authorization.permissions)
