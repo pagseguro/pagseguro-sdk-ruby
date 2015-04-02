@@ -46,11 +46,7 @@ module PagSeguro
     end
 
     def extended_data(data)
-      if PagSeguro.app_id && PagSeguro.app_key
-        data.merge!(app_credentials)
-      else
-        data.merge!(account_credentials(data))
-      end
+      data.merge!(account_credentials(data)) unless (PagSeguro.app_id && PagSeguro.app_key)
       data.merge({ charset: PagSeguro.encoding })
     end
 
@@ -68,13 +64,6 @@ module PagSeguro
     def headers_for_get
       {
         "Accept-Charset" => PagSeguro.encoding
-      }
-    end
-
-    def app_credentials
-      {
-        appId: PagSeguro.app_id,
-        appKey: PagSeguro.app_key
       }
     end
 
