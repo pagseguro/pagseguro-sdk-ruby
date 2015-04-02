@@ -5,11 +5,13 @@ describe PagSeguro::Authorization::Serializer do
     {
       app_id: 'app12345',
       app_key: 'KAdjfeAI3',
-      permissions: [:checkouts, :notifications]
+      permissions: [:checkouts, :notifications],
+      notification_url: 'foo.com',
+      redirect_url: 'bar.com'
     }
   end
   let(:authorization) { PagSeguro::Authorization.new(options) }
-  let(:serializer) { described_class.new(authorization, 'foo.com', 'bar.com') }
+  let(:serializer) { described_class.new(authorization) }
   let(:params) { serializer.to_params }
 
   it{ expect(params).to include(permissions: 'CREATE_CHECKOUTS,RECEIVE_TRANSACTION_NOTIFICATIONS') }
