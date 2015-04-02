@@ -16,11 +16,14 @@ describe PagSeguro::Authorization do
         .with('/authorizations/request', params)
         .and_return(double.as_null_object)
 
-      PagSeguro::Authorization.authorize(
-        { app_id: 'app123', app_key: 'adsada', permissions: [:notifications, :searches] },
-        'foo',
-        'bar'
-        )
+      PagSeguro::Authorization.new(
+          {
+            app_id: 'app123',
+            app_key: 'adsada',
+            permissions: [:notifications, :searches],
+            notification_url: 'foo',
+            redirect_url: 'bar'
+          }).authorize
     end
   end
 end
