@@ -15,6 +15,12 @@ module PagSeguro
     # The seller reference (optional)
     attr_accessor :reference
 
+    # The url which PagSeguro can send notifications
+    attr_accessor :notification_url
+
+    # The url which the application is going to be redirected after the proccess
+    attr_accessor :redirect_url
+
     PERMISSIONS = {
       checkouts: 'CREATE_CHECKOUTS',
       notifications: 'RECEIVE_TRANSACTION_NOTIFICATIONS',
@@ -23,9 +29,8 @@ module PagSeguro
       payments: 'DIRECT_PAYMENTS'
     }
 
-    def self.authorize(options, notification_url, redirect_url)
-      authorization = new(options)
-      params = Serializer.new(authorization, notification_url, redirect_url).to_params
+    def authorize
+      params = Serializer.new(self).to_params
       Response.new Request.post('/authorizations/request', params)
     end
 
