@@ -50,6 +50,9 @@ module PagSeguro
     # Get billing address info.
     attr_reader :billing_address
 
+    # Get installment info.
+    attr_reader :installment
+
     # The extra parameters for payment request
     attr_accessor :extra_params
 
@@ -80,15 +83,34 @@ module PagSeguro
       @holder = ensure_type(Holder, holder)
     end
 
-    # Set the billing address
+    # Set the billing address.
     def billing_address=(address)
       @billing_address = ensure_type(Address, address)
+    end
+
+    # Set the installment
+    def installment=(installment)
+      @installment = ensure_type(TransactionInstallment, installment)
+    end
+
+    # Calls the PagSeguro web service and register this request for payment.
+    def register
+      Response.new(Request.post("transactions", api_version, params))
     end
 
     private
     def before_initialize
       self.currency = "BRL"
       self.extra_params = []
+    end
+
+    def params
+      Serializer.new(self).to_params
+    end
+
+    # The default PagSeguro API version
+    def api_version
+      'v2'
     end
   end
 end
