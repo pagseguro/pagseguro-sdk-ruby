@@ -2,6 +2,7 @@ module PagSeguro
   class PaymentRequest
     include Extensions::MassAssignment
     include Extensions::EnsureType
+    include Extensions::Credentiable
 
     # Set the payment currency.
     # Defaults to BRL.
