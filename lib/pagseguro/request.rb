@@ -44,7 +44,7 @@ module PagSeguro
     end
 
     def extended_data(data)
-      data.merge!(account_credentials(data)) unless (PagSeguro.app_id && PagSeguro.app_key)
+      data.merge!(account_credentials(data)) unless (data[:appId] && data[:appKey])
       data.merge({ charset: PagSeguro.encoding })
     end
 
