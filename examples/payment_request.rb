@@ -6,6 +6,11 @@ payment.abandon_url = "http://dev.simplesideias.com.br/?abandoned"
 payment.notification_url = "http://dev.simplesideias.com.br/?notification"
 payment.redirect_url = "http://dev.simplesideias.com.br/?redirect"
 
+# You can pass a credentials object to be used in your
+# payment request, if you don't want to use email/token config.
+#
+# payment.credentials = PagSeguro::Credentials.new("app123", "qwerty", "authorizationcode")
+
 payment.items << {
   id: 1234,
   description: %[Televisão 19" Sony],

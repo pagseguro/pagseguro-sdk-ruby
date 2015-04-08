@@ -8,10 +8,12 @@ require "i18n"
 
 require "pagseguro/extensions/mass_assignment"
 require "pagseguro/extensions/ensure_type"
+require "pagseguro/extensions/credentiable"
 
 require "pagseguro/authorization"
 require "pagseguro/authorization/serializer"
 require "pagseguro/authorization/response"
+require "pagseguro/credentials"
 require "pagseguro/version"
 require "pagseguro/config"
 require "pagseguro/errors"

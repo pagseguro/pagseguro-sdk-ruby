@@ -140,6 +140,16 @@ describe PagSeguro::PaymentRequest::Serializer do
     it_behaves_like "item serialization", 2
   end
 
+  context "credentials serialization" do
+    before do
+      credentials = PagSeguro::Credentials.new(
+        "app123", "qwerty", "authocode"
+      )
+
+      payment_request.stub(credentials: credentials)
+    end
+  end
+
   context "extra params serialization" do
     before do
       payment_request.stub({
