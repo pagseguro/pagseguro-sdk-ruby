@@ -4,6 +4,10 @@
 
 ## Stable
 
+2.1.1
+
+- Correção de bug na busca de transações por data
+
 2.1.0
 
 - Utilização da versão 3 da api de notificações e consultas (OBS.: o serviço de consulta a transações abandonadas ainda utiliza a versão 2)
@@ -14,9 +18,6 @@
 
 - Consulta de opções de parcelamento
 
-## Stable
-
->>>>>>> Updates changelog, next release 2.2.0
 2.0.7
 
  - Suporte para adicionar parâmetros dinamicamente na criação de requisições de pagamentos (isso possibilita a utilização de parâmetros da api que ainda não foram mapeados na gem)
@@ -50,4 +51,3 @@
  - Criação de checkouts via API.
  - Tratamento de notificações de pagamento enviadas pelo PagSeguro.
  - Consulta de transações.
-
