@@ -140,6 +140,20 @@ describe PagSeguro::PaymentRequest::Serializer do
     it_behaves_like "item serialization", 2
   end
 
+  context "credentials serialization" do
+    before do
+      credentials = PagSeguro::Credentials.new(
+        "app123", "qwerty", "authocode"
+      )
+
+      payment_request.stub(credentials: credentials)
+    end
+
+    it { expect(params).to include(appId: 'app123') }
+    it { expect(params).to include(appKey: 'qwerty') }
+    it { expect(params).to include(authorizationCode: 'authocode') }
+  end
+
   context "extra params serialization" do
     before do
       payment_request.stub({
