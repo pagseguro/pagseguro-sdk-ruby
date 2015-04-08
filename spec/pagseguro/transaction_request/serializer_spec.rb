@@ -72,7 +72,9 @@ describe PagSeguro::TransactionRequest::Serializer do
 
   context "bank serialization" do
     before do
-      transaction_request.bank = PagSeguro::Bank.new({name: "itau"})
+      allow(transaction_request).to receive(:bank) do
+        PagSeguro::Bank.new({name: "itau"})
+      end
     end
 
     it { expect(params).to include(bankName: "itau") }
