@@ -11,7 +11,6 @@ describe PagSeguro::TransactionRequest do |variable|
 
   it_ensures_type PagSeguro::Sender, :sender
   it_ensures_type PagSeguro::Shipping, :shipping
-  it_ensures_type PagSeguro::Bank, :bank
   it_ensures_type PagSeguro::Holder, :holder
   it_ensures_type PagSeguro::Address, :billing_address
 
@@ -27,13 +26,6 @@ describe PagSeguro::TransactionRequest do |variable|
     payment = PagSeguro::TransactionRequest.new(shipping: shipping)
 
     expect(payment.shipping).to eql(shipping)
-  end
-
-  it "sets the bank" do
-    bank = PagSeguro::Bank.new
-    payment = PagSeguro::TransactionRequest.new(bank: bank)
-
-    expect(payment.bank).to eql(bank)
   end
 
   it "sets the holder" do

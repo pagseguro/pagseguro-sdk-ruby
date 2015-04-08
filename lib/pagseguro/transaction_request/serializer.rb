@@ -21,7 +21,7 @@ module PagSeguro
           serialize_item(item, index)
         end
 
-        serialize_bank(transaction_request.bank)
+        serialize_bank(transaction_request.bank) if transaction_request.respond_to?(:bank)
         serialize_holder(transaction_request.holder)
         serialize_billing_address(transaction_request.billing_address)
         serialize_sender(transaction_request.sender)

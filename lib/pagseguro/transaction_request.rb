@@ -13,9 +13,6 @@ module PagSeguro
     # Get the shipping info.
     attr_reader :shipping
 
-    # Get the bank info.
-    attr_reader :bank
-
     # Set the extra amount to be applied to the transaction's total.
     # This value can be used to add an extra charge to the transaction
     # or provide a discount, if negative.
@@ -71,12 +68,6 @@ module PagSeguro
     # Set the shipping info.
     def shipping=(shipping)
       @shipping = ensure_type(Shipping, shipping)
-    end
-
-    # Set the bank.
-    # Required if payment method is online debit.
-    def bank=(bank)
-      @bank = ensure_type(Bank, bank)
     end
 
     # Set the credit card holder.
