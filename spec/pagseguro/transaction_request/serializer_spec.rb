@@ -5,6 +5,12 @@ describe PagSeguro::TransactionRequest::Serializer do
   let(:params) { serializer.to_params }
   subject(:serializer) { described_class.new(transaction_request) }
 
+  before do
+    transaction_request.stub({
+      payment_method: "creditCard",
+    })
+  end
+
   context "global configuration serialization" do
     before do
       PagSeguro.receiver_email = "RECEIVER"
@@ -20,7 +26,6 @@ describe PagSeguro::TransactionRequest::Serializer do
         reference: "REF123",
         extra_amount: 1234.50,
         notification_url: "NOTIFICATION_URL",
-        payment_method: "creditCard",
         payment_mode: "default",
         credit_card_token: "4as56d4a56d456as456dsa"
       })
