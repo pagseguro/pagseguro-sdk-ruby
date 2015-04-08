@@ -43,6 +43,7 @@ module PagSeguro
 
         params[:appId] = credentials.app_id
         params[:appKey] = credentials.app_key
+        params[:authorizationCode] = credentials.authorization_code if credentials.authorization_code
       end
 
       def serialize_item(item, index)
