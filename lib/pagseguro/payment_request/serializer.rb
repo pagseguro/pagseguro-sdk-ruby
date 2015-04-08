@@ -9,8 +9,7 @@ module PagSeguro
       end
 
       def to_params
-        serialize_credentials(payment_request.credentials)
-
+        params[:credentials] = payment_request.credentials if payment_request.credentials
         params[:receiverEmail] = PagSeguro.receiver_email
         params[:currency] = payment_request.currency
         params[:reference] = payment_request.reference
@@ -36,14 +35,6 @@ module PagSeguro
       private
       def params
         @params ||= {}
-      end
-
-      def serialize_credentials(credentials)
-        return unless credentials
-
-        params[:appId] = credentials.app_id
-        params[:appKey] = credentials.app_key
-        params[:authorizationCode] = credentials.authorization_code if credentials.authorization_code
       end
 
       def serialize_item(item, index)

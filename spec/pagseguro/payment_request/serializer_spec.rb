@@ -148,10 +148,6 @@ describe PagSeguro::PaymentRequest::Serializer do
 
       payment_request.stub(credentials: credentials)
     end
-
-    it { expect(params).to include(appId: 'app123') }
-    it { expect(params).to include(appKey: 'qwerty') }
-    it { expect(params).to include(authorizationCode: 'authocode') }
   end
 
   context "extra params serialization" do
