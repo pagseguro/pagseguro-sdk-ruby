@@ -34,9 +34,6 @@ module PagSeguro
     # order.
     attr_accessor :notification_url
 
-    # Set the payment method.
-    attr_accessor :payment_method
-
     # Set the payment mode.
     attr_accessor :payment_mode
 
@@ -59,6 +56,11 @@ module PagSeguro
     # Products/items in this payment request.
     def items
       @items ||= Items.new
+    end
+
+    # Subclasses must implement payment_method
+    def payment_method
+      raise NotImplementedError.new("'#payment_method' must be implemented in specific class")
     end
 
     # Set the payment sender.

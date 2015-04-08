@@ -5,7 +5,6 @@ describe PagSeguro::TransactionRequest do |variable|
   it_assigns_attribute :extra_amount
   it_assigns_attribute :reference
   it_assigns_attribute :notification_url
-  it_assigns_attribute :payment_method
   it_assigns_attribute :payment_mode
   it_assigns_attribute :credit_card_token
   it_assigns_attribute :extra_params
@@ -66,6 +65,12 @@ describe PagSeguro::TransactionRequest do |variable|
   it "sets default currency" do
     payment = PagSeguro::TransactionRequest.new
     expect(payment.currency).to eql("BRL")
+  end
+
+  describe "#payment_method" do
+    it "raises not implemented error" do
+      expect { subject.payment_method }.to raise_error(NotImplementedError)
+    end
   end
 
   describe "#extra_params" do
