@@ -294,6 +294,11 @@ PagSeguro.environment = "production" # production ou sandbox
 PagSeguro.encoding = "UTF-8" # UTF-8 ou ISO-8859-1
 ```
 
+## Checkout Transparente
+
+Encontre toda a documentação necessária para o checkout transparente aqui:
+https://github.com/pagseguro/ruby/blob/master/docs/transparent_checkout.md
+
 ## Dúvidas?
 
 Caso tenha dúvidas ou precise de suporte, acesse nosso [fórum].
