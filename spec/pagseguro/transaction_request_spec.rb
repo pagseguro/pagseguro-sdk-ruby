@@ -6,13 +6,10 @@ describe PagSeguro::TransactionRequest do |variable|
   it_assigns_attribute :reference
   it_assigns_attribute :notification_url
   it_assigns_attribute :payment_mode
-  it_assigns_attribute :credit_card_token
   it_assigns_attribute :extra_params
 
   it_ensures_type PagSeguro::Sender, :sender
   it_ensures_type PagSeguro::Shipping, :shipping
-  it_ensures_type PagSeguro::Holder, :holder
-  it_ensures_type PagSeguro::Address, :billing_address
 
   it "sets the sender" do
     sender = PagSeguro::Sender.new
@@ -26,27 +23,6 @@ describe PagSeguro::TransactionRequest do |variable|
     payment = PagSeguro::TransactionRequest.new(shipping: shipping)
 
     expect(payment.shipping).to eql(shipping)
-  end
-
-  it "sets the holder" do
-    holder = PagSeguro::Holder.new
-    payment = PagSeguro::TransactionRequest.new(holder: holder)
-
-    expect(payment.holder).to eql(holder)
-  end
-
-  it "sets the billing address" do
-    address = PagSeguro::Address.new
-    payment = PagSeguro::TransactionRequest.new(billing_address: address)
-
-    expect(payment.billing_address).to eql(address)
-  end
-
-  it "sets the transaction installment" do
-    installment = PagSeguro::TransactionInstallment.new
-    payment = PagSeguro::TransactionRequest.new(installment: installment)
-
-    expect(payment.installment).to eql(installment)
   end
 
   it "sets the items" do

@@ -34,19 +34,6 @@ module PagSeguro
     # Set the payment mode.
     attr_accessor :payment_mode
 
-    # Set credit card token.
-    # Required if payment method is credit card.
-    attr_accessor :credit_card_token
-
-    # Get credit card holder info.
-    attr_reader :holder
-
-    # Get billing address info.
-    attr_reader :billing_address
-
-    # Get installment info.
-    attr_reader :installment
-
     # The extra parameters for payment request
     attr_accessor :extra_params
 
@@ -68,22 +55,6 @@ module PagSeguro
     # Set the shipping info.
     def shipping=(shipping)
       @shipping = ensure_type(Shipping, shipping)
-    end
-
-    # Set the credit card holder.
-    # Required if payment method is credit card
-    def holder=(holder)
-      @holder = ensure_type(Holder, holder)
-    end
-
-    # Set the billing address.
-    def billing_address=(address)
-      @billing_address = ensure_type(Address, address)
-    end
-
-    # Set the installment
-    def installment=(installment)
-      @installment = ensure_type(TransactionInstallment, installment)
     end
 
     # Calls the PagSeguro web service and register this request for payment.
