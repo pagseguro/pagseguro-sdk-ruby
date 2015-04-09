@@ -11,7 +11,7 @@ describe PagSeguro::OnlineDebitTransactionRequest do
 
   it "sets the bank" do
     bank = PagSeguro::Bank.new
-    payment = PagSeguro::OnlineDebitTransactionRequest.new(bank: bank)
+    payment = described_class.new(bank: bank)
 
     expect(payment.bank).to eq(bank)
   end
