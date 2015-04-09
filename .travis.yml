@@ -1,12 +1,13 @@
 language: ruby
 rvm:
-  - 2.2.0
-  - 2.1.5
-  - 2.0.0
-  - 1.9.3
-  - jruby-19mode
-
+- 2.2.0
+- 2.1.5
+- 2.0.0
+- 1.9.3
+- jruby-19mode
 notifications:
   email:
-    - lucas.renan@codeminer42.com
-    - vitor.kusiaki@codeminer42.com
+  - lucas.renan@codeminer42.com
+  - vitor.kusiaki@codeminer42.com
+  slack:
+    secure: H7PR+eH28CRGZ7E71EQ2xAjkbLX53eXbJ8nadHgx6W2gggNSB8UPw6gqQg/UC0lCbK6ejQ0wE/pEPfLBnCJkqL8mfBr7ADTqZe2fM/YxXQktdOlldJtZaxUikDwOWZSXdOG+3ITdbv/MQW/wehi8UWzFC+XkhJCudOPW1n+9bqs=
