@@ -5,29 +5,33 @@ module PagSeguro
     attr_accessor :credit_card_token
 
     # Get installment info.
-    # Required for credit card payment method.
     attr_reader :installment
 
     # Get credit card holder info.
-    # Required for credit card payment method.
     attr_reader :holder
 
     # Get billing address info.
-    # Required for credit card payment method.
     attr_reader :billing_address
 
-    # Set the installment
+    # Get the payment_method.
+    def payment_method
+      "credit_card"
+    end
+
+    # Set the installment.
+    # Required for credit card payment method.
     def installment=(installment)
       @installment = ensure_type(TransactionInstallment, installment)
     end
 
     # Set the credit card holder.
-    # Required if payment method is credit card
+    # Required for credit card payment method.
     def holder=(holder)
       @holder = ensure_type(Holder, holder)
     end
 
     # Set the billing address.
+    # Required for credit card payment method.
     def billing_address=(address)
       @billing_address = ensure_type(Address, address)
     end
