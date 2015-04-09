@@ -7,6 +7,12 @@ describe PagSeguro::CreditCardTransactionRequest do
   it_ensures_type PagSeguro::Holder, :holder
   it_ensures_type PagSeguro::Address, :billing_address
 
+  describe "#payment_method" do
+    it "is credit_card" do
+      expect(subject.payment_method).to eq("credit_card")
+    end
+  end
+
   it "sets the transaction installment" do
     installment = PagSeguro::TransactionInstallment.new
     payment = PagSeguro::CreditCardTransactionRequest.new(installment: installment)

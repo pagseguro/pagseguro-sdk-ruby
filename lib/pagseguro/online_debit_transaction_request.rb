@@ -3,8 +3,13 @@ module PagSeguro
     # Get the bank info.
     attr_reader :bank
 
+    # Get the payment_method.
+    def payment_method
+      "online_debit"
+    end
+
     # Set the bank.
-    # Required if payment method is online debit.
+    # Required for online debit payment method.
     def bank=(bank)
       @bank = ensure_type(Bank, bank)
     end
