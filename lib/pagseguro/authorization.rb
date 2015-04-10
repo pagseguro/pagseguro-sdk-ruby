@@ -34,6 +34,25 @@ module PagSeguro
       Response.new Request.post('/authorizations/request', params)
     end
 
+    # Find an authorization by it's notification code
+    def self.find_by_notification_code(options = {}, code)
+      load_from_response Request.get("/authorizations/notifications/#{code}", options)
+    end
+
+    # Serialize the HTTP response into data.
+    def self.load_from_response(response) # :nodoc:
+      if response.success? and response.xml?
+        load_from_xml Nokogiri::XML(response.body).css("authorization").first
+      else
+        Response.new Errors.new(response)
+      end
+    end
+
+    # Serialize the XML object.
+    def self.load_from_xml(xml) # :nodoc:
+      new Report.new(xml).serialize
+    end
+
     private
     def before_initialize
       self.app_id = PagSeguro.app_id
