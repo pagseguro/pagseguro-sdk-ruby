@@ -1,6 +1,6 @@
 require_relative "boot"
 
-transaction = PagSeguro::Transaction.find_by_code("4854F211D719422582360C5077691A5E")
+transaction = PagSeguro::Transaction.find_by_code("22FBCE2D-2E66-46A3-89C3-70F55E98A4D7")
 
 puts "=> Transaction"
 puts "  code: #{transaction.code}"
@@ -20,9 +20,9 @@ puts "  commission fee amount: #{transaction.creditor_fees.commission_fee_amount
 puts "  efrete: #{transaction.creditor_fees.efrete.to_f}"
 puts "  net amount: #{transaction.net_amount.to_f}"
 puts "  extra amount: #{transaction.extra_amount.to_f}"
+puts "  installment count: #{transaction.installments}"
 
-puts "    => Payments"
-puts "      installment count: #{transaction.installments}"
+puts "    => Payment Release"
 transaction.payment_releases.each do |release|
   puts "    current installment: #{release.installment}"
   puts "    total amount: #{release.total_amount.to_f}"
