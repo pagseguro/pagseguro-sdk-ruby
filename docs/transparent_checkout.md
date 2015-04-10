@@ -31,7 +31,7 @@ Para iniciar um Checkout Transparente é necessário ter um ID de sessão válid
 
 A API do Checkout Transparente possui funções JavaScript para algumas operações que devem ser executadas no browser do cliente, funções que serão descritas mais adiante. Para essas funções uma API JavaScript deve ser importada no final da página dos meios de pagamento:
 
-```
+```html
 produção:
 <script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
 
@@ -193,12 +193,10 @@ Retorno:
 
 Este serviço envia os dados do comprador e do pagamento para realizar a cobrança.
 
-URL:
-HttpMethod: POST
-https://ws.pagseguro.uol.com.br/v2/transactions
-
 A criação das transações podem ser feitas utilizando três métodos de pagamento:
 
 [Boleto Bancário](https://github.com/pagseguro/ruby/blob/master/examples/boleto_transaction_request.rb)
+
 [Cartão de Crédito](https://github.com/pagseguro/ruby/blob/master/examples/credit_card_transaction_request.rb)
+
 [Transferência Eletrônica](https://github.com/pagseguro/ruby/blob/master/examples/online_debit_transaction.rb)
