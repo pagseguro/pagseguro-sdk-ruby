@@ -51,6 +51,9 @@ require "pagseguro/transaction_installment"
 require "pagseguro/transaction_request"
 require "pagseguro/transaction_request/response"
 require "pagseguro/transaction_request/serializer"
+require "pagseguro/boleto_transaction_request"
+require "pagseguro/online_debit_transaction_request"
+require "pagseguro/credit_card_transaction_request"
 
 I18n.load_path += Dir[File.expand_path("../../locales/*.yml", __FILE__)]
 

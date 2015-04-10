@@ -1,9 +1,8 @@
 require_relative "boot"
 
-payment = PagSeguro::TransactionRequest.new
+payment = PagSeguro::BoletoTransactionRequest.new
 payment.notification_url = "http://www.meusite.com.br/notification"
-payment.payment_method = "creditCard"
-payment.payment_mode = "gateway"
+payment.payment_mode = "default"
 
 payment.items << {
   id: 1234,
@@ -12,11 +11,11 @@ payment.items << {
   weight: 0
 }
 
-payment.reference = "REF1234"
+payment.reference = "REF1234-boleto"
 payment.sender = {
-  hash: "0db5776271490042a3b89f7f54d7e54244cf74d469695aa67c49e11c8a56c2c4",
+  hash: "7e215170790948f45e26175c2192c77e88c0e4c361a5860b99d2e9a97af982e6",
   name: "Joao Comprador",
-  email: "joao@comprador.com.br",
+  email: "joao@sandbox.pagseguro.com.br",
   cpf: "75073461100",
   phone: {
     area_code: 11,
@@ -37,34 +36,6 @@ payment.shipping = {
   }
 }
 
-payment.billing_address = {
-  street: "Av. Brig. Faria Lima",
-  number: "1384",
-  complement: "5º andar",
-  city: "São Paulo",
-  state: "SP",
-  district: "Jardim Paulistano",
-  postal_code: "01452002"
-}
-
-payment.credit_card_token = "286ff355747941f58b2093608cd6b7a2"
-payment.holder = {
-  name: "João Comprador",
-  birth_date: "07/05/1981",
-  document: {
-    type: "CPF",
-    value: "00000000191"
-  },
-  phone: {
-    area_code: 11,
-    number: "123456789"
-  }
-}
-
-payment.installment = {
-  value: 459.50,
-  quantity: 1
-}
 
 # Add extras params to request
 # payment.extra_params << { paramName: 'paramValue' }

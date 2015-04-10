@@ -16,18 +16,19 @@ module PagSeguro
         params[:notificationURL] = transaction_request.notification_url
         params[:paymentMethod] = transaction_request.payment_method
         params[:paymentMode] = transaction_request.payment_mode
-        params[:creditCardToken] = transaction_request.credit_card_token
+        params[:creditCardToken] = transaction_request.credit_card_token if transaction_request.respond_to?(:credit_card_token)
         transaction_request.items.each.with_index(1) do |item, index|
           serialize_item(item, index)
         end
 
-        serialize_bank(transaction_request.bank)
-        serialize_holder(transaction_request.holder)
-        serialize_billing_address(transaction_request.billing_address)
         serialize_sender(transaction_request.sender)
         serialize_shipping(transaction_request.shipping)
-        serialize_installment(transaction_request.installment)
         serialize_extra_params(transaction_request.extra_params)
+
+        serialize_bank(transaction_request.bank) if transaction_request.respond_to?(:bank)
+        serialize_holder(transaction_request.holder) if transaction_request.respond_to?(:holder)
+        serialize_billing_address(transaction_request.billing_address) if transaction_request.respond_to?(:billing_address)
+        serialize_installment(transaction_request.installment) if transaction_request.respond_to?(:installment)
 
         params.delete_if {|key, value| value.nil? }
 

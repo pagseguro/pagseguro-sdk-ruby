@@ -5,6 +5,13 @@ describe PagSeguro::TransactionRequest::Serializer do
   let(:params) { serializer.to_params }
   subject(:serializer) { described_class.new(transaction_request) }
 
+  before do
+    transaction_request.stub({
+      payment_method: "creditCard",
+      credit_card_token: "4as56d4a56d456as456dsa"
+    })
+  end
+
   context "global configuration serialization" do
     before do
       PagSeguro.receiver_email = "RECEIVER"
@@ -20,9 +27,7 @@ describe PagSeguro::TransactionRequest::Serializer do
         reference: "REF123",
         extra_amount: 1234.50,
         notification_url: "NOTIFICATION_URL",
-        payment_method: "creditCard",
-        payment_mode: "default",
-        credit_card_token: "4as56d4a56d456as456dsa"
+        payment_mode: "default"
       })
     end
 
@@ -67,7 +72,9 @@ describe PagSeguro::TransactionRequest::Serializer do
 
   context "bank serialization" do
     before do
-      transaction_request.bank = PagSeguro::Bank.new({name: "itau"})
+      allow(transaction_request).to receive(:bank) do
+        PagSeguro::Bank.new({name: "itau"})
+      end
     end
 
     it { expect(params).to include(bankName: "itau") }
@@ -88,7 +95,7 @@ describe PagSeguro::TransactionRequest::Serializer do
         }
       })
 
-      transaction_request.holder = holder
+      transaction_request.stub({holder: holder})
     end
 
     it { expect(params).to include(creditCardHolderName: "Jose Comprador") }
@@ -178,10 +185,12 @@ describe PagSeguro::TransactionRequest::Serializer do
 
   context "installment serialization" do
     before do
-      transaction_request.installment = PagSeguro::TransactionInstallment.new({
+      installment = PagSeguro::TransactionInstallment.new({
         value: "459.50",
         quantity: "1"
       })
+
+      transaction_request.stub({installment: installment})
     end
 
     it { expect(params).to include(installmentValue: "459.50") }

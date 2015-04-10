@@ -5,16 +5,11 @@ describe PagSeguro::TransactionRequest do |variable|
   it_assigns_attribute :extra_amount
   it_assigns_attribute :reference
   it_assigns_attribute :notification_url
-  it_assigns_attribute :payment_method
   it_assigns_attribute :payment_mode
-  it_assigns_attribute :credit_card_token
   it_assigns_attribute :extra_params
 
   it_ensures_type PagSeguro::Sender, :sender
   it_ensures_type PagSeguro::Shipping, :shipping
-  it_ensures_type PagSeguro::Bank, :bank
-  it_ensures_type PagSeguro::Holder, :holder
-  it_ensures_type PagSeguro::Address, :billing_address
 
   it "sets the sender" do
     sender = PagSeguro::Sender.new
@@ -30,34 +25,6 @@ describe PagSeguro::TransactionRequest do |variable|
     expect(payment.shipping).to eql(shipping)
   end
 
-  it "sets the bank" do
-    bank = PagSeguro::Bank.new
-    payment = PagSeguro::TransactionRequest.new(bank: bank)
-
-    expect(payment.bank).to eql(bank)
-  end
-
-  it "sets the holder" do
-    holder = PagSeguro::Holder.new
-    payment = PagSeguro::TransactionRequest.new(holder: holder)
-
-    expect(payment.holder).to eql(holder)
-  end
-
-  it "sets the billing address" do
-    address = PagSeguro::Address.new
-    payment = PagSeguro::TransactionRequest.new(billing_address: address)
-
-    expect(payment.billing_address).to eql(address)
-  end
-
-  it "sets the transaction installment" do
-    installment = PagSeguro::TransactionInstallment.new
-    payment = PagSeguro::TransactionRequest.new(installment: installment)
-
-    expect(payment.installment).to eql(installment)
-  end
-
   it "sets the items" do
     payment = PagSeguro::TransactionRequest.new
     expect(payment.items).to be_a(PagSeguro::Items)
@@ -66,6 +33,12 @@ describe PagSeguro::TransactionRequest do |variable|
   it "sets default currency" do
     payment = PagSeguro::TransactionRequest.new
     expect(payment.currency).to eql("BRL")
+  end
+
+  describe "#payment_method" do
+    it "raises not implemented error" do
+      expect { subject.payment_method }.to raise_error(NotImplementedError)
+    end
   end
 
   describe "#extra_params" do
