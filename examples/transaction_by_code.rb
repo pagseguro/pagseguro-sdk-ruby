@@ -16,7 +16,6 @@ puts "  installment fee amount: #{transaction.creditor_fees.installment_fee_amou
 puts "  intermediation rate amount: #{transaction.creditor_fees.intermediation_rate_amount.to_f}"
 puts "  intermediation fee amount: #{transaction.creditor_fees.intermediation_fee_amount.to_f}"
 puts "  commission fee amount: #{transaction.creditor_fees.commission_fee_amount.to_f}"
-puts "  commission fee amount: #{transaction.creditor_fees.commission_fee_amount.to_f}"
 puts "  efrete: #{transaction.creditor_fees.efrete.to_f}"
 puts "  net amount: #{transaction.net_amount.to_f}"
 puts "  extra amount: #{transaction.extra_amount.to_f}"
