@@ -37,16 +37,15 @@ produção:
 
 sandbox:
 <script type="text/javascript" src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
-
-
-<script type="text/javascript">
-  PagSeguroDirectPayment.setSessionId('<%= @session_id %>');
-</script>
 ```
 
 Esse JavaScript possui um objeto chamado `PagSeguroDirectPayment`, que é a interface de acesso aos métodos. Após importar o arquivo, deve ser executado o método `setSessionId` com o ID de sessão gerado anteriormente.
 
-Nas funções os eventos de sucesso e erro ocorrem em chamadas callback no JavaScript que são passadas via JSON. Para isso, basta passar três funções JavaScript com nome 'success', 'error' e 'complete' via JSON na chamada dos métodos. A função 'complete' será chamada independente do retorno e as funções 'success' e 'error' serão chamadas dependendo do retorno, ou seja, se o retorno não possuir erro a função chamada será a 'success' e se possuir erro a função chamada será a 'error'.
+```javascript
+  PagSeguroDirectPayment.setSessionId('<%= @session_id %>');
+```
+
+Nas funções, os eventos de sucesso e erro ocorrem em chamadas callback no JavaScript que são passadas via JSON. Para isso, basta passar três funções JavaScript com nome 'success', 'error' e 'complete' via JSON na chamada dos métodos. A função 'complete' será chamada independente do retorno e as funções 'success' e 'error' serão chamadas dependendo do retorno, ou seja, se o retorno não possuir erro a função chamada será a 'success' e se possuir erro a função chamada será a 'error'.
 
 ### Obter identificação do comprador
 
