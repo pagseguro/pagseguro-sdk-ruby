@@ -23,15 +23,15 @@ else
   puts "  efrete: #{transaction.creditor_fees.efrete.to_f}"
   puts "  net amount: #{transaction.net_amount.to_f}"
   puts "  extra amount: #{transaction.extra_amount.to_f}"
+  puts "  installment count: #{transaction.installments}"
 
-  puts "    => Payments"
-  puts "      installment count: #{transaction.installments}"
+  puts "    => Payment Release"
   transaction.payment_releases.each do |release|
-    puts "    current installment: #{release.installment}"
-    puts "    total amount: #{release.total_amount.to_f}"
-    puts "    release amount: #{release.release_amount.to_f}"
-    puts "    status: #{release.status}"
-    puts "    release date: #{release.release_date}"
+    puts "      current installment: #{release.installment}"
+    puts "      total amount: #{release.total_amount.to_f}"
+    puts "      release amount: #{release.release_amount.to_f}"
+    puts "      status: #{release.status}"
+    puts "      release date: #{release.release_date}"
   end
 
   puts "    => Items"
