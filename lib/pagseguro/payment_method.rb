@@ -4,6 +4,7 @@ module PagSeguro
     include Extensions::MassAssignment
 
     TYPES = {
+      ""  => :not_set,
       "1" => :credit_card,
       "2" => :boleto,
       "3" => :online_transfer,
