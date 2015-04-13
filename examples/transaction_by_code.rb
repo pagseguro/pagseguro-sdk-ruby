@@ -26,11 +26,11 @@ else
 
   puts "    => Payment Release"
   transaction.payment_releases.each do |release|
-    puts "    current installment: #{release.installment}"
-    puts "    total amount: #{release.total_amount.to_f}"
-    puts "    release amount: #{release.release_amount.to_f}"
-    puts "    status: #{release.status}"
-    puts "    release date: #{release.release_date}"
+    puts "      current installment: #{release.installment}"
+    puts "      total amount: #{release.total_amount.to_f}"
+    puts "      release amount: #{release.release_amount.to_f}"
+    puts "      status: #{release.status}"
+    puts "      release date: #{release.release_date}"
   end
 
   puts "    => Items"
