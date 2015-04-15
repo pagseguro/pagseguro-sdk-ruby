@@ -1,12 +1,7 @@
 module PagSeguro
   class Authorization
     include Extensions::MassAssignment
-
-    # The application id
-    attr_accessor :app_id
-
-    # The token related to the application
-    attr_accessor :app_key
+    include Extensions::Credentiable
 
     # The permissions given to the application
     # Defaults to all permissions
@@ -39,6 +34,11 @@ module PagSeguro
       load_from_response Request.get("/authorizations/notifications/#{code}", options)
     end
 
+    # Find an authorization by it's code
+    def self.find_by_code(options = {}, code)
+      load_from_response Request.get("/authorizations/#{code}", options)
+    end
+
     # Serialize the HTTP response into data.
     def self.load_from_response(response) # :nodoc:
       if response.success? and response.xml?
@@ -55,8 +55,6 @@ module PagSeguro
 
     private
     def before_initialize
-      self.app_id = PagSeguro.app_id
-      self.app_key = PagSeguro.app_key
       self.permissions = PERMISSIONS.keys
     end
   end
