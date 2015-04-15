@@ -3,8 +3,6 @@ require "spec_helper"
 describe PagSeguro::Authorization::Serializer do
   let(:options) do
     {
-      app_id: 'app12345',
-      app_key: 'KAdjfeAI3',
       permissions: [:checkouts, :notifications],
       notification_url: 'foo.com',
       redirect_url: 'bar.com'
