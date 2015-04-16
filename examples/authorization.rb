@@ -1,14 +1,12 @@
 require_relative "boot"
 
-# app_id defaults to PagSeguro.app_id
-# app_key defaults to PagSeguro.app_key
+# credentials have app_id and app_key infos
 # permissions defaults to all permissions
 # notification_url is a required param
 # redirect_url is a required param
 
 options = {
-  app_id: ENV.fetch("PAGSEGURO_APP_ID"),
-  app_key: ENV.fetch("PAGSEGURO_APP_KEY"),
+  credentials: PagSeguro::Credentials.new("app4521929942", "1D47384E6565EBE664DAEF9AD690438B"),
   permissions: [:searches, :notifications],
   notification_url: 'foo.com.br',
   redirect_url: 'bar.com.br'
