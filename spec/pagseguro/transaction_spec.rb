@@ -7,7 +7,7 @@ describe PagSeguro::Transaction do
 
       PagSeguro::Request
         .should_receive(:get)
-        .with("transactions/notifications/CODE", "v3")
+        .with("transactions/notifications/CODE", "v3", {})
         .and_return(double.as_null_object)
 
       PagSeguro::Transaction.find_by_notification_code("CODE")
@@ -20,6 +20,19 @@ describe PagSeguro::Transaction do
 
       expect(response).to be_a(PagSeguro::Transaction::Response)
       expect(response.errors).to include("Sample error")
+    end
+  end
+
+  describe ".find_by_code" do
+    it 'finds a transaction by its code' do
+      PagSeguro::Transaction.stub :load_from_response
+
+      PagSeguro::Request
+        .should_receive(:get)
+        .with("transactions/CODE", {})
+        .and_return(double.as_null_object)
+
+      PagSeguro::Transaction.find_by_code("CODE")
     end
   end
 
