@@ -26,17 +26,17 @@ module PagSeguro
 
     def authorize
       params = Serializer.new(self).to_params
-      Response.new Request.post('/authorizations/request', params)
+      Response.new Request.post('authorizations/request', params)
     end
 
     # Find an authorization by it's notification code
-    def self.find_by_notification_code(options = {}, code)
-      load_from_response Request.get("/authorizations/notifications/#{code}", options)
+    def self.find_by_notification_code(code, options = {})
+      load_from_response Request.get("authorizations/notifications/#{code}", options)
     end
 
     # Find an authorization by it's code
-    def self.find_by_code(options = {}, code)
-      load_from_response Request.get("/authorizations/#{code}", options)
+    def self.find_by_code(code, options = {})
+      load_from_response Request.get("authorizations/#{code}", options)
     end
 
     # Serialize the HTTP response into data.
