@@ -45,6 +45,8 @@ module PagSeguro
 
     def extended_data(data)
       if data[:credentials]
+        data.merge!(credentials_object(data))
+      elsif PagSeguro.app_id && PagSeguro.app_key
         data.merge!(application_credentials(data))
       else
         data.merge!(account_credentials(data))
@@ -69,12 +71,21 @@ module PagSeguro
       }
     end
 
-    def application_credentials(data)
+    def credentials_object(data)
       credentials = data.delete(:credentials)
+      app_credentials = { appId: credentials.app_id, appKey: credentials.app_key }
+      if credentials.authorization_code
+        app_credentials.merge!(authorizationCode: credentials.authorization_code)
+      end
+
+      app_credentials
+    end
+
+    def application_credentials(data)
       {
-        appId: credentials.app_id,
-        appKey: credentials.app_key
-      }.merge(authorizationCode: credentials.authorization_code) if credentials. authorization_code
+        appId: PagSeguro.app_id,
+        appKey: PagSeguro.app_key
+      }
     end
 
     def account_credentials(data)
