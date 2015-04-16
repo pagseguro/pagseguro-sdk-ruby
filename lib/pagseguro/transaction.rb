@@ -2,6 +2,7 @@ module PagSeguro
   class Transaction
     include Extensions::MassAssignment
     include Extensions::EnsureType
+    include Extensions::Credentiable
 
     # When the payment request was created.
     attr_accessor :created_at
