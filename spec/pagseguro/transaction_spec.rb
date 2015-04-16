@@ -23,6 +23,19 @@ describe PagSeguro::Transaction do
     end
   end
 
+  describe ".find_by_code" do
+    it 'finds a transaction by its code' do
+      PagSeguro::Transaction.stub :load_from_response
+
+      PagSeguro::Request
+        .should_receive(:get)
+        .with("transactions/CODE", {})
+        .and_return(double.as_null_object)
+
+      PagSeguro::Transaction.find_by_code("CODE")
+    end
+  end
+
   describe ".find_by_date" do
     it "initializes search with default options" do
       now = Time.now
