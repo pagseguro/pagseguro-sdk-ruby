@@ -1,3 +1,8 @@
+## Next release - 2.4.0
+
+- Estorno de transações
+- Cancelamento de transações
+
 ## Next release - 2.2.0
 
 - Checkout transparente
