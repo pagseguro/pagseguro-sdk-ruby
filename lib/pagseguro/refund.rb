@@ -9,12 +9,12 @@ module PagSeguro
     # Calls the PagSeguro webservice and register the refund.
     def register
       params = Serializer.new(self).to_params
-      Response.new(Request.post('transactions/refunds', api_version, params))
+      Response.new(Request.post("transactions/refunds", api_version, params))
     end
 
     private
     def api_version
-      'v2'
+      "v2"
     end
   end
 end

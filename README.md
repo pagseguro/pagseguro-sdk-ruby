@@ -13,7 +13,7 @@ A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilit
  - Consultar [transações por intervalo de datas] \(este serviço utiliza a versão **V3** da API)
  - Consultar [transações abandonadas] \(este serviço utiliza a versão **V2** da API\)
  - Receber [notificações] \(este serviço utiliza a versão **V3** da API\)
-
+ - Enviar estorno de transações \(este serviço utiliza a versão **V2** da API\)
 
 ## Requisitos
 
@@ -198,6 +198,24 @@ puts
 visa_installments.each do |installment|
   puts installment.inspect
 end
+```
+
+### Estorno de Transações
+
+Você pode estornar pagamentos que as transações estiverem com status: Paga (3), Disponível (4), Em disputa (5).
+
+```ruby
+  refund = PagSeguro::Refund.new
+  refund.transaction_code = "D5D5BE444148407891E497B421975599"
+
+  response = refund.register
+
+  if response.errors.any?
+    puts response.errors.join("\n")
+  else
+    puts "=> REFUND RESPONSE"
+    puts response.result
+  end
 ```
 
 ## API
