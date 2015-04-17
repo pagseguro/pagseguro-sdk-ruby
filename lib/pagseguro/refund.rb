@@ -6,6 +6,11 @@ module PagSeguro
     # The transaction status must be: Paga (3), Disponível (4), Em disputa (5)
     attr_accessor :transaction_code
 
+    # Set the refund value.
+    # Greater than 0.00 and less or equal than transaction value.
+    # If not informed, PagSeguro will assume the total transaction value.
+    attr_accessor :value
+
     # Calls the PagSeguro webservice and register the refund.
     def register
       params = Serializer.new(self).to_params

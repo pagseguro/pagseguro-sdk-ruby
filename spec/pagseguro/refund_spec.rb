@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe PagSeguro::Refund do
   it_assigns_attribute :transaction_code
-
+  it_assigns_attribute :value
 
   describe "#register" do
     let(:refund) { PagSeguro::Refund.new }
