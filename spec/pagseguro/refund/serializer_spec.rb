@@ -7,7 +7,9 @@ describe PagSeguro::Refund::Serializer do
 
   before do
     refund.transaction_code = "1234"
+    refund.value = 100.50
   end
 
   it { expect(params).to include(transactionCode: "1234") }
+  it { expect(params).to include(refundValue: "100.50") }
 end
