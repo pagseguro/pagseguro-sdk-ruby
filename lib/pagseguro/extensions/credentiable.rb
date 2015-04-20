@@ -1,14 +1,16 @@
 module PagSeguro
   module Extensions
     module Credentiable
-      include Extensions::EnsureType
-
       # Get the credential object value
       attr_reader :credentials
 
       # Set a credential object
       def credentials=(credentials)
-        @credentials = ensure_type(Credentials, credentials)
+        if credentials.kind_of?(ApplicationCredentials) || credentials.kind_of?(AccountCredentials)
+          @credentials = credentials
+        else
+         raise 'Invalid credentials object'
+       end
       end
     end
   end
