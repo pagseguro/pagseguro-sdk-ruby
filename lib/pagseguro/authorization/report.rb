@@ -9,7 +9,7 @@ module PagSeguro
 
       # A array containing all permissions for the current authorization.
       # Each permission is a hash, with code, status and last update date
-      def authorizations
+      def permissions
         @transactions ||= xml.css("authorization permission").map do |node|
           {
             code: node.css("code").text,
