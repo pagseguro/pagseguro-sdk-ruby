@@ -35,8 +35,8 @@ describe PagSeguro::Authorization::Report do
       it { expect(report.created_at).to eq(Time.parse("2011-03-30T14:20:13.000-03:00")) }
     end
 
-    describe '#authorizations' do
-      it { expect(report.authorizations).to eq(permissions) }
+    describe '#permissions' do
+      it { expect(report.permissions).to eq(permissions) }
     end
   end
 end
