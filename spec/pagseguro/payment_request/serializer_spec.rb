@@ -142,7 +142,7 @@ describe PagSeguro::PaymentRequest::Serializer do
 
   context "credentials serialization" do
     before do
-      credentials = PagSeguro::Credentials.new(
+      credentials = PagSeguro::ApplicationCredentials.new(
         "app123", "qwerty", "authocode"
       )
 
