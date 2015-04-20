@@ -78,6 +78,18 @@ describe PagSeguro::Request do
       end
     end
 
+    context "when global app config is set" do
+      it "includes application credentials" do
+        PagSeguro.configure do |config|
+          config.app_id = "APP123"
+          config.app_key = "APPKEY"
+        end
+        PagSeguro::Request.get("checkout")
+
+        expect(FakeWeb.last_request.path).to include("appId=APP123&appKey=APPKEY")
+      end
+    end
+
     it "includes encoding" do
       PagSeguro::Request.get("checkout", "v3")
       expect(FakeWeb.last_request.path).to include("charset=UTF-8")
