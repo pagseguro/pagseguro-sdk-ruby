@@ -11,7 +11,7 @@ module PagSeguro
       end
 
       def errors
-        @errors ||= Errors.new(response)
+        @errors = response
       end
 
       def code
