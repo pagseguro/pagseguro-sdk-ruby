@@ -1,5 +1,5 @@
 module PagSeguro
-  class Credentials
+  class ApplicationCredentials
     # The application id
     attr_accessor :app_id
 

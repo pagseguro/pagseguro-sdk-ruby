@@ -46,10 +46,8 @@ module PagSeguro
     def extended_data(data)
       if data[:credentials]
         data.merge!(credentials_object(data))
-      elsif PagSeguro.app_id && PagSeguro.app_key
-        data.merge!(application_credentials(data))
       else
-        data.merge!(account_credentials(data))
+        data.merge!(global_credentials(data))
       end
       data.merge({ charset: PagSeguro.encoding })
     end
@@ -73,26 +71,35 @@ module PagSeguro
 
     def credentials_object(data)
       credentials = data.delete(:credentials)
-      app_credentials = { appId: credentials.app_id, appKey: credentials.app_key }
-      if credentials.authorization_code
-        app_credentials.merge!(authorizationCode: credentials.authorization_code)
+      if credentials.respond_to? :app_id
+        general_credentials = {
+          appId: credentials.app_id,
+          appKey: credentials.app_key,
+          authorizationCode: credentials.authorization_code
+        }
+      else
+        general_credentials = {
+          email: credentials.email,
+          token: credentials.token
+        }
       end
 
-      app_credentials
+      general_credentials.delete_if { |key, value| value.nil? }
+      general_credentials
     end
 
-    def application_credentials(data)
-      {
-        appId: PagSeguro.app_id,
-        appKey: PagSeguro.app_key
-      }
-    end
-
-    def account_credentials(data)
-      {
-        email: data[:email] || PagSeguro.email,
-        token: data[:token] || PagSeguro.token
-      }
+    def global_credentials(data)
+      if PagSeguro.app_id && PagSeguro.app_key
+        {
+          appId: PagSeguro.app_id,
+          appKey: PagSeguro.app_key
+        }
+      else
+        {
+          email: data[:email] || PagSeguro.email,
+          token: data[:token] || PagSeguro.token
+        }
+      end
     end
   end
 
