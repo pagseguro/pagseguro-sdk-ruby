@@ -14,6 +14,7 @@ A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilit
  - Consultar [transações abandonadas] \(este serviço utiliza a versão **V2** da API\)
  - Receber [notificações] \(este serviço utiliza a versão **V3** da API\)
  - Enviar estorno de transações \(este serviço utiliza a versão **V2** da API\)
+  - Cancelar transações \(este serviço utiliza a versão **V2** da API\)
 
 ## Requisitos
 
@@ -214,6 +215,24 @@ Você pode estornar pagamentos que as transações estiverem com status: Paga (3
     puts response.errors.join("\n")
   else
     puts "=> REFUND RESPONSE"
+    puts response.result
+  end
+```
+
+### Cancelamento de Transações
+
+Você pode cancelar transações que estiverem com status: Aguardando pagamento ou Em análise.
+
+```ruby
+  cancellation = PagSeguro::TransactionCancellation.new
+  cancellation.transaction_code = "AFB8FCF29496401681257C1ECE3A98FF"
+
+  response = cancellation.register
+
+  if response.errors.any?
+    puts response.errors.join("\n")
+  else
+    puts "=> CANCELLATION RESPONSE"
     puts response.result
   end
 ```
