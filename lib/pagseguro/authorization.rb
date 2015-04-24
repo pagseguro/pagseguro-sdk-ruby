@@ -48,11 +48,6 @@ module PagSeguro
       end
     end
 
-    # Serialize the XML object.
-    def self.load_from_xml(xml) # :nodoc:
-      Report.new(xml)
-    end
-
     private
     def before_initialize
       self.permissions = PERMISSIONS.keys
