@@ -85,7 +85,7 @@ module PagSeguro
 
   # The configuration intance for the thread
   def self.configuration
-    Thread.current[:pagseguro_config] ||= PagSeguro::Config.new
+    Thread.current[:pagseguro_config] ||= solve_configuration
   end
 
   # Set the global configuration.
@@ -107,5 +107,18 @@ module PagSeguro
   # The site url.
   def self.site_url(path)
     File.join(root_uri(:site), path)
+  end
+
+  private
+  def self.solve_configuration
+    other_thread && main_configuration ? main_configuration.clone : PagSeguro::Config.new
+  end
+
+  def self.other_thread
+    Thread.main != Thread.current
+  end 
+
+  def self.main_configuration
+    Thread.main[:pagseguro_config]
   end
 end

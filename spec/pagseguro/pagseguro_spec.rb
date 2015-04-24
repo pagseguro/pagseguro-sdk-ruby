@@ -31,6 +31,11 @@ describe PagSeguro do
       end
       thread.join
 
+      thread_2 = Thread.new do
+        expect(PagSeguro.receiver_email).to eql("RECEIVER_EMAIL")
+      end
+      thread_2.join
+
       expect(PagSeguro.receiver_email).to eql("RECEIVER_EMAIL")
     end
   end
