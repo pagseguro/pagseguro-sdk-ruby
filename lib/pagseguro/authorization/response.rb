@@ -19,7 +19,7 @@ module PagSeguro
       end
 
       def url
-        PagSeguro.api_url("authorization/request.jhtml?code=#{code}") if code
+        @url ||= PagSeguro.api_url("authorization/request.jhtml?code=#{code}") if code
       end
 
       def created_at
