@@ -17,3 +17,6 @@ response = PagSeguro::Authorization.new(options).authorize
 puts "=> Response"
 puts response.code
 puts response.created_at
+
+puts "Use this link to confirm authorizations:"
+puts "  link: #{response.url}"
