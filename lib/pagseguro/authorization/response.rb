@@ -18,6 +18,10 @@ module PagSeguro
         @code ||= response.data.css("authorizationRequest > code").text if success?
       end
 
+      def url
+        PagSeguro.api_url("authorization/request.jhtml?code=#{code}") if code
+      end
+
       def created_at
         @created_at ||= Time.parse(response.data.css("authorizationRequest > date").text) if success?
       end
