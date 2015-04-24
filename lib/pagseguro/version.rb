@@ -1,3 +1,3 @@
 module PagSeguro
-  VERSION = "2.1.1"
+  VERSION = "2.4.0"
 end
