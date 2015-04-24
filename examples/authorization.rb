@@ -6,11 +6,12 @@ require_relative "boot"
 # redirect_url is a required param
 
 options = {
-  credentials: PagSeguro::ApplicationCredentials.new("app4521929942", "1D47384E6565EBE664DAEF9AD690438B"),
+  credentials: PagSeguro::ApplicationCredentials.new("app452", "1D47384E"),
   permissions: [:searches, :notifications],
   notification_url: 'foo.com.br',
   redirect_url: 'bar.com.br'
 }
+
 response = PagSeguro::Authorization.new(options).authorize
 
 puts "=> Response"
