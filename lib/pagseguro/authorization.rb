@@ -21,7 +21,9 @@ module PagSeguro
       notifications: 'RECEIVE_TRANSACTION_NOTIFICATIONS',
       searches: 'SEARCH_TRANSACTIONS',
       pre_approvals: 'MANAGE_PAYMENT_PRE_APPROVALS',
-      payments: 'DIRECT_PAYMENTS'
+      payments: 'DIRECT_PAYMENT',
+      refunds: 'REFUND_TRANSACTIONS',
+      cancels: 'CANCEL_TRANSACTIONS'
     }
 
     def authorize
