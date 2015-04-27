@@ -18,7 +18,7 @@ describe PagSeguro::Authorization::Response do
 
     it { expect(response.code).to eql("D8DD848AC9C98D9EE44C5FB3A1E53913") }
     it { expect(response.created_at).to eql(Time.parse("2011-02-25T11:40:50.000-03:00")) }
-    it { expect(response.url).to eql("https://ws.pagseguro.uol.com.br/v2/authorization/request.jhtml?code=D8DD848AC9C98D9EE44C5FB3A1E53913") }
+    it { expect(response.url).to eql("https://pagseguro.uol.com.br/v2/authorization/request.jhtml?code=D8DD848AC9C98D9EE44C5FB3A1E53913") }
   end
 end
 
