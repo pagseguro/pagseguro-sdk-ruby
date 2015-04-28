@@ -20,6 +20,16 @@ module PagSeguro
         end
       end
 
+      def serialize_status_history
+        xml.css("status").map do |node|
+          PagSeguro::TransactionStatus.new(
+            code: node.css("code").text,
+            date: Time.parse(node.css("date").text),
+            notification_code: node.css("notificationCode").text
+          )
+        end
+      end
+
       def serialize_general(data)
         data[:code] = xml.css("> code").text
         data[:reference] = xml.css("reference").text
