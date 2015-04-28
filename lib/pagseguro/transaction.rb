@@ -76,6 +76,10 @@ module PagSeguro
       load_from_response send_request("transactions/notifications/#{code}", options)
     end
 
+    def self.find_status_history(code)
+      load_from_response = send_request("transactions/#{code}/statusHistory")
+    end
+
     # Search transactions within a date range.
     # Return a PagSeguro::SearchByDate instance
     #
@@ -191,7 +195,7 @@ module PagSeguro
     end
 
     # Send a get request to v3 API version, with the path given
-    def self.send_request(path, options)
+    def self.send_request(path, options = {})
       Request.get(path, 'v3', options)
     end
 

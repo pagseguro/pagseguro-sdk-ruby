@@ -36,6 +36,17 @@ describe PagSeguro::Transaction do
     end
   end
 
+  describe ".find_status_history" do
+    it "finds a transaction status history by the given transaction code" do
+      allow(PagSeguro::Request)
+      .to receive(:get)
+      .with("transactions/CODE/statusHistory", "v3", {})
+      .and_return(double.as_null_object)
+
+      PagSeguro::Transaction.find_status_history("CODE")
+    end
+  end
+
   describe ".find_by_date" do
     it "initializes search with default options" do
       now = Time.now
