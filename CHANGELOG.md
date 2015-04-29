@@ -2,6 +2,7 @@
 
 - Estorno de transações
 - Cancelamento de transações
+- Consulta de histórico de status de transações
 
 2.3.0
 
