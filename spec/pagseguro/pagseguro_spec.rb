@@ -2,6 +2,10 @@ require "spec_helper"
 
 describe PagSeguro do
   before do
+    PagSeguro.configure do |config|
+      config.app_id = "APP123"
+      config.app_key = "APPTOKEN"
+    end
     PagSeguro.email = "EMAIL"
     PagSeguro.token = "TOKEN"
     PagSeguro.receiver_email = "RECEIVER_EMAIL"
@@ -31,6 +35,10 @@ describe PagSeguro do
   context "default settings" do
     it { expect(PagSeguro.encoding).to eql("UTF-8") }
     it { expect(PagSeguro.environment).to eql(:production) }
+    it { expect(PagSeguro.account_credentials.email).to eql("EMAIL") }
+    it { expect(PagSeguro.account_credentials.token).to eql("TOKEN") }
+    it { expect(PagSeguro.application_credentials.app_id).to eql("APP123") }
+    it { expect(PagSeguro.application_credentials.app_key).to eql("APPTOKEN") }
   end
 
   describe ".api_url" do
