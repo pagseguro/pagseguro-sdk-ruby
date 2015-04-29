@@ -5,9 +5,9 @@ describe PagSeguro do
     PagSeguro.configure do |config|
       config.app_id = "APP123"
       config.app_key = "APPTOKEN"
+      config.email = "EMAIL"
+      config.token = "TOKEN"
     end
-    PagSeguro.email = "EMAIL"
-    PagSeguro.token = "TOKEN"
     PagSeguro.receiver_email = "RECEIVER_EMAIL"
   end
 
