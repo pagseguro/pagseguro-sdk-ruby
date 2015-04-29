@@ -87,6 +87,16 @@ module PagSeguro
     end
   end
 
+  # Returns an object with the configured account credentials
+  def self.account_credentials
+    PagSeguro::AccountCredentials.new(PagSeguro.email, PagSeguro.token)
+  end
+
+  # Returns an object with the configured application credentials
+  def self.application_credentials
+    PagSeguro::ApplicationCredentials.new(PagSeguro.app_id, PagSeguro.app_key)
+  end
+
   # Register endpoints by environment.
   def self.uris
     @uris ||= {
