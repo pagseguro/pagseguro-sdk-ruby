@@ -11,6 +11,10 @@ describe PagSeguro::Request do
   context "POST request" do
     before do
       FakeWeb.register_uri :post, %r[.+], body: "BODY"
+      PagSeguro.configure do |config|
+        config.app_id = nil
+        config.app_key = nil
+      end
     end
 
     it "includes credentials" do
