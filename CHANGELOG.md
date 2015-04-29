@@ -2,6 +2,7 @@
 
 - Estorno de transações
 - Cancelamento de transações
+- Consulta de histórico de status de transações
 
 ## Next release - 2.2.0
 
