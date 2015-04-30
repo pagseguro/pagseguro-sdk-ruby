@@ -1,11 +1,19 @@
 module PagSeguro
   class Session
     class Response
-      # The response errors.
-      attr_reader :errors
+      extend Forwardable
 
-      def initialize(errors = Errors.new)
-        @errors = errors
+      def_delegators :response, :success?
+
+      # The request response.
+      attr_reader :response
+
+      def initialize(response)
+        @response = response
+      end
+
+      def errors
+        @errors ||= Errors.new(response)
       end
     end
   end

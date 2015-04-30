@@ -5,13 +5,10 @@ module PagSeguro
     # The session id.
     attr_accessor :id
 
-    # Set the transaction errors.
-    attr_reader :errors
-
     # Create a payment session.
     # Return a PagSeguro::Session instance.
     def self.create
-      load_from_response Request.post("sessions", "v2")
+      Response.new(Request.post("sessions", "v2"))
     end
 
     # Serialize the HTTP response into data.
@@ -26,11 +23,6 @@ module PagSeguro
     # Serialize the XML object.
     def self.load_from_xml(xml) # :nodoc:
       new Serializer.new(xml).serialize
-    end
-
-    private
-    def after_initialize
-      @errors = Errors.new
     end
   end
 end
