@@ -7,7 +7,7 @@ describe PagSeguro::Session do |variable|
     context "when request succeeds" do
       let(:request) { double("request") }
 
-      it "creates a payment session" do
+      xit "creates a payment session" do
         expect(PagSeguro::Request).to receive(:post)
           .with("sessions", "v2")
           .and_return(request)
