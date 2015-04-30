@@ -57,8 +57,8 @@ module PagSeguro
       @shipping = ensure_type(Shipping, shipping)
     end
 
-    # Calls the PagSeguro web service and register this request for payment.
-    def register
+    # Calls the PagSeguro web service and create this request for payment.
+    def create
       Response.new(Request.post("transactions", api_version, params))
     end
 
