@@ -1,7 +1,9 @@
 require_relative "boot"
 require "active_support/all"
 
-report = PagSeguro::Transaction.find_by_date(starts_at: 29.days.ago, per_page: 1)
+# credentials = PagSeguro::ApplicationCredentials.new("app45", "1D47")
+# report = PagSeguro::Transaction.find_by_date({ starts_at: 29.days.ago, per_page: 1, credentials: credentials })
+report = PagSeguro::Transaction.find_by_date({ starts_at: 29.days.ago, per_page: 1 })
 
 while report.next_page?
   report.next_page!

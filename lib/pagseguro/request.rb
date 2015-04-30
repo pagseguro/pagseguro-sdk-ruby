@@ -49,7 +49,8 @@ module PagSeguro
       else
         data.merge!(global_credentials(data))
       end
-      data.merge({ charset: PagSeguro.encoding })
+      data.merge!({ charset: PagSeguro.encoding })
+      data.delete_if { |key, value| value.nil? }
     end
 
     def extended_headers(request_method, headers)
@@ -84,7 +85,6 @@ module PagSeguro
         }
       end
 
-      general_credentials.delete_if { |key, value| value.nil? }
       general_credentials
     end
 

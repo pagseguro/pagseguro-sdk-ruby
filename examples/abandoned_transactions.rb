@@ -1,6 +1,8 @@
 require_relative "boot"
 require "active_support/all"
 
+# credentials = PagSeguro::ApplicationCredentials.new("app45", "1D47")
+#report = PagSeguro::Transaction.find_abandoned(starts_at: 30.days.ago, size: 1, credentials: credentials)
 report = PagSeguro::Transaction.find_abandoned(
   starts_at: 30.days.ago,
   size: 1
