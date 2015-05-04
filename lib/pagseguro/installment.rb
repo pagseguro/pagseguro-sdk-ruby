@@ -21,10 +21,10 @@ module PagSeguro
     # Find installment options by a given amount
     # Optional. Credit card brand
     # Return an Array of PagSeguro::Installment instances
-    def self.find(amount, card_brand = nil)
+    def self.find(amount, options = {})
       string = "installments?amount=#{amount}"
-      string += "&cardBrand=#{card_brand}" if card_brand
-      load_from_response Request.get(string)
+      string += "&cardBrand=#{options.delete(:card_brand)}" if options[:card_brand]
+      load_from_response Request.get(string, options)
     end
 
     # Serialize the HTTP response into data.
