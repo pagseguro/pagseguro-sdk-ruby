@@ -9,7 +9,7 @@ installments.each do |installment|
 end
 
 # credentials = PagSeguro::ApplicationCredentials.new("app123", 'token')
-visa_installments = PagSeguro::Installment.find("100.00", { card_brand: "visa")
+visa_installments = PagSeguro::Installment.find("100.00", { card_brand: "visa" })
 # visa_installments = PagSeguro::Installment.find("100.00", { card_brand: "visa",
 #   credentials: credentials })
 
