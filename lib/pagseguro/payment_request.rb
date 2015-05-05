@@ -52,12 +52,6 @@ module PagSeguro
     # complete the payment.
     attr_accessor :abandon_url
 
-    # The email that identifies the request. Defaults to PagSeguro.email
-    attr_accessor :email
-
-    # The token that identifies the request. Defaults to PagSeguro.token
-    attr_accessor :token
-
     # The extra parameters for payment request
     attr_accessor :extra_params
 
@@ -86,8 +80,6 @@ module PagSeguro
     def before_initialize
       self.extra_params = []
       self.currency = "BRL"
-      self.email    = PagSeguro.email
-      self.token    = PagSeguro.token
     end
 
     def endpoint

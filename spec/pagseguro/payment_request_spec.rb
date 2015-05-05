@@ -9,8 +9,6 @@ describe PagSeguro::PaymentRequest do
   it_assigns_attribute :max_uses
   it_assigns_attribute :notification_url
   it_assigns_attribute :abandon_url
-  it_assigns_attribute :email
-  it_assigns_attribute :token
 
   it_ensures_type PagSeguro::Sender, :sender
   it_ensures_type PagSeguro::Shipping, :shipping
@@ -30,30 +28,6 @@ describe PagSeguro::PaymentRequest do
   it "sets default currency" do
     payment = PagSeguro::PaymentRequest.new
     expect(payment.currency).to eql("BRL")
-  end
-
-  describe "#email" do
-    before { PagSeguro.email = 'DEFAULT_EMAIL' }
-
-    it "returns the email set in the constructor" do
-      expect(described_class.new(email: 'foo').email).to eq('foo')
-    end
-
-    it "defaults to PagSeguro.email" do
-      expect(described_class.new.email).to eq('DEFAULT_EMAIL')
-    end
-  end
-
-  describe "#token" do
-    before { PagSeguro.token = 'DEFAULT_TOKEN' }
-
-    it "returns the token set in the constructor" do
-      expect(described_class.new(token: 'foo').token).to eq('foo')
-    end
-
-    it "defaults to PagSeguro.token" do
-      expect(described_class.new.token).to eq('DEFAULT_TOKEN')
-    end
   end
 
   describe "#register" do
