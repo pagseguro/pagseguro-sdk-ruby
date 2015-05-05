@@ -1,6 +1,9 @@
 require_relative "boot"
 
-installments = PagSeguro::Installment.find("100.00")
+credentials = PagSeguro.application_credentials
+credentials.authorization_code = "BF0C85F19BEB4011AC4D99C88C6E0638"
+
+installments = PagSeguro::Installment.find("100.00", {credentials: credentials})
 
 if installments.errors.any?
   puts "=> ERRORS"
@@ -14,10 +17,7 @@ else
   end
 end
 
-# credentials = PagSeguro::ApplicationCredentials.new("app123", 'token')
-visa_installments = PagSeguro::Installment.find("100.00", { card_brand: "visa" })
-# visa_installments = PagSeguro::Installment.find("100.00", { card_brand: "visa",
-#   credentials: credentials })
+visa_installments = PagSeguro::Installment.find("100.00", { card_brand: "visa", credentials: credentials })
 
 puts
 if installments.errors.any?
