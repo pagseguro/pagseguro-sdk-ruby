@@ -5,7 +5,9 @@ RSpec.describe "Creating Session" do
 
   context "when request succeeds" do
     before do
-      FakeWeb.register_uri :post, PagSeguro.api_url("v2/sessions"), body: "",
+      body = %[<?xml version="1.0"?><session>
+        <id>620f99e348c24f07877c927b353e49d3</id></session>]
+      FakeWeb.register_uri :post, PagSeguro.api_url("v2/sessions"), body: body,
         content_type: "text/xml"
     end
 
