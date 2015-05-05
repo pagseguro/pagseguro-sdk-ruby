@@ -72,11 +72,6 @@ describe PagSeguro::PaymentRequest do
     it "performs request" do
       params = double
 
-      params.should_receive(:merge).with({
-        email: PagSeguro.email,
-        token: PagSeguro.token
-      }).and_return(params)
-
       PagSeguro::PaymentRequest::Serializer.any_instance.stub to_params: params
 
       PagSeguro::Request

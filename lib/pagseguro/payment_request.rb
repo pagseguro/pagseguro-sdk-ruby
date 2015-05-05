@@ -78,10 +78,7 @@ module PagSeguro
 
     # Calls the PagSeguro web service and register this request for payment.
     def register
-      params = Serializer.new(self).to_params.merge({
-        email: email,
-        token: token
-      })
+      params = Serializer.new(self).to_params
       Response.new Request.post("checkout", params)
     end
 
