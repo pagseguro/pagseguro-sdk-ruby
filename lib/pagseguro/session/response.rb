@@ -15,6 +15,15 @@ module PagSeguro
       def errors
         @errors ||= Errors.new(response)
       end
+
+      def parse
+        # if response.success? and response.xml?
+        #   xml = Nokogiri::XML(response.body).css("session").first
+        #   Serializer.new(xml).serialize
+        # end
+
+        self
+      end
     end
   end
 end
