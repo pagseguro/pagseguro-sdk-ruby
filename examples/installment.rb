@@ -8,8 +8,10 @@ installments.each do |installment|
   puts installment.inspect
 end
 
-
-visa_installments = PagSeguro::Installment.find("100.00", "visa")
+# credentials = PagSeguro::ApplicationCredentials.new("app123", 'token')
+visa_installments = PagSeguro::Installment.find("100.00", { card_brand: "visa" })
+# visa_installments = PagSeguro::Installment.find("100.00", { card_brand: "visa",
+#   credentials: credentials })
 
 puts
 puts "=> VISA INSTALLMENTS"
