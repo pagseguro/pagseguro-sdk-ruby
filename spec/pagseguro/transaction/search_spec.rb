@@ -4,6 +4,7 @@ describe PagSeguro::Search do
   let(:search) { PagSeguro::Search.new("foo", "bar", 1) }
   let(:source) { File.read("./spec/fixtures/transactions/search.xml") }
   let(:xml) { Nokogiri::XML(source) }
+  let(:response) { double(:response, data: xml, unauthorized?: false, bad_request?: false) }
 
   context 'when being initialized' do
     it 'initializes with passed page number' do
@@ -17,30 +18,43 @@ describe PagSeguro::Search do
     end
   end
 
-  describe '#transactions' do
-    it 'returns a transaction search results' do
-      allow(search).to receive(:xml).and_return(xml)
-    end
-  end
+  describe 'methods that parse xml' do
+    before do
+      search.instance_exec(response) do |response|
+        @response = response
+        @errors = PagSeguro::Errors.new(response)
+      end
 
-  describe '#created_at' do
-    xit 'returns the created date' do
-      allow(search).to receive(:xml).and_return(xml)
-      expect(search.created_at).to eq(Time.parse("2011-02-16T20:14:35.000-02:00"))
+      allow(search).to receive(:perform_request_and_serialize)
     end
-  end
 
-  describe '#results' do
-    xit 'returns the number of results' do
-      allow(search).to receive(:xml).and_return(xml)
-      expect(search.results).to eq("10")
+    describe '#transactions' do
+      let(:transaction) { double(:transaction) }
+
+      it 'returns an array of transactions' do
+        expect(PagSeguro::Transaction).to receive(:load_from_xml).exactly(2)
+          .times
+          .and_return(transaction)
+        expect(search.transactions).to eq([transaction, transaction])
+      end
     end
-  end
 
-  describe '#total_pages' do
-    xit 'returns the number of pages' do
-      allow(search).to receive(:xml).and_return(xml)
-      expect(search.total_pages).to eq("1")
+    describe '#created_at' do
+      it 'returns the created date' do
+        expect(search.created_at).to eq(Time.parse("2011-02-16T20:14:35.000-02:00"))
+      end
+    end
+
+    describe '#results' do
+      it 'returns the number of results' do
+        expect(search.results).to eq(10)
+      end
+    end
+
+    describe '#total_pages' do
+      it 'returns the number of pages' do
+        expect(search.total_pages).to eq(1)
+      end
     end
   end
 
