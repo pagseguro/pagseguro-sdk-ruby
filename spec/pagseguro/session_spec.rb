@@ -3,13 +3,17 @@ require "spec_helper"
 describe PagSeguro::Session do |variable|
   describe "#create" do
     context "when request succeeds" do
-      let(:request) { double("request") }
+      let(:request) { double(:request) }
+      let(:response) { double(:response) }
 
-      xit "creates a payment session" do
+      it "creates a payment session" do
         expect(PagSeguro::Request).to receive(:post)
           .with("sessions", "v2")
           .and_return(request)
-        expect(PagSeguro::Session).to receive(:load_from_response).with(request)
+        expect(PagSeguro::Session::Response).to receive(:new)
+          .with(request)
+          .and_return(response)
+        expect(response).to receive(:parse)
 
         PagSeguro::Session.create
       end
