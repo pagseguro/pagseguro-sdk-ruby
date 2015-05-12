@@ -69,7 +69,7 @@ module PagSeguro
     end
 
     def params
-      SerializerParams.new(self).to_params
+      RequestSerializer.new(self).to_params
     end
 
     # The default PagSeguro API version

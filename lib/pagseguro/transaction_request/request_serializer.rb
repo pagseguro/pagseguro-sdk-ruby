@@ -1,6 +1,6 @@
 module PagSeguro
   class TransactionRequest
-    class SerializerParams
+    class RequestSerializer
       # The transaction request that will be serialized.
       attr_reader :transaction_request
 
