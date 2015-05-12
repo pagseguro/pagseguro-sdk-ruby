@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe PagSeguro::SearchByDate do
-  describe 'it searches transactions by date' do
-    let(:options) { { starts_at: Time.now, ends_at: Time.now, per_page: 1 } }
-    let(:search) { PagSeguro::SearchByDate.new("transactions", options, 1) }
+describe PagSeguro::SearchByReference do
+  describe 'it searches transactions by reference' do
+    let(:options) { { reference: "ref1234" } }
+    let(:search) { PagSeguro::SearchByReference.new("transactions", options, 1) }
     let(:source) { File.read("./spec/fixtures/transactions/search.xml") }
     let(:xml) { Nokogiri::XML(source) }
     let(:response) { double(:response, data: xml, unauthorized?: false, bad_request?: false) }
 
-    describe 'the search by date' do
+    describe 'the search by reference' do
       before do
         FakeWeb.register_uri :get, %r[#{PagSeguro.api_url('v3/transactions')}.*], body: xml
       end
