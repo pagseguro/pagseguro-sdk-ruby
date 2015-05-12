@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PagSeguro::TransactionRequest::Serializer do
+describe PagSeguro::TransactionRequest::ResponseSerializer do
   context "for existing transactions" do
     let(:source) { File.read("./spec/fixtures/transaction_request/success.xml") }
     let(:xml) { Nokogiri::XML(source) }

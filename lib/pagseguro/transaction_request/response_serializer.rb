@@ -1,6 +1,6 @@
 module PagSeguro
   class TransactionRequest
-    class Serializer
+    class ResponseSerializer
       attr_reader :xml
 
       def initialize(xml)
