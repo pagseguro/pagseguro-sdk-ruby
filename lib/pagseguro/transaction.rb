@@ -103,8 +103,7 @@ module PagSeguro
     # # +reference+: the transaction reference code
     #
     def self.find_by_reference(reference)
-      options = { reference: reference }
-      SearchByReference.new("transactions", options)
+      SearchByReference.new("transactions", { reference: reference })
     end
 
     # Get abandoned transactions.
