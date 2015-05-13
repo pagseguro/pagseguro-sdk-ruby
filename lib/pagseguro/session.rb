@@ -1,5 +1,10 @@
 module PagSeguro
   class Session
+    include Extensions::MassAssignment
+
+    # The session id.
+    attr_accessor :id
+
     # Create a payment session.
     # Return a PagSeguro::Session::Response instance.
     def self.create
