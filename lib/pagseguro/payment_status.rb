@@ -31,5 +31,9 @@ module PagSeguro
     def status
       STATUSES.fetch(id.to_s) { raise "PagSeguro::PaymentStatus#id isn't mapped" }
     end
+
+    def description
+      I18n.t(id, scope: "pagseguro.payment_status")
+    end
   end
 end
