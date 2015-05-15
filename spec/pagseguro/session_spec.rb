@@ -2,33 +2,37 @@ require "spec_helper"
 
 describe PagSeguro::Session do |variable|
   describe "#create" do
-    context "when request succeeds" do
-      let(:request) { double(:request) }
-      let(:response) { double(:response) }
+    let(:request) { double(:request) }
+    let(:response) { double(:response) }
 
-      it "creates a payment session" do
-        expect(PagSeguro::Request).to receive(:post)
-          .with("sessions", "v2")
-          .and_return(request)
-        expect(PagSeguro::Session::Response).to receive(:new)
-          .with(request)
-          .and_return(response)
-        expect(response).to receive(:parse)
+    before do
+      expect(PagSeguro::Request).to receive(:post)
+        .with("sessions", "v2")
+        .and_return(request)
+      expect(PagSeguro::Session::Response).to receive(:new)
+        .with(request)
+        .and_return(response)
+    end
+
+    context "when request succeeds" do
+      let(:serialized_data) { {id: "123"} }
+
+      it "creates a session" do
+        expect(response).to receive(:serialize).and_return(serialized_data)
+        expect(PagSeguro::Session).to receive(:new).with(serialized_data)
 
         PagSeguro::Session.create
       end
     end
 
     context "when request fails" do
-      it "returns response with errors" do
-        body = %[<?xml version="1.0"?><errors><error><code>1234</code>
-          <message>Sample error</message></error></errors>]
-        FakeWeb.register_uri :post, %r[.+], status: [400, "Bad Request"],
-          body: body, content_type: "text/xml"
-        response = PagSeguro::Session.create
+      let(:serialized_data) { {errors: PagSeguro::Errors.new} }
 
-        expect(response).to be_a(PagSeguro::Session::Response)
-        expect(response.errors).to include("Sample error")
+      it "does not create a session" do
+        expect(response).to receive(:serialize).and_return(serialized_data)
+        expect(PagSeguro::Session).to receive(:new).with(serialized_data)
+
+        PagSeguro::Session.create
       end
     end
   end
