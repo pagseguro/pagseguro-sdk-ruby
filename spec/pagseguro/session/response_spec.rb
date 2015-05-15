@@ -1,34 +1,38 @@
 require "spec_helper"
 
 RSpec.describe PagSeguro::Session::Response do
-  let(:response) do
-    double(:response, xml?: true, unauthorized?: false, bad_request?: false)
-  end
+  let(:response) { double(:response) }
   subject { described_class.new(response) }
 
-  it "initializes with no errors" do
-    expect(subject.errors).to be_empty
-  end
+  describe "#serialize" do
+    context "when request succeeds" do
+      let(:serializer) { double(:serializer) }
+      let(:serialized_data) { double(:serialized_data) }
+      before do
+        expect(response).to receive(:success?).and_return(true)
+        expect(response).to receive(:xml?).and_return(true)
+      end
 
-  it "delegates .success? to response" do
-    expect(response).to receive(:success?).and_return(true)
-    expect(subject.success?).to be_truthy
-  end
+      it "returns a hash with serialized response data" do
+        expect(response).to receive(:body).and_return("")
+        expect(PagSeguro::Session::Serializer).to receive(:new).and_return(serializer)
+        expect(serializer).to receive(:serialize).and_return(serialized_data)
 
-  describe ".parse" do
-    before do
-      expect(response).to receive(:success?).and_return(true)
-      expect(subject).to receive(:serialize).and_return({id: "1"})
+        expect(subject.serialize).to eq(serialized_data)
+      end
     end
 
-    it "returns self" do
-      expect(subject.parse).to eq(subject)
-    end
+    context "when request fails" do
+      before do
+        expect(response).to receive(:success?).and_return(false)
+      end
 
-    it "creates attributes accessors for serialized data" do
-      subject.parse
+      it "returns a hash with an errors object" do
+        expect(response).to receive(:unauthorized?).and_return(false)
+        expect(response).to receive(:bad_request?).and_return(false)
 
-      expect(subject.id).to eq("1")
+        expect(subject.serialize[:errors]).to be_a(PagSeguro::Errors)
+      end
     end
   end
 end
