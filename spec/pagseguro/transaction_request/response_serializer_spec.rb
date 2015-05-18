@@ -20,7 +20,7 @@ describe PagSeguro::TransactionRequest::ResponseSerializer do
     it { expect(data).to include(discount_amount: BigDecimal("0.00")) }
     it { expect(data).to include(net_amount: BigDecimal("49900.50")) }
     it { expect(data).to include(extra_amount: BigDecimal("0.00")) }
-    it { expect(data).to include(installments: 1) }
+    it { expect(data).to include(installment_count: 1) }
 
     it { expect(data[:items].size).to eq(2) }
     it { expect(data[:items].first).to include(id: "0001") }
