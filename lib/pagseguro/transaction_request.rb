@@ -34,12 +34,51 @@ module PagSeguro
     # Set the payment mode.
     attr_accessor :payment_mode
 
-    # The extra parameters for payment request
+    # The extra parameters for payment request.
     attr_accessor :extra_params
+
+    # The transaction code returned from api.
+    attr_reader :code
+
+    # The transaction type returned from api.
+    attr_reader :type_id
+
+    # The payment link returned from api.
+    attr_reader :payment_link
+
+    # The transaction status returned from api.
+    attr_reader :status
+
+    # The payment method returned from api.
+    attr_reader :payment_method
+
+    # The gross amount returned from api.
+    attr_reader :gross_amount
+
+    # The discount amount returned from api.
+    attr_reader :discount_amount
+
+    # The net amount returned from api.
+    attr_reader :net_amount
+
+    # The installments number returned from api.
+    attr_reader :installment_count
+
+    # The created at date returned from api
+    attr_reader :created_at
+
+    # The updated at date returned from api
+    attr_reader :updated_at
+
+    attr_writer :errors
 
     # Products/items in this payment request.
     def items
       @items ||= Items.new
+    end
+
+    def errors
+      @errors ||= Errors.new
     end
 
     # Subclasses must implement payment_method
@@ -57,12 +96,21 @@ module PagSeguro
       @shipping = ensure_type(Shipping, shipping)
     end
 
-    # Calls the PagSeguro web service and register this request for payment.
-    def register
-      Response.new(Request.post("transactions", api_version, params))
+    # Calls the PagSeguro web service and create this request for payment.
+    # Return boolean.
+    def create
+      request = Request.post("transactions", api_version, params)
+      response = Response.new(request)
+      update_attributes(response.serialize)
+
+      response.success?
     end
 
     private
+    attr_writer :code, :type_id, :payment_link, :status, :payment_method,
+      :gross_amount, :discount_amount, :net_amount, :installment_count,
+      :created_at, :updated_at
+
     def before_initialize
       self.currency = "BRL"
       self.extra_params = []
@@ -70,6 +118,21 @@ module PagSeguro
 
     def params
       RequestSerializer.new(self).to_params
+    end
+
+    def update_attributes(attrs)
+      attrs.map { |name, value| send("#{name}=", value) }
+    end
+
+    # Used to set response items from api.
+    def items=(items)
+      @items = Items.new
+      items.map { |item| @items << item }
+    end
+
+    # Used to set the payment method from api.
+    def payment_method=(payment_method)
+      @payment_method = ensure_type(PaymentMethod, payment_method)
     end
 
     # The default PagSeguro API version

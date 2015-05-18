@@ -1,30 +1,26 @@
 module PagSeguro
   class TransactionRequest
     class Response
-      extend Forwardable
-
-      def_delegators :response, :success?
-      attr_reader :response
-
       def initialize(response)
         @response = response
       end
 
-      def errors
-        @errors ||= Errors.new(response)
+      def serialize
+        if success?
+          xml = Nokogiri::XML(response.body).css("transaction").first
+          ResponseSerializer.new(xml).serialize
+        else
+          { errors: Errors.new(response) }
+        end
       end
 
-      def code
-        @code ||= response.data.css("transaction > code").text if success?
+      def success?
+        (response.success? && response.xml?) ? true : false
       end
 
-      def created_at
-        @created_at ||= Time.parse(response.data.css("transaction > date").text) if success?
-      end
-
-      def payment_link
-        @payment_link ||= response.data.css("transaction > paymentLink").text if success?
-      end
+      private
+      # The request response.
+      attr_reader :response
     end
   end
 end

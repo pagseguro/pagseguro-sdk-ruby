@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PagSeguro::TransactionRequest::Response do
+RSpec.describe PagSeguro::Session::Response do
   let(:response) { double(:response) }
   subject { described_class.new(response) }
 
@@ -15,8 +15,7 @@ describe PagSeguro::TransactionRequest::Response do
 
       it "returns a hash with serialized response data" do
         expect(response).to receive(:body).and_return("")
-        expect(PagSeguro::TransactionRequest::ResponseSerializer).to receive(:new)
-          .and_return(serializer)
+        expect(PagSeguro::Session::Serializer).to receive(:new).and_return(serializer)
         expect(serializer).to receive(:serialize).and_return(serialized_data)
 
         expect(subject.serialize).to eq(serialized_data)
