@@ -73,16 +73,50 @@ puts "=> REQUEST"
 puts PagSeguro::TransactionRequest::Serializer.new(payment).to_params
 puts
 
-response = payment.register
+transaction = payment.register
 
-if response.errors.any?
+if transaction.errors.any?
   puts "=> ERRORS"
-  puts response.errors.to_a
+  puts transaction.errors.join("\n")
 else
-  puts "=> RESPONSE"
-  puts response.code
-  puts response.created_at
+  puts "=> Transaction"
+  puts "  code: #{transaction.code}"
+  puts "  reference: #{transaction.reference}"
+  puts "  type: #{transaction.type_id}"
+  puts "  payment link: #{transaction.payment_link}"
+  puts "  status: #{transaction.status}"
+  puts "  payment method type: #{transaction.payment_method.type}"
+  puts "  created at: #{transaction.created_at}"
+  puts "  updated at: #{transaction.updated_at}"
+  puts "  gross amount: #{transaction.gross_amount.to_f}"
+  puts "  discount amount: #{transaction.discount_amount.to_f}"
+  puts "  net amount: #{transaction.net_amount.to_f}"
+  puts "  extra amount: #{transaction.extra_amount.to_f}"
+  puts "  installment count: #{transaction.installment_count}"
 
-  puts
-  puts response.inspect
+  puts "    => Items"
+  puts "      items count: #{transaction.items.size}"
+  transaction.items.each do |item|
+    puts "      item id: #{item.id}"
+    puts "      description: #{item.description}"
+    puts "      quantity: #{item.quantity}"
+    puts "      amount: #{item.amount.to_f}"
+  end
+
+  puts "    => Sender"
+  puts "      name: #{transaction.sender.name}"
+  puts "      email: #{transaction.sender.email}"
+  puts "      phone: (#{transaction.sender.phone.area_code}) #{transaction.sender.phone.number}"
+  puts "      document: #{transaction.sender.document.type}: #{transaction.sender.document.value}"
+
+  puts "    => Shipping"
+  puts "      street: #{transaction.shipping.address.street}, #{transaction.shipping.address.number}"
+  puts "      complement: #{transaction.shipping.address.complement}"
+  puts "      postal code: #{transaction.shipping.address.postal_code}"
+  puts "      district: #{transaction.shipping.address.district}"
+  puts "      city: #{transaction.shipping.address.city}"
+  puts "      state: #{transaction.shipping.address.state}"
+  puts "      country: #{transaction.shipping.address.country}"
+  puts "      type: #{transaction.shipping.type_name}"
+  puts "      cost: #{transaction.shipping.cost}"
 end
