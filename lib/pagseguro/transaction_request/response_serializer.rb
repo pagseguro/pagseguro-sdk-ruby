@@ -44,7 +44,7 @@ module PagSeguro
         data[:discount_amount] = BigDecimal(xml.css("discountAmount").text)
         data[:net_amount] = BigDecimal(xml.css("netAmount").text)
         data[:extra_amount] = BigDecimal(xml.css("extraAmount").text)
-        data[:installments] = xml.css("installmentCount").text.to_i
+        data[:installment_count] = xml.css("installmentCount").text.to_i
       end
 
       def serialize_items(data)
