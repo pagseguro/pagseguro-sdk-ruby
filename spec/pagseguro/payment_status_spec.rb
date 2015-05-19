@@ -2,20 +2,18 @@
 require "spec_helper"
 
 shared_examples_for "payment status mapping" do |id, status, description|
-  before :all do
-    @payment_status = PagSeguro::PaymentStatus.new(id)
-  end
+  let(:payment_status) { PagSeguro::PaymentStatus.new(id) }
 
   it "returns #{status} as status when id is #{id}" do
-    expect(@payment_status.status).to eql(status)
+    expect(payment_status.status).to eql(status)
   end
 
   it "detects as #{status}" do
-    expect(@payment_status.public_send("#{status}?")).to be
+    expect(payment_status.public_send("#{status}?")).to be
   end
 
   it "described as #{description}" do
-    expect(@payment_status.description).to eq(description)
+    expect(payment_status.description).to eq(description)
   end
 end
 
