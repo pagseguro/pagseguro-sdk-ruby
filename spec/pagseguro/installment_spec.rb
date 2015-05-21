@@ -87,7 +87,7 @@ describe PagSeguro::Installment do
     let(:data) { double(:data) }
 
     it "serializes the xml" do
-      expect(PagSeguro::Installment::Serializer).to receive(:new).with(xml)
+      expect(PagSeguro::Installment::ResponseSerializer).to receive(:new).with(xml)
         .and_return(serializer)
       expect(serializer).to receive(:serialize).and_return(data)
       expect(PagSeguro::Installment).to receive(:new).with(data)

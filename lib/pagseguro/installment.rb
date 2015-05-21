@@ -40,7 +40,7 @@ module PagSeguro
 
     # Serialize the XML object.
     def self.load_from_xml(xml) # :nodoc:
-      new Serializer.new(xml).serialize
+      new ResponseSerializer.new(xml).serialize
     end
   end
 end
