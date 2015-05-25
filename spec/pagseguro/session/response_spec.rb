@@ -1,20 +1,19 @@
 require "spec_helper"
 
 RSpec.describe PagSeguro::Session::Response do
-  let(:response) { double(:response) }
-  subject { described_class.new(response) }
+  let(:http_response) do
+    response = double(body: "", code: 200, content_type: "text/xml", "[]" => nil)
+    Aitch::Response.new({xml_parser: Aitch::XMLParser}, response)
+  end
+
+  subject { described_class.new(http_response) }
 
   describe "#serialize" do
     context "when request succeeds" do
       let(:serializer) { double(:serializer) }
       let(:serialized_data) { double(:serialized_data) }
-      before do
-        expect(response).to receive(:success?).and_return(true)
-        expect(response).to receive(:xml?).and_return(true)
-      end
 
       it "returns a hash with serialized response data" do
-        expect(response).to receive(:body).and_return("")
         expect(PagSeguro::Session::Serializer).to receive(:new).and_return(serializer)
         expect(serializer).to receive(:serialize).and_return(serialized_data)
 
@@ -24,13 +23,10 @@ RSpec.describe PagSeguro::Session::Response do
 
     context "when request fails" do
       before do
-        expect(response).to receive(:success?).and_return(false)
+        expect(http_response).to receive(:success?).and_return(false)
       end
 
       it "returns a hash with an errors object" do
-        expect(response).to receive(:unauthorized?).and_return(false)
-        expect(response).to receive(:bad_request?).and_return(false)
-
         expect(subject.serialize[:errors]).to be_a(PagSeguro::Errors)
       end
     end
