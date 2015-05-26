@@ -18,33 +18,21 @@ module PagSeguro
     # Set interest free.
     attr_accessor :interest_free
 
+    attr_writer :errors
+
+    def errors
+      @errors ||= Errors.new
+    end
+
     # Find installment options by a given amount
     # Optional. Credit card brand
     # Return an Array of PagSeguro::Installment instances
     def self.find(amount, card_brand = nil)
       string = "installments?amount=#{amount}"
       string += "&cardBrand=#{card_brand}" if card_brand
-      load_from_response Request.get(string, api_version)
-    end
 
-    # Serialize the HTTP response into data.
-    def self.load_from_response(response) # :nodoc:
-      if response.success? and response.xml?
-        Nokogiri::XML(response.body).css("installments > installment").map do |node|
-          load_from_xml(node)
-        end
-      else
-        Response.new Errors.new(response)
-      end
-    end
-
-    # Serialize the XML object.
-    def self.load_from_xml(xml) # :nodoc:
-      new ResponseSerializer.new(xml).serialize
-    end
-
-    def self.api_version
-      'v2'
+      response = Request.get(string, 'v2')
+      Response.new(response).serialize
     end
   end
 end
