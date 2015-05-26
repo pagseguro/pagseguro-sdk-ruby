@@ -6,7 +6,7 @@ describe PagSeguro::AuthorizationRequest::Response do
     Aitch::Response.new({xml_parser: Aitch::XMLParser}, response)
   end
 
-  subject(:response) { described_class.new(http_response) }
+  subject { described_class.new(http_response) }
 
   describe "#serialize" do
     context "when request succeeds" do
