@@ -14,7 +14,7 @@ RSpec.describe PagSeguro::Session::Response do
       let(:serialized_data) { double(:serialized_data) }
 
       it "returns a hash with serialized response data" do
-        expect(PagSeguro::Session::Serializer).to receive(:new).and_return(serializer)
+        expect(PagSeguro::Session::ResponseSerializer).to receive(:new).and_return(serializer)
         expect(serializer).to receive(:serialize).and_return(serialized_data)
 
         expect(subject.serialize).to eq(serialized_data)
