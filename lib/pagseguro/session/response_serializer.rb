@@ -1,6 +1,6 @@
 module PagSeguro
   class Session
-    class Serializer
+    class ResponseSerializer
       # The session that will be serialized
       attr_reader :xml
 
