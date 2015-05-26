@@ -1,30 +1,26 @@
 module PagSeguro
   class Authorization
     class Response
-      extend Forwardable
-
-      def_delegators :response, :success?
-      attr_reader :response
-
       def initialize(response)
         @response = response
       end
 
-      def errors
-        @errors = response
+      def serialize
+        if response.success? && response.xml?
+          xml = Nokogiri::XML(response.body).css('authorization').first
+          ResponseSerializer.new(xml).serialize
+        else
+          { errors: Errors.new(response) }
+        end
       end
 
-      def code
-        @code ||= response.data.css("authorizationRequest > code").text if success?
+      def success?
+        (response.success? && response.xml?) ? true : false
       end
 
-      def url
-        @url ||= PagSeguro.site_url("authorization/request.jhtml?code=#{code}") if code
-      end
-
-      def created_at
-        @created_at ||= Time.parse(response.data.css("authorizationRequest > date").text) if success?
-      end
+      private
+      # The request response.
+      attr_reader :response
     end
   end
 end

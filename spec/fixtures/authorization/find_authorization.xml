@@ -2,9 +2,6 @@
   <code>9D7FF2E921216F1334EE9FBEB7B4EBBC</code>
   <creationDate>2011-03-30T14:20:13.000-03:00</creationDate>
   <reference>ref1234</reference>
-  <account>
-    <publicKey>PUB5B25BA316D9B4D079696254728D4D784</publicKey>
-  </account>
   <permissions>
     <permission>
       <code>CREATE_CHECKOUTS</code>
