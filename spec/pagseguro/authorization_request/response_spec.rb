@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PagSeguro::Authorization::Response do
+describe PagSeguro::AuthorizationRequest::Response do
   let(:http_response) do
     response = double(body: "", code: 200, content_type: "text/xml", "[]" => nil)
     Aitch::Response.new({xml_parser: Aitch::XMLParser}, response)
@@ -14,7 +14,7 @@ describe PagSeguro::Authorization::Response do
       let(:serialized_data) { double(:serialized_data) }
 
       it "returns a hash with serialized response data" do
-        expect(PagSeguro::Authorization::ResponseSerializer).to receive(:new)
+        expect(PagSeguro::AuthorizationRequest::ResponseSerializer).to receive(:new)
           .and_return(serializer)
         expect(serializer).to receive(:serialize).and_return(serialized_data)
 

@@ -1,5 +1,5 @@
 module PagSeguro
-  class Authorization
+  class AuthorizationRequest
     class Response
       def initialize(response)
         @response = response
@@ -7,7 +7,7 @@ module PagSeguro
 
       def serialize
         if response.success? && response.xml?
-          xml = Nokogiri::XML(response.body).css('authorization').first
+          xml = Nokogiri::XML(response.body).css('authorizationRequest').first
           ResponseSerializer.new(xml).serialize
         else
           { errors: Errors.new(response) }
