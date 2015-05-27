@@ -7,6 +7,7 @@ describe PagSeguro::Authorization do
   let(:options) { { crendentials: crendentials} }
   let(:request) { double(:request) }
   let(:response) { double(:response) }
+  let(:serialized_data) { { code: 1234 } }
 
   describe ".find_by_notification_code" do
     before do
@@ -16,24 +17,31 @@ describe PagSeguro::Authorization do
       expect(PagSeguro::Authorization::Response).to receive(:new)
         .with(request)
         .and_return(response)
-      expect(response).to receive(:serialize).and_return(PagSeguro::Authorization.new)
+      expect(response).to receive(:serialize).and_return(serialized_data)
     end
 
-    xit "finds authorization by the given notificationCode" do
-      authorization = PagSeguro::Authorization.find_by_notification_code(notification_code, options)
-      expect(authorization).to be_a(PagSeguro::Authorization)
+    it "finds authorization by the given notificationCode" do
+      expect(PagSeguro::Authorization).to receive(:new).with(serialized_data)
+
+      PagSeguro::Authorization.find_by_notification_code(notification_code, options)
     end
   end
 
   describe ".find_by_code" do
-    xit "finds authorization by the given notificationCode" do
-      PagSeguro::Authorization.stub :load_from_response
-
+    before do
       expect(PagSeguro::Request).to receive(:get)
-        .with('authorizations/CODE', {})
-        .and_return(double.as_null_object)
+        .with("authorizations/1234", options)
+        .and_return(request)
+      expect(PagSeguro::Authorization::Response).to receive(:new)
+        .with(request)
+        .and_return(response)
+      expect(response).to receive(:serialize).and_return(serialized_data)
+    end
 
-      PagSeguro::Authorization.find_by_code("CODE")
+    it "finds authorization by the given notificationCode" do
+      expect(PagSeguro::Authorization).to receive(:new).with(serialized_data)
+
+      PagSeguro::Authorization.find_by_code(code, options)
     end
   end
 end
