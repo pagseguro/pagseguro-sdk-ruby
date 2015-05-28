@@ -9,6 +9,9 @@ module PagSeguro
       end
 
       def to_params
+        params[:amount] = data[:amount]
+        params[:cardBrand] = data[:card_brand] if data[:card_brand]
+
         params
       end
 

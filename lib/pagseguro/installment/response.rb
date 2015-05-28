@@ -8,7 +8,7 @@ module PagSeguro
       def serialize
         if response.success? && response.xml?
           Nokogiri::XML(response.body).css("installments > installment").map do |node|
-            ResponseSerializer.new(xml).serialize
+            ResponseSerializer.new(node).serialize
           end
         else
           { errors: Errors.new(response) }

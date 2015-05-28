@@ -26,13 +26,12 @@ module PagSeguro
 
     # Find installment options by a given amount
     # Optional. Credit card brand
-    # Return an Array of PagSeguro::Installment instances
+    # Return a PagSeguro::Installment::Collection instance
     def self.find(amount, card_brand = nil)
-      string = "installments?amount=#{amount}"
-      string += "&cardBrand=#{card_brand}" if card_brand
-
-      response = Request.get(string, 'v2')
-      Response.new(response).serialize
+      params = RequestSerializer.new({ amount: amount, card_brand: card_brand })
+        .to_params
+      response = Request.get("installments", "v2", params)
+      Collection.new Response.new(response).serialize
     end
   end
 end
