@@ -8,41 +8,45 @@ describe PagSeguro::Installment do
   it_assigns_attribute :interest_free
 
   describe ".find" do
+    let(:request_serializer) { double(:request_serializer, to_params: params) }
+    let(:params) { { amount: "100.00", card_brand: "visa" } }
+    let(:request) { double(:request) }
+    let(:response) { double(:response) }
+
+    before do
+      expect(PagSeguro::Installment::RequestSerializer).to receive(:new)
+        .with(params)
+        .and_return(request_serializer)
+      expect(PagSeguro::Request).to receive(:get)
+        .with("installments", "v2", params)
+        .and_return(request)
+      expect(PagSeguro::Installment::Response).to receive(:new)
+        .with(request)
+        .and_return(response)
+    end
+
     context "when request succeeds" do
-      let(:request) { double("request") }
-      let(:version) { 'v2' }
+      let(:serialized_data) { [{amount: "100.00", card_brand: "visa"}] }
 
-      xit "finds installments by the given amount" do
-        expect(PagSeguro::Request).to receive(:get)
-          .with("installments?amount=100.00", version)
-          .and_return(request)
-        expect(PagSeguro::Installment).to receive(:load_from_response)
-          .with(request)
+      it "finds installments by the given amount" do
+        expect(response).to receive(:serialize).and_return(serialized_data)
+        expect(PagSeguro::Installment::Collection).to receive(:new)
+          .with(serialized_data)
 
-        PagSeguro::Installment.find("100.00")
-      end
-
-      xit "find installments by amount and credit card brand" do
-        expect(PagSeguro::Request).to receive(:get)
-          .with("installments?amount=100.00&cardBrand=visa", version)
-          .and_return(request)
-        expect(PagSeguro::Installment).to receive(:load_from_response)
-          .with(request)
-
-        PagSeguro::Installment.find("100.00", :visa)
+        PagSeguro::Installment.find("100.00", "visa")
       end
     end
 
     context "when request fails" do
-      xit "returns response with errors" do
-        body = %[<?xml version="1.0"?><errors><error><code>1234</code>
-          <message>Sample error</message></error></errors>]
-        FakeWeb.register_uri :get, %r[.+], status: [400, "Bad Request"],
-          body: body, content_type: "text/xml"
-        response = PagSeguro::Installment.find("invalid")
+      let(:response) { double(:response, success?: false) }
+      let(:serialized_data) { {errors: PagSeguro::Errors.new} }
 
-        expect(response).to be_a(PagSeguro::Installment::Response)
-        expect(response.errors).to include("Sample error")
+      it "returns error" do
+        expect(response).to receive(:serialize).and_return(serialized_data)
+        expect(PagSeguro::Installment::Collection).to receive(:new)
+          .with(serialized_data)
+
+        PagSeguro::Installment.find("100.00", "visa")
       end
     end
   end
