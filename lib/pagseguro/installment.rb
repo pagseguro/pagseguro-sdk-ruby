@@ -18,12 +18,6 @@ module PagSeguro
     # Set interest free.
     attr_accessor :interest_free
 
-    attr_writer :errors
-
-    def errors
-      @errors ||= Errors.new
-    end
-
     # Find installment options by a given amount
     # Optional. Credit card brand
     # Return a PagSeguro::Installment::Collection instance
