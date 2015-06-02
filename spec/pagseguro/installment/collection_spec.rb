@@ -19,13 +19,13 @@ describe PagSeguro::Installment::Collection do
       end
 
       it "has no installments" do
-        expect(subject.empty?).to be_truthy
+        expect(subject).to be_empty
       end
     end
 
     context "when options[:installments] is present" do
-      it { expect(subject.any?).to be_truthy }
-      it { expect(subject.empty?).to be_falsey }
+      it { expect(subject).to be_any }
+      it { expect(subject).not_to be_empty }
 
       it "has installments instances" do
         subject.each do |installment|
@@ -37,7 +37,7 @@ describe PagSeguro::Installment::Collection do
 
   describe "#errors" do
     it { expect(subject.errors).to be_a(PagSeguro::Errors) }
-    it { expect(subject.errors.empty?).to be_truthy }
+    it { expect(subject.errors).to be_empty }
   end
 
   describe "method delegation" do
