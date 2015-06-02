@@ -49,7 +49,7 @@ puts "=> REQUEST"
 puts PagSeguro::TransactionRequest::Serializer.new(payment).to_params
 puts
 
-transaction = payment.register
+transaction = payment.create
 
 if transaction.errors.any?
   puts "=> ERRORS"
