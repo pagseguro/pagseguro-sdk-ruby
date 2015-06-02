@@ -9,5 +9,6 @@ notifications:
   email:
   - lucas.renan@codeminer42.com
   - vitor.kusiaki@codeminer42.com
+  - dmitry.rocha@codeminer42.com
   slack:
     secure: H7PR+eH28CRGZ7E71EQ2xAjkbLX53eXbJ8nadHgx6W2gggNSB8UPw6gqQg/UC0lCbK6ejQ0wE/pEPfLBnCJkqL8mfBr7ADTqZe2fM/YxXQktdOlldJtZaxUikDwOWZSXdOG+3ITdbv/MQW/wehi8UWzFC+XkhJCudOPW1n+9bqs=
