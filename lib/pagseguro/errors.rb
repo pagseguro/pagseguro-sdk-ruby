@@ -8,8 +8,10 @@ module PagSeguro
     def initialize(response = nil)
       @response = response
       @messages = []
+    end
 
-      process_response if response
+    def add
+      process_response if @response
     end
 
     private
