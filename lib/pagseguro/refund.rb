@@ -12,14 +12,18 @@ module PagSeguro
     attr_accessor :value
 
     # Calls the PagSeguro webservice and register the refund.
+    # Return boolean.
     def register
-      params = Serializer.new(self).to_params
       Response.new(Request.post("transactions/refunds", api_version, params))
     end
 
     private
     def api_version
       "v2"
+    end
+
+    def params
+      RequestSerializer.new(self).to_params
     end
   end
 end
