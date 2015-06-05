@@ -11,7 +11,7 @@ describe PagSeguro::Refund do
     it "serializes refund" do
       serializer = double(:serializer, to_params: {})
 
-      expect(PagSeguro::Refund::Serializer).to receive(:new)
+      expect(PagSeguro::Refund::RequestSerializer).to receive(:new)
         .with(refund)
         .and_return(serializer)
 
