@@ -17,6 +17,7 @@ describe PagSeguro::Transaction do
       body = %[<?xml version="1.0"?><errors><error><code>1234</code><message>Sample error</message></error></errors>]
       FakeWeb.register_uri :get, %r[.+], status: [400, "Bad Request"], body: body, content_type: "text/xml"
       response = PagSeguro::Transaction.find_by_notification_code("invalid")
+      response.errors.add
 
       expect(response).to be_a(PagSeguro::Transaction::Response)
       expect(response.errors).to include("Sample error")

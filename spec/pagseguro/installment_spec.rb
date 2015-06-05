@@ -40,6 +40,7 @@ describe PagSeguro::Installment do
         FakeWeb.register_uri :get, %r[.+], status: [400, "Bad Request"],
           body: body, content_type: "text/xml"
         response = PagSeguro::Installment.find("invalid")
+        response.errors.add
 
         expect(response).to be_a(PagSeguro::Installment::Response)
         expect(response.errors).to include("Sample error")
