@@ -9,16 +9,20 @@ module PagSeguro
       @response = response
       @messages = []
 
-      process_response if response
+      process(@response) if response
+    end
+
+    def add(response)
+      process(response)
     end
 
     private
-    def process_response
-      @messages << error_message(:unauthorized, "Unauthorized") if @response.unauthorized?
+    def process(response)
+      @messages << error_message(:unauthorized, "Unauthorized") if response.unauthorized?
 
-      @response.data.css("errors > error").each do |error|
+      response.data.css("errors > error").each do |error|
         @messages << error_message(error.css("code").text, error.css("message").text)
-      end if @response.bad_request?
+      end if response.bad_request?
     end
 
     def error_message(code, message)
