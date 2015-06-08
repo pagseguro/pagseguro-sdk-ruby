@@ -1,23 +1,35 @@
 require "spec_helper"
 
 describe PagSeguro::Refund::Response do
-  context "when refund is created" do
-    # TODO: use helper when merge with 2.2.0 branch
-    def xml_response(path)
-      response = double(
-        body: File.read("./spec/fixtures/#{path}"),
-        code: 200,
-        content_type: "text/xml",
-        "[]" => nil
-      )
+  let(:http_response) do
+    response = double(body: "", code: 200, content_type: "text/xml", "[]" => nil)
+    Aitch::Response.new({xml_parser: Aitch::XMLParser}, response)
+  end
 
-      Aitch::Response.new({xml_parser: Aitch::XMLParser}, response)
+  subject { described_class.new(http_response) }
+
+  describe "#serialize" do
+    context "when request succeeds" do
+      let(:serializer) { double(:serializer) }
+      let(:serialized_data) { double(:serialized_data) }
+
+      it "returns a hash with serialized response data" do
+        expect(PagSeguro::Refund::ResponseSerializer).to receive(:new)
+          .and_return(serializer)
+        expect(serializer).to receive(:serialize).and_return(serialized_data)
+
+        expect(subject.serialize).to eq(serialized_data)
+      end
     end
 
-    let(:http_response) { xml_response("refund/success.xml") }
-    subject(:response) { described_class.new(http_response) }
+    context "when request fails" do
+      before do
+        expect(http_response).to receive(:success?).and_return(false)
+      end
 
-    it { expect(response.result).to eq("OK") }
+      it "returns a hash with an errors object" do
+        expect(subject.serialize[:errors]).to be_a(PagSeguro::Errors)
+      end
+    end
   end
 end
-
