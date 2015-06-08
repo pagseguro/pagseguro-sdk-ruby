@@ -1,45 +1,57 @@
 require "spec_helper"
 
 describe PagSeguro::TransactionCancellation do
+  let(:xml_parsed) { Nokogiri::XML(raw_xml) }
+
   it_assigns_attribute :transaction_code
 
   describe "#register" do
-    let(:cancellation) { PagSeguro::TransactionCancellation.new }
-    before { FakeWeb.register_uri :any, %r[.*?], body: "" }
-
-    it "serializes cancellation" do
-      serializer = double(:serializer, to_params: {})
-
-      expect(PagSeguro::TransactionCancellation::Serializer).to receive(:new)
-        .with(cancellation)
-        .and_return(serializer)
-
-      cancellation.register
+    subject { PagSeguro::TransactionCancellation.new }
+    let :http_request do
+      double(:ResponseRequest, success?: true, unauthorized?: false, bad_request?: false, data: xml_parsed, body: raw_xml, :xml? => true)
     end
 
-    it "performs request" do
-      expect(PagSeguro::Request).to receive(:post)
+    before do
+      allow(PagSeguro::Request).to receive(:post)
         .with("transactions/cancels", "v2", {})
-
-      cancellation.register
+        .and_return(http_request)
     end
 
-    it "initializes response" do
-      response = double(:response)
-      allow(PagSeguro::Request).to receive(:post).and_return(response)
+    context "when request succeds" do
+      let(:raw_xml) { File.read("./spec/fixtures/transaction_cancellation/success.xml") }
 
-      expect(PagSeguro::TransactionCancellation::Response).to receive(:new)
-        .with(response)
+      it "returns boolean" do
+        expect(subject.register).to be_truthy
+      end
 
-      cancellation.register
+      it "does not add errors" do
+        expect { subject.register }.not_to change { subject.errors.empty? }
+      end
+
+      it "updates attributes" do
+        expect { subject.register }.to change { subject.result }
+      end
     end
 
-    it "returns response" do
-      response = double(:response)
-      allow(PagSeguro::TransactionCancellation::Response).to receive(:new)
-        .and_return(response)
+    context "when request fails" do
+      before do
+        allow(http_request).to receive(:success?).and_return(false)
+        allow(http_request).to receive(:bad_request?).and_return(true)
+      end
 
-      expect(cancellation.register).to eq(response)
+      let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
+
+      it "adds errors" do
+        expect { subject.register }.to change { subject.errors.empty? }
+      end
     end
+  end
+
+  it '#update_attributes' do
+    cancellation = PagSeguro::TransactionCancellation.new
+
+    expect(cancellation).to receive(:result=).with("OK")
+
+    cancellation.update_attributes(result: "OK")
   end
 end

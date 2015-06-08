@@ -1,22 +1,32 @@
 module PagSeguro
   class TransactionCancellation
     class Response
-      extend Forwardable
+      def initialize(response, cancellation)
+        @response = response
+        @cancellation = cancellation
+      end
 
-      def_delegators :response, :success?
+      def serialize
+        if success?
+          xml = Nokogiri::XML(response.body)
+          cancellation.update_attributes(ResponseSerializer.new(xml).serialize)
+        else
+          cancellation.errors.add(response)
+        end
+
+        cancellation
+      end
+
+      def success?
+        response.success? && response.xml?
+      end
+
+      private
+      # The request response.
       attr_reader :response
 
-      def initialize(response)
-        @response = response
-      end
-
-      def errors
-        @errors ||= Errors.new(response)
-      end
-
-      def result
-        @result ||= response.data.css("result").text if success?
-      end
+      # The PagSeguro::TransactionCancellation instance.
+      attr_reader :cancellation
     end
   end
 end
