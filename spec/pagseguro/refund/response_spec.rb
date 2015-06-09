@@ -1,35 +1,39 @@
 require "spec_helper"
 
 describe PagSeguro::Refund::Response do
-  let(:http_response) do
-    response = double(body: "", code: 200, content_type: "text/xml", "[]" => nil)
-    Aitch::Response.new({xml_parser: Aitch::XMLParser}, response)
+  let(:refund) do
+    PagSeguro::Refund.new
   end
 
-  subject { described_class.new(http_response) }
+  subject { PagSeguro::Refund::Response.new(http_response, refund) }
 
-  describe "#serialize" do
-    context "when request succeeds" do
-      let(:serializer) { double(:serializer) }
-      let(:serialized_data) { double(:serialized_data) }
-
-      it "returns a hash with serialized response data" do
-        expect(PagSeguro::Refund::ResponseSerializer).to receive(:new)
-          .and_return(serializer)
-        expect(serializer).to receive(:serialize).and_return(serialized_data)
-
-        expect(subject.serialize).to eq(serialized_data)
-      end
+  context '#success?' do
+    let(:http_response) do
+      double(:HttpResponse, xml?: true)
     end
 
-    context "when request fails" do
-      before do
-        expect(http_response).to receive(:success?).and_return(false)
-      end
+    it 'delegate to response' do
+      allow(http_response).to receive(:success?).and_return(true)
+      expect(subject).to be_success
 
-      it "returns a hash with an errors object" do
-        expect(subject.serialize[:errors]).to be_a(PagSeguro::Errors)
-      end
+      allow(http_response).to receive(:success?).and_return(false)
+      expect(subject).not_to be_success
+    end
+  end
+
+  context '#serialize' do
+    let(:http_response) do
+      double(:HttpResponse, body: raw_xml, success?: true, xml?: true, unauthorized?: false, bad_request?: false)
+    end
+
+    let(:raw_xml) { File.read("./spec/fixtures/refund/success.xml") }
+
+    it 'return refund instance' do
+      expect(subject.serialize).to eq refund
+    end
+
+    it 'change result' do
+      expect { subject.serialize }.to change { refund.result }
     end
   end
 end
