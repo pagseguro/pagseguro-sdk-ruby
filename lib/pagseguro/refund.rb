@@ -11,10 +11,25 @@ module PagSeguro
     # If not informed, PagSeguro will assume the total transaction value.
     attr_accessor :value
 
+    # Result from request.
+    attr_accessor :result
+
+    # PagSeguro::Errors object.
+    attr_reader :errors
+
     # Calls the PagSeguro webservice and register the refund.
-    # Return boolean.
+    # Return PagSeguro::Refund.
     def register
-      Response.new(Request.post("transactions/refunds", api_version, params))
+      response_request = Request.post("transactions/refunds", api_version, params)
+      Response.new(response_request, self).serialize
+    end
+
+    def errors
+      @errors ||= Errors.new
+    end
+
+    def update_attributes(attrs)
+      attrs.map { |name, value| send("#{name}=", value) }
     end
 
     private
