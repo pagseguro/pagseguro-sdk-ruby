@@ -1,22 +1,33 @@
 module PagSeguro
   class Refund
     class Response
-      extend Forwardable
+      def initialize(response, refund)
+        @response = response
+        @refund = refund
+      end
 
-      def_delegators :response, :success?
+      def serialize
+        if success?
+          xml = Nokogiri::XML(response.body)
+          serialize = ResponseSerializer.new(xml).serialize
+          refund.update_attributes(serialize)
+        else
+          refund.errors.add(response)
+        end
+
+        refund
+      end
+
+      def success?
+        response.success? && response.xml?
+      end
+
+      private
+      # The request response.
       attr_reader :response
 
-      def initialize(response)
-        @response = response
-      end
-
-      def errors
-        @errors ||= Errors.new(response)
-      end
-
-      def result
-        @result ||= response.data.css("result").text if success?
-      end
+      # The refund object to return
+      attr_reader :refund
     end
   end
 end

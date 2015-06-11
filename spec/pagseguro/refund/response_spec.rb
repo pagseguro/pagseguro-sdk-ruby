@@ -1,23 +1,39 @@
 require "spec_helper"
 
 describe PagSeguro::Refund::Response do
-  context "when refund is created" do
-    # TODO: use helper when merge with 2.2.0 branch
-    def xml_response(path)
-      response = double(
-        body: File.read("./spec/fixtures/#{path}"),
-        code: 200,
-        content_type: "text/xml",
-        "[]" => nil
-      )
+  let(:refund) do
+    PagSeguro::Refund.new
+  end
 
-      Aitch::Response.new({xml_parser: Aitch::XMLParser}, response)
+  subject { PagSeguro::Refund::Response.new(http_response, refund) }
+
+  context '#success?' do
+    let(:http_response) do
+      double(:HttpResponse, xml?: true)
     end
 
-    let(:http_response) { xml_response("refund/success.xml") }
-    subject(:response) { described_class.new(http_response) }
+    it 'delegate to response' do
+      allow(http_response).to receive(:success?).and_return(true)
+      expect(subject).to be_success
 
-    it { expect(response.result).to eq("OK") }
+      allow(http_response).to receive(:success?).and_return(false)
+      expect(subject).not_to be_success
+    end
+  end
+
+  context '#serialize' do
+    let(:http_response) do
+      double(:HttpResponse, body: raw_xml, success?: true, xml?: true, unauthorized?: false, bad_request?: false)
+    end
+
+    let(:raw_xml) { File.read("./spec/fixtures/refund/success.xml") }
+
+    it 'return refund instance' do
+      expect(subject.serialize).to eq refund
+    end
+
+    it 'change result' do
+      expect { subject.serialize }.to change { refund.result }
+    end
   end
 end
-

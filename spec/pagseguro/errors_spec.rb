@@ -3,6 +3,7 @@ require "spec_helper"
 
 describe PagSeguro::Errors do
   let(:response) { double }
+  let(:http_response) { double(:http_response, unauthorized?: true, bad_request?: false) }
 
   context "when have no response" do
     it "returns errors" do
@@ -16,10 +17,11 @@ describe PagSeguro::Errors do
 
     before do
       response.stub unauthorized?: true, bad_request?: false
+      errors.add(http_response)
     end
 
-    it { should_not be_empty }
-    it { should include(I18n.t("pagseguro.errors.unauthorized")) }
+    it { expect(errors).not_to be_empty }
+    it { expect(errors).to include(I18n.t("pagseguro.errors.unauthorized")) }
   end
 
   context "when message can't be translated" do
@@ -84,6 +86,7 @@ describe PagSeguro::Errors do
 
     before do
       response.stub data: xml, unauthorized?: false, bad_request?: true
+      errors.add(http_response)
     end
 
     it { expect(errors).to include("Malformed request XML: XML document structures must start and end within the same entity..") }
