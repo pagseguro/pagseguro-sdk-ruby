@@ -9,6 +9,8 @@ module PagSeguro
 
       def to_params
         params[:credentials] = authorization.credentials if authorization.credentials
+        params[:initialDate] = authorization.initial_date if authorization.respond_to? :initial_date
+        params[:finalDate]   = authorization.final_date if authorization.respond_to? :final_date
 
         params
       end

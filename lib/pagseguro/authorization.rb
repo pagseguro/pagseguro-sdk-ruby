@@ -26,5 +26,11 @@ module PagSeguro
       request = Request.get("authorizations/#{code}", options)
       new Response.new(request).serialize
     end
+
+    def self.find_by_date(options)
+      request = Request.get("authorizations", RequestSerializer.new(options).to_params)
+      response = Response.new(request).serialize_collection
+      Collection.new(response)
+    end
   end
 end
