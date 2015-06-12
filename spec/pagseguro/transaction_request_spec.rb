@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe PagSeguro::TransactionRequest do |variable|
+  let(:xml_parsed) { Nokogiri::XML(raw_xml) }
+
   it_assigns_attribute :currency
   it_assigns_attribute :extra_amount
   it_assigns_attribute :reference
@@ -71,47 +73,52 @@ describe PagSeguro::TransactionRequest do |variable|
 
   describe "#create" do
     let(:transaction_request) { PagSeguro::TransactionRequest.new }
-    let(:request) { double(:request) }
-    let(:response) { double(:response) }
+    let(:request) { double(:request, success?: true, xml?: true, body: raw_xml) }
     let(:params) do
       {receiverEmail: "RECEIVER", currency: "BRL", paymentMethod: "credit_card"}
     end
 
     before do
-      transaction_request.instance_eval do
-        def payment_method
-          "credit_card"
-        end
-      end
+      PagSeguro.receiver_email = "RECEIVER"
 
-      expect(PagSeguro::Request).to receive(:post)
+      allow(transaction_request).to receive(:payment_method).and_return("credit_card")
+
+      allow(PagSeguro::Request).to receive(:post)
         .with("transactions", "v2", params)
         .and_return(request)
-      expect(PagSeguro::TransactionRequest::Response).to receive(:new)
-        .with(request)
-        .and_return(response)
-      expect(response).to receive(:serialize).and_return(serialized_data)
     end
 
     context "when request succeeds" do
-      let(:serialized_data) { {code: "123"} }
+      let(:raw_xml) { File.read("./spec/fixtures/transaction_request/success.xml") }
 
       it "creates a transaction request" do
-        expect(response).to receive(:success?).and_return(true)
-
-        expect(transaction_request.create).to be_truthy
-        expect(transaction_request.code).to eq(serialized_data[:code])
+        expect(transaction_request.create).not_to be_a(PagSeguro::TransactionRequest)
+        expect(transaction_request.code).to eq("9E884542-81B3-4419-9A75-BCC6FB495EF1")
       end
     end
 
     context "when request fails" do
-      let(:serialized_data) { {errors: PagSeguro::Errors.new} }
+      let :response_request do
+        double(:ResponseRequest, success?: false, unauthorized?: false, bad_request?: false, data: xml_parsed, body: raw_xml, :xml? => true)
+      end
+
+      before do
+        allow(response_request).to receive(:success?).and_return(false)
+        allow(response_request).to receive(:bad_request?).and_return(true)
+
+        allow(PagSeguro::Request).to receive(:post)
+          .and_return(response_request)
+      end
+
+      let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
       it "does not create a transaction request" do
-        expect(response).to receive(:success?).and_return(false)
-
-        expect(transaction_request.create).to be_falsey
+        expect(transaction_request.create).to be_falsy
         expect(transaction_request.code).to be_nil
+      end
+
+      it "add errors" do
+        expect { transaction_request.create }.to change { transaction_request.errors.empty? }
       end
     end
   end
