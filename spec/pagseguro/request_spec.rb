@@ -84,7 +84,7 @@ describe PagSeguro::Request do
           config.app_id = "APP123"
           config.app_key = "APPKEY"
         end
-        PagSeguro::Request.get("checkout")
+        PagSeguro::Request.get("checkout", "v3")
 
         expect(FakeWeb.last_request.path).to include("appId=APP123&appKey=APPKEY")
       end

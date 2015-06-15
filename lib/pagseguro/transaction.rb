@@ -66,14 +66,14 @@ module PagSeguro
 
     # Find a transaction by its transactionCode
     # Return a PagSeguro::Transaction instance
-    def self.find_by_code(code, options = {})
-      load_from_response Request.get("transactions/#{code}", options)
+    def self.find_by_code(code)
+      load_from_response send_request("transactions/#{code}")
     end
 
     # Find a transaction by its notificationCode.
     # Return a PagSeguro::Transaction instance.
-    def self.find_by_notification_code(code, options = {})
-      load_from_response Request.get("transactions/notifications/#{code}", options)
+    def self.find_by_notification_code(code)
+      load_from_response send_request("transactions/notifications/#{code}")
     end
 
     # Search transactions within a date range.
