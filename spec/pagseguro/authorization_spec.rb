@@ -12,7 +12,7 @@ describe PagSeguro::Authorization do
   describe ".find_by_notification_code" do
     before do
       expect(PagSeguro::Request).to receive(:get)
-        .with("authorizations/notifications/4321", options)
+        .with("authorizations/notifications/4321", 'v2', options)
         .and_return(request)
       expect(PagSeguro::Authorization::Response).to receive(:new)
         .with(request)
@@ -30,7 +30,7 @@ describe PagSeguro::Authorization do
   describe ".find_by_code" do
     before do
       expect(PagSeguro::Request).to receive(:get)
-        .with("authorizations/1234", options)
+        .with("authorizations/1234", 'v2', options)
         .and_return(request)
       expect(PagSeguro::Authorization::Response).to receive(:new)
         .with(request)

@@ -10,7 +10,13 @@ require "pagseguro/extensions/mass_assignment"
 require "pagseguro/extensions/ensure_type"
 require "pagseguro/extensions/credentiable"
 
+require "pagseguro/version"
+require "pagseguro/config"
+
+require "pagseguro/account_credentials"
+require "pagseguro/application_credentials"
 require "pagseguro/authorization"
+require "pagseguro/authorization/collection"
 require "pagseguro/authorization/request_serializer"
 require "pagseguro/authorization/response_serializer"
 require "pagseguro/authorization/response"
@@ -18,13 +24,15 @@ require "pagseguro/authorization_request"
 require "pagseguro/authorization_request/request_serializer"
 require "pagseguro/authorization_request/response_serializer"
 require "pagseguro/authorization_request/response"
-require "pagseguro/account_credentials"
-require "pagseguro/application_credentials"
-require "pagseguro/version"
-require "pagseguro/config"
+require "pagseguro/creditor_fee"
+require "pagseguro/authorization_request"
+require "pagseguro/authorization_request/request_serializer"
+require "pagseguro/authorization_request/response_serializer"
+require "pagseguro/authorization_request/response"
 require "pagseguro/errors"
 require "pagseguro/exceptions"
 require "pagseguro/address"
+require "pagseguro/document"
 require "pagseguro/shipping"
 require "pagseguro/phone"
 require "pagseguro/installment"
@@ -33,13 +41,14 @@ require "pagseguro/installment/serializer"
 require "pagseguro/item"
 require "pagseguro/items"
 require "pagseguro/payment_method"
+require "pagseguro/payment_release"
+require "pagseguro/payment_releases"
 require "pagseguro/payment_request"
 require "pagseguro/payment_request/serializer"
 require "pagseguro/payment_request/response"
 require "pagseguro/payment_status"
 require "pagseguro/permission"
 require "pagseguro/request"
-require "pagseguro/report"
 require "pagseguro/sender"
 require "pagseguro/notification"
 require "pagseguro/notification/authorization"
@@ -47,6 +56,10 @@ require "pagseguro/notification/transaction"
 require "pagseguro/transaction"
 require "pagseguro/transaction/response"
 require "pagseguro/transaction/serializer"
+require "pagseguro/transaction/search"
+require "pagseguro/transaction/search/search_by_date"
+require "pagseguro/transaction/search/search_by_reference"
+require "pagseguro/transaction/search/search_abandoned"
 
 I18n.load_path += Dir[File.expand_path("../../locales/*.yml", __FILE__)]
 
@@ -97,12 +110,12 @@ module PagSeguro
   def self.uris
     @uris ||= {
       production: {
-        api: "https://ws.pagseguro.uol.com.br/v2",
-        site: "https://pagseguro.uol.com.br/v2"
+        api: "https://ws.pagseguro.uol.com.br/",
+        site: "https://pagseguro.uol.com.br/"
       },
       sandbox: {
-        site: 'https://sandbox.pagseguro.uol.com.br/v2',
-        api:  'https://ws.sandbox.pagseguro.uol.com.br/v2'
+        site: 'https://sandbox.pagseguro.uol.com.br/',
+        api:  'https://ws.sandbox.pagseguro.uol.com.br/'
       }
     }
   end

@@ -51,12 +51,13 @@ describe PagSeguro do
     end
 
     it "returns production api url when the environment is :production" do
-      expect(PagSeguro.api_url("/some/path")).to eql("https://ws.pagseguro.uol.com.br/v2/some/path")
+      expect(PagSeguro.api_url("v2/some/path")).to eql("https://ws.pagseguro.uol.com.br/v2/some/path")
     end
 
     it "returns sandbox api url when the environment is :sandbox" do
       PagSeguro.environment = :sandbox
-      expect(PagSeguro.api_url("/some/path")).to eql("https://ws.sandbox.pagseguro.uol.com.br/v2/some/path")
+
+      expect(PagSeguro.api_url("v2/some/path")).to eql("https://ws.sandbox.pagseguro.uol.com.br/v2/some/path")
     end
   end
 
@@ -70,12 +71,12 @@ describe PagSeguro do
     end
 
     it "returns production site url when the environment is production" do
-      expect(PagSeguro.site_url("/some/path")).to eql("https://pagseguro.uol.com.br/v2/some/path")
+      expect(PagSeguro.site_url("v2/some/path")).to eql("https://pagseguro.uol.com.br/v2/some/path")
     end
 
     it "returns sandbox site url when the environment is :sandbox" do
       PagSeguro.environment = :sandbox
-      expect(PagSeguro.site_url("/some/path")).to eql("https://sandbox.pagseguro.uol.com.br/v2/some/path")
+      expect(PagSeguro.site_url("v2/some/path")).to eql("https://sandbox.pagseguro.uol.com.br/v2/some/path")
     end
   end
 end

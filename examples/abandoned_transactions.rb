@@ -22,7 +22,7 @@ while report.next_page?
     puts "   created at: #{transaction.created_at}"
     puts "   code: #{transaction.code}"
     puts "   type_id: #{transaction.type_id}"
-    puts "   gross amount: #{transaction.gross_amount}"
+    puts "   gross amount: #{transaction.gross_amount.to_f}"
     puts
   end
 end

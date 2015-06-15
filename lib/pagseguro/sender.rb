@@ -6,6 +6,9 @@ module PagSeguro
     # Get the sender phone.
     attr_reader :phone
 
+    # Get the sender document
+    attr_reader :document
+
     # Set the sender name.
     attr_accessor :name
 
@@ -18,6 +21,11 @@ module PagSeguro
     # Set the sender phone.
     def phone=(phone)
       @phone = ensure_type(Phone, phone)
+    end
+
+    # Set the sender document.
+    def document=(document)
+      @document = ensure_type(Document, document)
     end
   end
 end

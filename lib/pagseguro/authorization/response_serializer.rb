@@ -1,7 +1,6 @@
 module PagSeguro
   class Authorization
     class ResponseSerializer
-      attr_reader :xml
 
       def initialize(xml)
         @xml = xml
@@ -14,6 +13,7 @@ module PagSeguro
         end
       end
 
+      private
       def serialize_general(data)
         data[:code] = xml.css("> code").text
         data[:reference] = xml.css("reference").text
@@ -32,6 +32,8 @@ module PagSeguro
           data[:permissions] << permission
         end
       end
+
+      attr_reader :xml
     end
   end
 end

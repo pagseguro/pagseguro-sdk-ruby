@@ -7,7 +7,7 @@ describe PagSeguro::Transaction do
 
       PagSeguro::Request
         .should_receive(:get)
-        .with("transactions/notifications/CODE", {})
+        .with("transactions/notifications/CODE", "v3")
         .and_return(double.as_null_object)
 
       PagSeguro::Transaction.find_by_notification_code("CODE")
@@ -29,7 +29,20 @@ describe PagSeguro::Transaction do
 
       PagSeguro::Request
         .should_receive(:get)
-        .with("transactions/CODE", {})
+        .with("transactions/CODE", 'v3')
+        .and_return(double.as_null_object)
+
+      PagSeguro::Transaction.find_by_code("CODE")
+    end
+  end
+
+  describe ".find_by_code" do
+    it 'finds a transaction by its code' do
+      PagSeguro::Transaction.stub :load_from_response
+
+      PagSeguro::Request
+        .should_receive(:get)
+        .with("transactions/CODE", 'v3')
         .and_return(double.as_null_object)
 
       PagSeguro::Transaction.find_by_code("CODE")
@@ -37,31 +50,26 @@ describe PagSeguro::Transaction do
   end
 
   describe ".find_by_date" do
-    it "initializes report with default options" do
+    it "initializes search with default options" do
       now = Time.now
       Time.stub now: now
 
-      PagSeguro::Report
+      PagSeguro::SearchByDate
         .should_receive(:new)
-        .with(
-          PagSeguro::Transaction,
-          "transactions",
-          hash_including(per_page: 50, starts_at: now - 86400, ends_at: now),
-          0
-        )
+        .with("transactions",
+          hash_including(starts_at: now - 86400, ends_at: now, per_page: 50), 0)
 
       PagSeguro::Transaction.find_by_date
     end
 
-    it "initializes report with given options" do
+    it "initializes search with given options" do
       starts_at = Time.now - 3600
       ends_at = starts_at + 180
-      page = 1
+      page = 0
 
-      PagSeguro::Report
+      PagSeguro::SearchByDate
         .should_receive(:new)
         .with(
-          PagSeguro::Transaction,
           "transactions",
           hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at),
           page
@@ -74,15 +82,30 @@ describe PagSeguro::Transaction do
     end
   end
 
-  describe ".find_abandoned" do
-    it "initializes report with default options" do
+  describe ".find_by_reference" do
+    it 'initializes search with given reference code' do
       now = Time.now
       Time.stub now: now
 
-      PagSeguro::Report
+      PagSeguro::SearchByReference
         .should_receive(:new)
         .with(
-          PagSeguro::Transaction,
+          "transactions",
+          hash_including(reference: 'ref1234'),
+        )
+
+      PagSeguro::Transaction.find_by_reference('ref1234')
+    end
+  end
+
+  describe ".find_abandoned" do
+    it "initializes search with default options" do
+      now = Time.now
+      Time.stub now: now
+
+      PagSeguro::SearchAbandoned
+        .should_receive(:new)
+        .with(
           "transactions/abandoned",
           hash_including(per_page: 50, starts_at: now - 86400, ends_at: now - 900),
           0
@@ -91,22 +114,21 @@ describe PagSeguro::Transaction do
       PagSeguro::Transaction.find_abandoned
     end
 
-    it "initializes report with given options" do
+    it "initializes search with given options" do
       starts_at = Time.now - 3600
       ends_at = starts_at + 180
       page = 1
 
-      PagSeguro::Report
+      PagSeguro::SearchAbandoned
         .should_receive(:new)
         .with(
-          PagSeguro::Transaction,
           "transactions/abandoned",
           hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at),
           page
         )
 
       PagSeguro::Transaction.find_abandoned(
-        {per_page: 10, starts_at: starts_at, ends_at: ends_at},
+        { per_page: 10, starts_at: starts_at, ends_at: ends_at },
         page
       )
     end

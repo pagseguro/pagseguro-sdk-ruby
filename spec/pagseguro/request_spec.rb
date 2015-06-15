@@ -20,7 +20,7 @@ describe PagSeguro::Request do
     it "includes credentials" do
       PagSeguro.email = "EMAIL"
       PagSeguro.token = "TOKEN"
-      PagSeguro::Request.post("checkout")
+      PagSeguro::Request.post("checkout", "v3")
 
       expect(FakeWeb.last_request.body).to include("email=EMAIL&token=TOKEN")
     end
@@ -28,18 +28,18 @@ describe PagSeguro::Request do
     it "includes custom credentials" do
       PagSeguro.email = "EMAIL"
       PagSeguro.token = "TOKEN"
-      PagSeguro::Request.post("checkout", email: 'foo', token: 'bar')
+      PagSeguro::Request.post("checkout", "v3", email: 'foo', token: 'bar')
 
       expect(FakeWeb.last_request.body).to include("email=foo&token=bar")
     end
 
     it "includes encoding" do
-      PagSeguro::Request.post("checkout")
+      PagSeguro::Request.post("checkout", "v3")
       expect(FakeWeb.last_request.body).to include("charset=UTF-8")
     end
 
     it "include request headers" do
-      PagSeguro::Request.post("checkout")
+      PagSeguro::Request.post("checkout", "v3")
       request = FakeWeb.last_request
 
       expect(request["Accept-Charset"]).to eql("UTF-8")
@@ -56,9 +56,11 @@ describe PagSeguro::Request do
 
     context "when global acoount config is set" do
       it "includes account credentials" do
-        PagSeguro.email = "EMAIL"
-        PagSeguro.token = "TOKEN"
-        PagSeguro::Request.get("checkout")
+        PagSeguro.configure do |config|
+          config.email = "EMAIL"
+          config.token = "TOKEN"
+        end
+        PagSeguro::Request.get("checkout", "v3")
 
         expect(FakeWeb.last_request.path).to include("email=EMAIL&token=TOKEN")
       end
@@ -70,19 +72,31 @@ describe PagSeguro::Request do
           config.app_id = "APP123"
           config.app_key = "APPKEY"
         end
-        PagSeguro::Request.get("checkout")
+        PagSeguro::Request.get("checkout", "v3")
+
+        expect(FakeWeb.last_request.path).to include("appId=APP123&appKey=APPKEY")
+      end
+    end
+
+    context "when global app config is set" do
+      it "includes application credentials" do
+        PagSeguro.configure do |config|
+          config.app_id = "APP123"
+          config.app_key = "APPKEY"
+        end
+        PagSeguro::Request.get("checkout", "v3")
 
         expect(FakeWeb.last_request.path).to include("appId=APP123&appKey=APPKEY")
       end
     end
 
     it "includes encoding" do
-      PagSeguro::Request.get("checkout")
+      PagSeguro::Request.get("checkout", "v3")
       expect(FakeWeb.last_request.path).to include("charset=UTF-8")
     end
 
     it "include request headers" do
-      PagSeguro::Request.get("checkout")
+      PagSeguro::Request.get("checkout", "v3")
       request = FakeWeb.last_request
 
       expect(request["Accept-Charset"]).to eql("UTF-8")
