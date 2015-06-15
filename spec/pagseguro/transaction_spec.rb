@@ -42,7 +42,7 @@ describe PagSeguro::Transaction do
 
       PagSeguro::Request
         .should_receive(:get)
-        .with("transactions/CODE", {})
+        .with("transactions/CODE", 'v3')
         .and_return(double.as_null_object)
 
       PagSeguro::Transaction.find_by_code("CODE")
