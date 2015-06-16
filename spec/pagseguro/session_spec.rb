@@ -1,38 +1,40 @@
 require "spec_helper"
 
 describe PagSeguro::Session do |variable|
-  describe "#create" do
-    let(:request) { double(:request) }
-    let(:response) { double(:response) }
+  describe ".create" do
+    subject { PagSeguro::Session }
+    let(:request) do
+      double(:request, success?: true, xml?: true, data: xml_parsed,
+             body: raw_xml, unauthorized?: false, bad_request?: false)
+    end
+    let(:xml_parsed) { Nokogiri::XML(raw_xml) }
+    let(:raw_xml) { File.read("./spec/fixtures/session/success.xml") }
 
     before do
-      expect(PagSeguro::Request).to receive(:post)
+      allow(PagSeguro::Request).to receive(:post)
         .with("sessions", "v2")
         .and_return(request)
-      expect(PagSeguro::Session::Response).to receive(:new)
-        .with(request)
-        .and_return(response)
     end
 
     context "when request succeeds" do
-      let(:serialized_data) { {id: "123"} }
-
       it "creates a session" do
-        expect(response).to receive(:serialize).and_return(serialized_data)
-        expect(PagSeguro::Session).to receive(:new).with(serialized_data)
-
-        PagSeguro::Session.create
+        expect(subject.create).to be_a(PagSeguro::Session)
       end
     end
 
     context "when request fails" do
-      let(:serialized_data) { {errors: PagSeguro::Errors.new} }
+      before do
+        allow(request).to receive(:success?).and_return(false)
+        allow(request).to receive(:bad_request?).and_return(true)
+      end
+      let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
-      it "does not create a session" do
-        expect(response).to receive(:serialize).and_return(serialized_data)
-        expect(PagSeguro::Session).to receive(:new).with(serialized_data)
+      it "create a session" do
+        expect(subject.create).to be_a(PagSeguro::Session)
+      end
 
-        PagSeguro::Session.create
+      it "create a session with errors" do
+        expect(subject.create.errors).not_to be_empty
       end
     end
   end
