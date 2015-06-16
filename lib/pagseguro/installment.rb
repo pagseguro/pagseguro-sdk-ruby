@@ -22,10 +22,16 @@ module PagSeguro
     # Optional. Credit card brand
     # Return a PagSeguro::Installment::Collection instance
     def self.find(amount, card_brand = nil)
-      params = RequestSerializer.new({ amount: amount, card_brand: card_brand })
-        .to_params
-      response = Request.get("installments", "v2", params)
-      Collection.new Response.new(response).serialize
+      request = Request.get("installments", "v2", params(amount: amount, card_brand: card_brand))
+      collection = Collection.new
+      Response.new(request, collection).serialize
+
+      collection
+    end
+
+    private
+    def self.params(options)
+      RequestSerializer.new(options).to_params
     end
   end
 end

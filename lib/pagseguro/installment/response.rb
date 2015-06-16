@@ -1,21 +1,31 @@
 module PagSeguro
   class Installment
     class Response
-      def initialize(response)
+      def initialize(response, collection)
         @response = response
+        @collection = collection
       end
 
       def serialize
-        if response.success? && response.xml?
-          { installments: serialize_installments }
+        if success?
+          collection.installments = serialize_installments
         else
-          { errors: Errors.new(response) }
+          collection.errors.add(response)
         end
+
+        collection
+      end
+
+      def success?
+        response.success? && response.xml?
       end
 
       private
       # The request response.
       attr_reader :response
+
+      # The PagSeguro::Installment::Collection instance.
+      attr_reader :collection
 
       def serialize_installments
         Nokogiri::XML(response.body).css("installments > installment").map do |node|
