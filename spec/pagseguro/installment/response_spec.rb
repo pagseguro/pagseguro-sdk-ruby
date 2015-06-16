@@ -1,40 +1,51 @@
 require "spec_helper"
 
 RSpec.describe PagSeguro::Installment::Response do
-  let(:body) do
-    %[<?xml version="1.0"?>
-        <installments>
-          <installment>
-          </installment>
-        </installments>]
-  end
   let(:http_response) do
-    response = double(body: body, code: 200, content_type: "text/xml", "[]" => nil)
-    Aitch::Response.new({xml_parser: Aitch::XMLParser}, response)
+    double(:request, success?: true, xml?: true, data: xml_parsed, body: raw_xml, unauthorized?: false)
   end
+  let(:xml_parsed) { Nokogiri::XML(raw_xml) }
+  let(:collection) { PagSeguro::Installment::Collection.new }
+  subject { PagSeguro::Installment::Response.new(http_response, collection) }
 
-  subject { described_class.new(http_response) }
+  context "#success?" do
+    let(:http_response) do
+      double(:HttpResponse, xml?: true)
+    end
+
+    it "delegate to response" do
+      allow(http_response).to receive(:success?).and_return(true)
+      expect(subject).to be_success
+
+      allow(http_response).to receive(:success?).and_return(false)
+      expect(subject).not_to be_success
+    end
+  end
 
   describe "#serialize" do
     context "when request succeeds" do
       let(:serializer) { double(:serializer) }
-      let(:serialized_data) { double(:serialized_data) }
+      let(:raw_xml) { File.read("./spec/fixtures/installment/success.xml") }
 
-      it "returns a hash with serialized response data" do
-        expect(PagSeguro::Installment::ResponseSerializer).to receive(:new).and_return(serializer)
-        expect(serializer).to receive(:serialize).and_return(serialized_data)
+      it "not change errors" do
+        expect { subject.serialize }.not_to change { collection.errors.empty? }
+      end
 
-        expect(subject.serialize).to eq({installments:[serialized_data]})
+      it "return a collection instance" do
+        expect(subject.serialize).to be_a(PagSeguro::Installment::Collection)
       end
     end
 
     context "when request fails" do
       before do
-        expect(http_response).to receive(:success?).and_return(false)
+        allow(http_response).to receive(:success?).and_return(false)
+        allow(http_response).to receive(:bad_request?).and_return(true)
       end
 
-      it "returns a hash with an errors object" do
-        expect(subject.serialize[:errors]).to be_a(PagSeguro::Errors)
+      let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
+
+      it "update collection errors" do
+        expect { subject.serialize }.to change { collection.errors.empty? }
       end
     end
   end

@@ -7,42 +7,37 @@ describe PagSeguro::Installment::Collection do
       { amount: "110", card_brand: "visa" }
     ]
   end
-  subject { described_class.new({installments: installments}) }
+  subject { PagSeguro::Installment::Collection.new }
 
   describe "initialization" do
-    context "when options[:errors] is present" do
-      let(:errors) { double(:errors) }
-      subject { described_class.new({errors: errors}) }
-
-      it "sets errors" do
-        expect(subject.errors).to eq(errors)
-      end
-
-      it "has no installments" do
-        expect(subject).to be_empty
-      end
+    it "errors should be a instance of PagSeguro::Errors" do
+      expect(subject.errors).to be_a(PagSeguro::Errors)
     end
 
-    context "when options[:installments] is present" do
-      it { expect(subject).to be_any }
-      it { expect(subject).not_to be_empty }
+    it "delegate empty? to @installments" do
+      subject.installments = []
+      expect(subject).to be_empty
 
-      it "has installments instances" do
-        subject.each do |installment|
-          expect(installment).to be_a(PagSeguro::Installment)
-        end
-      end
+      subject.installments = installments
+      expect(subject).not_to be_empty
+    end
+
+    it "delegate any? to @installments" do
+      subject.installments = []
+      expect(subject).not_to be_any
+
+      subject.installments = installments
+      expect(subject).to be_any
     end
   end
 
-  describe "#errors" do
-    it { expect(subject.errors).to be_a(PagSeguro::Errors) }
-    it { expect(subject.errors).to be_empty }
-  end
+  context "#installments=" do
+    it "turns array of hash into installments" do
+      subject.installments = installments
 
-  describe "method delegation" do
-    it { subject.respond_to? (:each) }
-    it { subject.respond_to? (:empty?) }
-    it { subject.respond_to? (:any?) }
+      subject.each do |installment|
+        expect(installment).to be_a(PagSeguro::Installment)
+      end
+    end
   end
 end
