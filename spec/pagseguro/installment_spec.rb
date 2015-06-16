@@ -29,7 +29,7 @@ describe PagSeguro::Installment do
         expect(PagSeguro::Installment).to receive(:load_from_response)
           .with(request)
 
-        PagSeguro::Installment.find("100.00", { card_brand: :visa })
+        PagSeguro::Installment.find("100.00", :visa)
       end
     end
 
