@@ -5,6 +5,7 @@ module PagSeguro
     # The session id.
     attr_accessor :id
 
+    # The PageSeguro::Errors object.
     attr_writer :errors
 
     def errors
@@ -15,7 +16,14 @@ module PagSeguro
     # Return a PagSeguro::Session instance.
     def self.create
       response = Request.post("sessions", "v2")
-      new Response.new(response).serialize
+      session = Session.new
+      response = Response.new(response, session).serialize
+
+      session
+    end
+
+    def update_attributes(attrs)
+      attrs.map { |name, value| send("#{name}=", value) }
     end
   end
 end

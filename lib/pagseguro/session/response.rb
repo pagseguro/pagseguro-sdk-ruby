@@ -1,22 +1,32 @@
 module PagSeguro
   class Session
     class Response
-      def initialize(response)
+      def initialize(response, session)
         @response = response
+        @session = session
       end
 
       def serialize
-        if response.success? && response.xml?
+        if success?
           xml = Nokogiri::XML(response.body).css("session").first
-          ResponseSerializer.new(xml).serialize
+          session.update_attributes(ResponseSerializer.new(xml).serialize)
         else
-          { errors: Errors.new(response) }
+          session.errors.add(response)
         end
+
+        session
+      end
+
+      def success?
+        response.success? && response.xml?
       end
 
       private
       # The request response.
       attr_reader :response
+
+      # The Session instance.
+      attr_reader :session
     end
   end
 end
