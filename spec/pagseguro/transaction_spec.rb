@@ -24,13 +24,48 @@ describe PagSeguro::Transaction do
   end
 
   describe ".find_status_history" do
-    it "finds a transaction status history by the given transaction code" do
-      allow(PagSeguro::Request)
-      .to receive(:get)
-      .with("transactions/CODE/statusHistory", "v3")
-      .and_return(double.as_null_object)
+    before do
+      allow(PagSeguro::Request).to receive(:get)
+        .with("transactions/CODE/statusHistory", "v3")
+        .and_return(response)
+    end
+    let(:parsed_xml) { Nokogiri::XML(raw_xml) }
+    let(:response) do
+      double(:Response, xml?: true, success?: true, unauthorized?: false,
+             bad_request?: false, body: raw_xml, data: parsed_xml)
+    end
+    subject { PagSeguro::Transaction.find_status_history("CODE") }
 
-      PagSeguro::Transaction.find_status_history("CODE")
+    context "when request succeds" do
+      let(:raw_xml) { File.read("./spec/fixtures/transactions/status_history.xml") }
+
+      it "returns an instance of Collection" do
+        expect(subject).to be_a(PagSeguro::Transaction::Collection)
+      end
+
+      it "returns a collection with errors object" do
+        expect(subject.errors).to be_a(PagSeguro::Errors)
+      end
+
+      it "returns a collection with no errors" do
+        expect(subject.errors).to be_empty
+      end
+    end
+
+    context "when request fails" do
+      before do
+        allow(response).to receive(:success?).and_return(false)
+        allow(response).to receive(:bad_request?).and_return(true)
+      end
+      let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
+
+      it "returns an instance of Collection" do
+        expect(subject).to be_a(PagSeguro::Transaction::Collection)
+      end
+
+      it "returns a collection with errors" do
+        expect(subject.errors).not_to be_empty
+      end
     end
   end
 

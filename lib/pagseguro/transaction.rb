@@ -75,13 +75,20 @@ module PagSeguro
       load_from_response send_request("transactions/notifications/#{code}")
     end
 
+    # Find a transaction by status.
+    # Return a PagSeguro::Transaction::Colletion.
     def self.find_status_history(code)
       response = send_request("transactions/#{code}/statusHistory")
+      collection = Collection.new
+
       if response.success? and response.xml?
-        Serializer.new(Nokogiri::XML(response.body)).serialize_status_history
+        xml = Nokogiri::XML(response.body)
+        collection.transactions = Serializer.new(xml).serialize_status_history
       else
-        Response.new Errors.new(response)
+        collection.errors.add(response)
       end
+
+      collection
     end
 
     # Search transactions within a date range.
