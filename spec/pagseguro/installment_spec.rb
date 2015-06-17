@@ -7,46 +7,40 @@ describe PagSeguro::Installment do
   it_assigns_attribute :total_amount
   it_assigns_attribute :interest_free
 
+  let(:request) do
+    double(:request, success?: true, xml?: true, body: raw_xml, data: xml_parsed, unauthorized?: false)
+  end
+
+  let(:xml_parsed) { Nokogiri::XML(raw_xml) }
+
   describe ".find" do
-    let(:request_serializer) { double(:request_serializer, to_params: params) }
-    let(:params) { { amount: "100.00", card_brand: "visa" } }
-    let(:request) { double(:request) }
-    let(:response) { double(:response) }
+    subject { PagSeguro::Installment }
+    let(:params) { { amount: "100.00", cardBrand: "visa" } }
 
     before do
-      expect(PagSeguro::Installment::RequestSerializer).to receive(:new)
-        .with(params)
-        .and_return(request_serializer)
-      expect(PagSeguro::Request).to receive(:get)
+      allow(PagSeguro::Request).to receive(:get)
         .with("installments", "v2", params)
         .and_return(request)
-      expect(PagSeguro::Installment::Response).to receive(:new)
-        .with(request)
-        .and_return(response)
     end
 
     context "when request succeeds" do
-      let(:serialized_data) { [{amount: "100.00", card_brand: "visa"}] }
+      let(:raw_xml) { File.read("./spec/fixtures/installment/success.xml") }
 
-      it "finds installments by the given amount" do
-        expect(response).to receive(:serialize).and_return(serialized_data)
-        expect(PagSeguro::Installment::Collection).to receive(:new)
-          .with(serialized_data)
-
-        PagSeguro::Installment.find("100.00", "visa")
+      it "returns a instance of collection" do
+        expect(subject.find("100.00", "visa")).to be_a(PagSeguro::Installment::Collection)
       end
     end
 
     context "when request fails" do
-      let(:response) { double(:response, success?: false) }
-      let(:serialized_data) { {errors: PagSeguro::Errors.new} }
+      before do
+        allow(request).to receive(:success?).and_return(false)
+        allow(request).to receive(:bad_request?).and_return(true)
+      end
 
-      it "returns error" do
-        expect(response).to receive(:serialize).and_return(serialized_data)
-        expect(PagSeguro::Installment::Collection).to receive(:new)
-          .with(serialized_data)
+      let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
-        PagSeguro::Installment.find("100.00", "visa")
+      it "returns collection with error" do
+        expect(subject.find("100.00", "visa").errors).not_to be_empty
       end
     end
   end

@@ -5,9 +5,8 @@ module PagSeguro
 
       def_delegators :@installments, :each, :empty?, :any?
 
-      def initialize(options)
-        @errors = options[:errors] if options[:errors]
-        @installments = instantiate_installments(options[:installments])
+      def installments=(objects)
+        @installments = instantiate_installments(objects)
       end
 
       def errors
