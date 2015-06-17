@@ -44,7 +44,7 @@ describe PagSeguro::Refund do
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
       let :response_request do
-        double(:ResponseRequest, success?: false, unauthorized?: false, bad_request?: true, data: xml_parsed, body: raw_xml, :xml? => true)
+        double(:ResponseRequest, success?: false, unauthorized?: false, not_found?: false, bad_request?: true, data: xml_parsed, body: raw_xml, :xml? => true)
       end
 
       it "returns a PagSeguro::Refund with errors" do
