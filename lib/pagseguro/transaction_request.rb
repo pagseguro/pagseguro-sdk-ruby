@@ -100,10 +100,14 @@ module PagSeguro
     # Return boolean.
     def create
       request = Request.post("transactions", api_version, params)
-      response = Response.new(request)
-      update_attributes(response.serialize)
+      response = Response.new(request, self)
+      response.serialize
 
       response.success?
+    end
+
+    def update_attributes(attrs)
+      attrs.map { |name, value| send("#{name}=", value) }
     end
 
     private
@@ -118,10 +122,6 @@ module PagSeguro
 
     def params
       RequestSerializer.new(self).to_params
-    end
-
-    def update_attributes(attrs)
-      attrs.map { |name, value| send("#{name}=", value) }
     end
 
     # Used to set response items from api.
