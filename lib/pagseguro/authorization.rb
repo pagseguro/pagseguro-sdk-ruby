@@ -32,5 +32,13 @@ module PagSeguro
       response = Response.new(request).serialize_collection
       Collection.new(response)
     end
+
+    def update_attributes(attrs)
+      attrs.map { |name, value| send("#{name}=", value) }
+    end
+
+    def errors
+      @errors ||= Errors.new
+    end
   end
 end

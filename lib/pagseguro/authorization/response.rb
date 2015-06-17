@@ -1,25 +1,31 @@
 module PagSeguro
   class Authorization
     class Response
-      def initialize(response)
+      def initialize(response, object)
         @response = response
+        @object = object
       end
 
       def serialize
         if success?
           xml = Nokogiri::XML(response.body).css('authorization').first
-          ResponseSerializer.new(xml).serialize
+          serializer = ResponseSerializer.new(xml).serialize
+          object.update_attributes(serializer)
         else
-          { errors: Errors.new(response) }
+          object.errors.add(response)
         end
+
+        object
       end
 
       def serialize_collection
         if success?
-          { authorizations: serialize_authorizations }
+          object.authorizations = serialize_authorizations
         else
-          { errors: Errors.new(response) }
+          object.errors.add(response)
         end
+
+        object
       end
 
       def success?
@@ -29,6 +35,9 @@ module PagSeguro
       private
       # The request response.
       attr_reader :response
+
+      # The PagSeguro::Authorization or PagSeguro::Authorization::Collection object
+      attr_reader :object
 
       def serialize_authorizations
         Nokogiri::XML(response.body).css('authorizations > authorization').map do |node|
