@@ -3,18 +3,18 @@ module PagSeguro
     class Collection
       extend Forwardable
 
-      def_delegators :@transactions, :each, :empty?, :any?
+      def_delegators :@statuses, :each, :empty?, :any?
 
-      def transactions=(objects)
-        @transactions = objects
+      def statuses=(objects)
+        @statuses = objects
       end
 
       def errors
         @errors ||= Errors.new
       end
 
-      # Transaction instances
-      attr_reader :transactions
+      # PagSeguro::TransactionStatus instances.
+      attr_reader :statuses
     end
   end
 end

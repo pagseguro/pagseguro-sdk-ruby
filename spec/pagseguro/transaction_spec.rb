@@ -2,24 +2,96 @@ require "spec_helper"
 
 describe PagSeguro::Transaction do
   describe ".find_by_notification_code" do
-    it "finds transaction by the given notificationCode" do
-      PagSeguro::Transaction.stub :load_from_response
-
-      PagSeguro::Request
-        .should_receive(:get)
+    before do
+      allow(PagSeguro::Request).to receive(:get)
         .with("transactions/notifications/CODE", "v3", {})
-        .and_return(double.as_null_object)
+        .and_return(request)
+    end
+    let(:parsed_xml) { Nokogiri::XML(raw_xml) }
+    let(:request) do
+      double(:Request, xml?: true, success?: true, unauthorized?: false,
+             bad_request?: false, body: raw_xml, data: parsed_xml)
+    end
+    subject { PagSeguro::Transaction.find_by_notification_code("CODE") }
 
-      PagSeguro::Transaction.find_by_notification_code("CODE")
+    context "when request succeds" do
+      let(:raw_xml) { File.read("./spec/fixtures/transactions/success.xml") }
+
+      it "returns an instance of transaction" do
+        expect(subject).to be_a(PagSeguro::Transaction)
+      end
+
+      it "returns a collection with errors object" do
+        expect(subject.errors).to be_a(PagSeguro::Errors)
+      end
+
+      it "returns a collection with no errors" do
+        expect(subject.errors).to be_empty
+      end
     end
 
-    it "returns response with errors when request fails" do
-      body = %[<?xml version="1.0"?><errors><error><code>1234</code><message>Sample error</message></error></errors>]
-      FakeWeb.register_uri :get, %r[.+], status: [400, "Bad Request"], body: body, content_type: "text/xml"
-      response = PagSeguro::Transaction.find_by_notification_code("invalid")
+    context "when request fails" do
+      before do
+        allow(request).to receive(:success?).and_return(false)
+        allow(request).to receive(:bad_request?).and_return(true)
+        allow(request).to receive(:not_found?).and_return(false)
+      end
+      let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
-      expect(response).to be_a(PagSeguro::Transaction::Response)
-      expect(response.errors).to include("Sample error")
+      it "returns an instance of Transaction" do
+        expect(subject).to be_a(PagSeguro::Transaction)
+      end
+
+      it "returns a collection with errors" do
+        expect(subject.errors).not_to be_empty
+      end
+    end
+  end
+
+  describe ".find_by_code" do
+    before do
+      allow(PagSeguro::Request).to receive(:get)
+        .with("transactions/CODE", "v3", {})
+        .and_return(request)
+    end
+    let(:parsed_xml) { Nokogiri::XML(raw_xml) }
+    let(:request) do
+      double(:Request, xml?: true, success?: true, unauthorized?: false,
+             bad_request?: false, body: raw_xml, data: parsed_xml)
+    end
+    subject { PagSeguro::Transaction.find_by_code("CODE") }
+
+    context "when request succeds" do
+      let(:raw_xml) { File.read("./spec/fixtures/transactions/success.xml") }
+
+      it "returns an instance of transaction" do
+        expect(subject).to be_a(PagSeguro::Transaction)
+      end
+
+      it "returns a collection with errors object" do
+        expect(subject.errors).to be_a(PagSeguro::Errors)
+      end
+
+      it "returns a collection with no errors" do
+        expect(subject.errors).to be_empty
+      end
+    end
+
+    context "when request fails" do
+      before do
+        allow(request).to receive(:success?).and_return(false)
+        allow(request).to receive(:bad_request?).and_return(true)
+        allow(request).to receive(:not_found?).and_return(false)
+      end
+      let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
+
+      it "returns an instance of Transaction" do
+        expect(subject).to be_a(PagSeguro::Transaction)
+      end
+
+      it "returns a collection with errors" do
+        expect(subject.errors).not_to be_empty
+      end
     end
   end
 
@@ -203,5 +275,16 @@ describe PagSeguro::Transaction do
     it { expect(transaction.status).to be_a(PagSeguro::PaymentStatus) }
     it { expect(transaction.items.size).to eq(1) }
     it { expect(transaction).to respond_to(:escrow_end_date) }
+  end
+
+  it "always set errors" do
+    expect(subject.errors).to be_a(PagSeguro::Errors)
+  end
+
+  it "#update_attributes" do
+    subject = PagSeguro::Transaction.new
+    expect(subject).to receive(:code=).with("1234")
+
+    subject.update_attributes(code: "1234")
   end
 end
