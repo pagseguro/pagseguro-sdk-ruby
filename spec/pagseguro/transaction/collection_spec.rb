@@ -1,16 +1,16 @@
 require "spec_helper"
 
 describe PagSeguro::Transaction::Collection do
-  let(:transactions) { [PagSeguro::TransactionStatus.new] }
+  let(:statuses) { [PagSeguro::TransactionStatus.new] }
   subject { PagSeguro::Transaction::Collection.new }
 
   it "errors must be a PagSeguro::Errors instance" do
     expect(subject.errors).to be_a(PagSeguro::Errors)
   end
 
-  context "when has no transactions" do
+  context "when has no statuses" do
     before do
-      subject.transactions=[]
+      subject.statuses=[]
     end
 
     it "be blank" do
@@ -22,9 +22,9 @@ describe PagSeguro::Transaction::Collection do
     end
   end
 
-  context "when has transactions" do
+  context "when has statuses" do
     before do
-      subject.transactions=transactions
+      subject.statuses=statuses
     end
 
     it "not be blank" do
@@ -35,9 +35,9 @@ describe PagSeguro::Transaction::Collection do
       expect(subject).to be_any
     end
 
-    it "each should return transaction instances" do
-      subject.each do |transaction|
-        expect(transaction).to be_a(PagSeguro::TransactionStatus)
+    it "each should return PagSeguro::TransactionStatus instances" do
+      subject.each do |status|
+        expect(status).to be_a(PagSeguro::TransactionStatus)
       end
     end
   end
