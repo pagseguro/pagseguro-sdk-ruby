@@ -15,7 +15,7 @@ module PagSeguro
     # Create a payment session.
     # Return a PagSeguro::Session instance.
     def self.create
-      response = Request.post("sessions", "v2")
+      response = Request.post("sessions", api_version)
       session = Session.new
       response = Response.new(response, session).serialize
 
@@ -24,6 +24,10 @@ module PagSeguro
 
     def update_attributes(attrs)
       attrs.map { |name, value| send("#{name}=", value) }
+    end
+
+    def self.api_version
+      'v2'
     end
   end
 end
