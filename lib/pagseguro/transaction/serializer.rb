@@ -30,6 +30,7 @@ module PagSeguro
         end
       end
 
+      private
       def serialize_general(data)
         data[:code] = xml.css("> code").text
         data[:reference] = xml.css("reference").text

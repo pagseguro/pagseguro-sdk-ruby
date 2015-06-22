@@ -9,16 +9,9 @@ module PagSeguro
       end
 
       def to_params
-        params[:transactionCode] = transaction_cancellation.transaction_code
-
-        params.delete_if {|key, value| value.nil? }
-
-        params
-      end
-
-      private
-      def params
-        @params ||= {}
+        {}.tap do |data|
+          data[:transactionCode] = transaction_cancellation.transaction_code
+        end.delete_if { |_, value| value.nil? }
       end
     end
   end
