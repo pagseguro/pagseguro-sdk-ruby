@@ -9,19 +9,13 @@ module PagSeguro
       end
 
       def to_params
-        params[:transactionCode] = refund.transaction_code
-        params[:refundValue] = to_amount(refund.value)
-
-        params.delete_if {|key, value| value.nil? }
-
-        params
+        {}.tap do |data|
+          data[:transactionCode] = refund.transaction_code
+          data[:refundValue] = to_amount(refund.value)
+        end.delete_if { |_, value| value.nil? }
       end
 
       private
-      def params
-        @params ||= {}
-      end
-
       def to_amount(amount)
         "%.2f" % BigDecimal(amount.to_s).round(2).to_s("F") if amount
       end
