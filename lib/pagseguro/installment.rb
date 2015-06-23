@@ -24,7 +24,7 @@ module PagSeguro
     def self.find(amount, card_brand = nil)
       string = "installments?amount=#{amount}"
       string += "&cardBrand=#{card_brand}" if card_brand
-      load_from_response Request.get(string, 'v2')
+      load_from_response Request.get(string, api_version)
     end
 
     # Serialize the HTTP response into data.
@@ -41,6 +41,10 @@ module PagSeguro
     # Serialize the XML object.
     def self.load_from_xml(xml) # :nodoc:
       new Serializer.new(xml).serialize
+    end
+
+    def self.api_version
+      'v2'
     end
   end
 end
