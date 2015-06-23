@@ -136,7 +136,7 @@ module PagSeguro
 
     # Send a get request to v3 API version, with the path given
     def self.send_request(path)
-      Request.get(path, 'v3')
+      Request.get(path, api_version)
     end
 
     # Serialize the XML object.
@@ -187,6 +187,10 @@ module PagSeguro
     # Normalize the payment status.
     def status=(status)
       @status = ensure_type(PaymentStatus, status)
+    end
+
+    def self.api_version
+      'v3'
     end
 
     private
