@@ -16,7 +16,7 @@ module PagSeguro
         object
       end
 
-      def serialize_collection
+      def serialize_statuses
         if success?
           object.statuses = Serializer.new(xml).serialize_status_history
         else
