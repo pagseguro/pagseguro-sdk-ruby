@@ -16,8 +16,8 @@ describe PagSeguro::Transaction::Response do
     end
   end
 
-  describe "#serialize_collection" do
-    let(:object) { PagSeguro::Transaction::Collection.new }
+  describe "#serialize_statuses" do
+    let(:object) { PagSeguro::Transaction::StatusCollection.new }
     let(:http_response) do
       double(:Response, xml?: true, success?: true, unauthorized?: false,
              bad_request?: false, body: raw_xml, data: parsed_xml)
@@ -28,11 +28,11 @@ describe PagSeguro::Transaction::Response do
       let(:raw_xml) { File.read("./spec/fixtures/transactions/status_history.xml") }
 
       it "returns a collection" do
-        expect(subject.serialize_collection).to be_a(PagSeguro::Transaction::Collection)
+        expect(subject.serialize_statuses).to be_a(PagSeguro::Transaction::StatusCollection)
       end
 
       it "not change errors" do
-        expect { subject.serialize_collection }.not_to change { object.errors.empty? }
+        expect { subject.serialize_statuses }.not_to change { object.errors.empty? }
       end
     end
 
@@ -44,12 +44,12 @@ describe PagSeguro::Transaction::Response do
       end
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
-      it "returns PagSeguro::Transaction::Collection instance" do
-        expect(subject.serialize_collection).to be_a(PagSeguro::Transaction::Collection)
+      it "returns PagSeguro::Transaction::StatusCollection instance" do
+        expect(subject.serialize_statuses).to be_a(PagSeguro::Transaction::StatusCollection)
       end
 
       it "change collection errors" do
-        expect { subject.serialize_collection }.to change { object.errors.empty? }
+        expect { subject.serialize_statuses }.to change { object.errors.empty? }
       end
     end
   end

@@ -109,8 +109,8 @@ describe PagSeguro::Transaction do
     context "when request succeds" do
       let(:raw_xml) { File.read("./spec/fixtures/transactions/status_history.xml") }
 
-      it "returns an instance of Collection" do
-        expect(subject).to be_a(PagSeguro::Transaction::Collection)
+      it "returns an instance of StatusCollection" do
+        expect(subject).to be_a(PagSeguro::Transaction::StatusCollection)
       end
 
       it "returns a collection with errors object" do
@@ -129,8 +129,8 @@ describe PagSeguro::Transaction do
       end
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
-      it "returns an instance of Collection" do
-        expect(subject).to be_a(PagSeguro::Transaction::Collection)
+      it "returns an instance of StatusCollection" do
+        expect(subject).to be_a(PagSeguro::Transaction::StatusCollection)
       end
 
       it "returns a collection with errors" do
