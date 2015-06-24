@@ -14,8 +14,14 @@ module PagSeguro
     def <<(item)
       item = ensure_type(Item, item)
 
-      if include?(item)
-        item.quantity += 1
+      original_item = include?(item)
+
+      if original_item
+        if item.quantity.nil?
+          original_item.quantity += 1
+        else
+          original_item.quantity += item.quantity
+        end
       else
         @store << item
       end
@@ -24,7 +30,9 @@ module PagSeguro
     # Verify if the item is already included to item list.
     # Returns boolean.
     def include?(item)
-      @store.find {|stored_item| stored_item.id == ensure_type(Item, item).id }
+      @store.detect do |stored_item|
+        stored_item.id == item.id && stored_item.description == item.description
+      end
     end
   end
 end
