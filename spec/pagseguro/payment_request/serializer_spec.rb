@@ -14,8 +14,8 @@ describe PagSeguro::PaymentRequest::Serializer do
   end
 
   context "generic attributes serialization" do
-    before do
-      payment_request.stub({
+    let(:payment_request) do
+      double(:PaymentRequest,
         currency: "BRL",
         reference: "REF123",
         extra_amount: 1234.50,
@@ -23,8 +23,8 @@ describe PagSeguro::PaymentRequest::Serializer do
         notification_url: "NOTIFICATION_URL",
         abandon_url: "ABANDON_URL",
         max_uses: 5,
-        max_age: 3600
-      })
+        max_age: 3600,
+      ).as_null_object
     end
 
     it { expect(params).to include(currency: "BRL") }
@@ -50,8 +50,8 @@ describe PagSeguro::PaymentRequest::Serializer do
   end
 
   context "address serialization" do
-    before do
-      address = PagSeguro::Address.new({
+    let(:address) do
+      PagSeguro::Address.new(
         street: "STREET",
         state: "STATE",
         city: "CITY",
@@ -59,13 +59,13 @@ describe PagSeguro::PaymentRequest::Serializer do
         district: "DISTRICT",
         number: "NUMBER",
         complement: "COMPLEMENT"
-      })
-
-      shipping = double(address: address).as_null_object
-
-      payment_request.stub(
-        shipping: shipping
       )
+    end
+    let(:payment_request) do
+      double(:PaymentRequest, shipping: shipping).as_null_object
+    end
+    let(:shipping) do
+      double(:Shipping, address: address).as_null_object
     end
 
     it { expect(params).to include(shippingAddressStreet: "STREET") }
@@ -86,7 +86,7 @@ describe PagSeguro::PaymentRequest::Serializer do
         cpf: "CPF"
       })
 
-      payment_request.stub(sender: sender)
+      allow(payment_request).to receive(:sender).and_return(sender)
     end
 
     it { expect(params).to include(senderEmail: "EMAIL") }
@@ -103,7 +103,7 @@ describe PagSeguro::PaymentRequest::Serializer do
         }
       })
 
-      payment_request.stub(sender: sender)
+      allow(payment_request).to receive(:sender).and_return(sender)
     end
 
     it { expect(params).to include(senderAreaCode: "AREA_CODE") }
@@ -141,13 +141,12 @@ describe PagSeguro::PaymentRequest::Serializer do
   end
 
   context "extra params serialization" do
-    before do
-      payment_request.stub({
+    let(:payment_request) do
+      double(:PaymentRequest,
         extra_params: [
           { extraParam: 'param_value' },
           { newExtraParam: 'extra_param_value' }
-        ]
-      })
+        ]).as_null_object
     end
 
     it { expect(params).to include(extraParam: 'param_value') }
