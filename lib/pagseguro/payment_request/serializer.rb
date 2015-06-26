@@ -9,86 +9,80 @@ module PagSeguro
       end
 
       def to_params
-        params[:receiverEmail] = PagSeguro.receiver_email
-        params[:currency] = payment_request.currency
-        params[:reference] = payment_request.reference
-        params[:extraAmount] = to_amount(payment_request.extra_amount)
-        params[:redirectURL] = payment_request.redirect_url
-        params[:notificationURL] = payment_request.notification_url
-        params[:abandonURL] = payment_request.abandon_url
-        params[:maxUses] = payment_request.max_uses
-        params[:maxAge] = payment_request.max_age
-        payment_request.items.each.with_index(1) do |item, index|
-          serialize_item(item, index)
-        end
+        {}.tap do |data|
+          data[:receiverEmail] = PagSeguro.receiver_email
+          data[:currency] = payment_request.currency
+          data[:reference] = payment_request.reference
+          data[:extraAmount] = to_amount(payment_request.extra_amount)
+          data[:redirectURL] = payment_request.redirect_url
+          data[:notificationURL] = payment_request.notification_url
+          data[:abandonURL] = payment_request.abandon_url
+          data[:maxUses] = payment_request.max_uses
+          data[:maxAge] = payment_request.max_age
+          payment_request.items.each_with_index do |item, index|
+            serialize_item(data, item, index.succ)
+          end
 
-        serialize_sender(payment_request.sender)
-        serialize_shipping(payment_request.shipping)
-        serialize_extra_params(payment_request.extra_params)
-
-        params.delete_if {|key, value| value.nil? }
-
-        params
+          serialize_sender(data, payment_request.sender)
+          serialize_shipping(data, payment_request.shipping)
+          serialize_extra_params(data, payment_request.extra_params)
+        end.delete_if { |_, value| value.nil? }
       end
 
       private
-      def params
-        @params ||= {}
+      def serialize_item(data, item, index)
+        data["itemId#{index}"] = item.id
+        data["itemDescription#{index}"] = item.description
+        data["itemAmount#{index}"] = to_amount(item.amount)
+        data["itemQuantity#{index}"] = item.quantity
+        data["itemShippingCost#{index}"] = to_amount(item.shipping_cost)
+        data["itemWeight#{index}"] = item.weight if item.weight
       end
 
-      def serialize_item(item, index)
-        params["itemId#{index}"] = item.id
-        params["itemDescription#{index}"] = item.description
-        params["itemAmount#{index}"] = to_amount(item.amount)
-        params["itemQuantity#{index}"] = item.quantity
-        params["itemShippingCost#{index}"] = to_amount(item.shipping_cost)
-        params["itemWeight#{index}"] = item.weight if item.weight
-      end
-
-      def serialize_sender(sender)
+      def serialize_sender(data, sender)
         return unless sender
 
-        params[:senderEmail] =  sender.email
-        params[:senderName] = sender.name
-        params[:senderCPF] = sender.cpf
+        data[:senderEmail] =  sender.email
+        data[:senderName] = sender.name
+        data[:senderCPF] = sender.cpf
 
-        serialize_phone(sender.phone)
+        serialize_phone(data, sender.phone)
       end
 
-      def serialize_phone(phone)
+      def serialize_phone(data, phone)
         return unless phone
 
-        params[:senderAreaCode] = phone.area_code
-        params[:senderPhone] = phone.number
+        data[:senderAreaCode] = phone.area_code
+        data[:senderPhone] = phone.number
       end
 
-      def serialize_shipping(shipping)
+      def serialize_shipping(data, shipping)
         return unless shipping
 
-        params[:shippingType] = shipping.type_id
-        params[:shippingCost] = to_amount(shipping.cost)
+        data[:shippingType] = shipping.type_id
+        data[:shippingCost] = to_amount(shipping.cost)
 
-        serialize_address(shipping.address)
+        serialize_address(data, shipping.address)
       end
 
-      def serialize_address(address)
+      def serialize_address(data, address)
         return unless address
 
-        params[:shippingAddressCountry] = address.country
-        params[:shippingAddressState] = address.state
-        params[:shippingAddressCity] = address.city
-        params[:shippingAddressPostalCode] = address.postal_code
-        params[:shippingAddressDistrict] = address.district
-        params[:shippingAddressStreet] = address.street
-        params[:shippingAddressNumber] = address.number
-        params[:shippingAddressComplement] = address.complement
+        data[:shippingAddressCountry] = address.country
+        data[:shippingAddressState] = address.state
+        data[:shippingAddressCity] = address.city
+        data[:shippingAddressPostalCode] = address.postal_code
+        data[:shippingAddressDistrict] = address.district
+        data[:shippingAddressStreet] = address.street
+        data[:shippingAddressNumber] = address.number
+        data[:shippingAddressComplement] = address.complement
       end
 
-      def serialize_extra_params(extra_params)
+      def serialize_extra_params(data, extra_params)
         return unless extra_params
 
         extra_params.each do |extra_param|
-          params[extra_param.keys.first] = extra_param.values.first
+          data[extra_param.keys.first] = extra_param.values.first
         end
       end
 
