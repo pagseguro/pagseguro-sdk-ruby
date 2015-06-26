@@ -3,8 +3,8 @@ module EnsureTypeMacro
     it "ensures that #{attr.inspect} coerces hash to #{klass}" do
       options = double(:options)
 
-      klass
-        .should_receive(:new)
+      expect(klass)
+        .to receive(:new)
         .with(options)
         .and_return("INSTANCE")
 

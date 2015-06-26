@@ -25,8 +25,8 @@ describe PagSeguro::Items do
   it "sets item from Hash" do
     item = PagSeguro::Item.new(id: 1234)
 
-    PagSeguro::Item
-      .should_receive(:new)
+    expect(PagSeguro::Item)
+      .to receive(:new)
       .with({id: 1234})
       .and_return(item)
 
