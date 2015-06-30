@@ -26,6 +26,7 @@ module PagSeguro
       attrs.map { |name, value| send("#{name}=", value) }
     end
 
+    private
     def self.api_version
       'v2'
     end
