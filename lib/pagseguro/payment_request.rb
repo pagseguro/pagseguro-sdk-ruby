@@ -92,7 +92,6 @@ module PagSeguro
       self.token    = PagSeguro.token
     end
 
-    # The default PagSeguro API version
     def api_version
       'v2'
     end

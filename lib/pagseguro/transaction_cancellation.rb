@@ -19,6 +19,7 @@ module PagSeguro
       response.success?
     end
 
+    # Errors object.
     def errors
       @errors ||= Errors.new
     end
