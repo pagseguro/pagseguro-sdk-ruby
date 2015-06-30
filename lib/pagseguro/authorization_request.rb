@@ -22,6 +22,7 @@ module PagSeguro
     # The date of authorization creation
     attr_reader :date
 
+    # Errors object.
     attr_writer :errors
 
     PERMISSIONS = {
@@ -34,6 +35,8 @@ module PagSeguro
       cancels: 'CANCEL_TRANSACTIONS'
     }
 
+    # Post and create an Authorization.
+    # Return Boolean.
     def create
       request = Request.post('authorizations/request', params)
       response = Response.new(request)
@@ -42,6 +45,7 @@ module PagSeguro
       response.success?
     end
 
+    # URL to confirm authorization after create one.
     def url
       PagSeguro.site_url("authorization/request.jhtml?code=#{code}") if code
     end
@@ -66,4 +70,3 @@ module PagSeguro
     end
   end
 end
-

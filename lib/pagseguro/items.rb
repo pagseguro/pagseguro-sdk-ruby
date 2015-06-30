@@ -10,6 +10,7 @@ module PagSeguro
       @store = []
     end
 
+    # Adds a new item to item list.
     def <<(item)
       item = ensure_type(Item, item)
 
@@ -20,6 +21,8 @@ module PagSeguro
       end
     end
 
+    # Verify if the item is already included to item list.
+    # Return Boolean.
     def include?(item)
       @store.find {|stored_item| stored_item.id == ensure_type(Item, item).id }
     end
