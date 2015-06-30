@@ -135,7 +135,7 @@ module PagSeguro
       @payment_method = ensure_type(PaymentMethod, payment_method)
     end
 
-    # The default PagSeguro API version
+    private
     def api_version
       'v2'
     end
