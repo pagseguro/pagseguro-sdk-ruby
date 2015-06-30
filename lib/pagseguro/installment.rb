@@ -30,6 +30,7 @@ module PagSeguro
     end
 
     private
+
     def self.params(options)
       RequestSerializer.new(options).to_params
     end

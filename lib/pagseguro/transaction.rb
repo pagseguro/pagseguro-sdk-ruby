@@ -126,25 +126,6 @@ module PagSeguro
       SearchAbandoned.new("transactions/abandoned", options, page)
     end
 
-    # Serialize the HTTP response into data.
-    def self.load_from_response(response) # :nodoc:
-      if response.success? and response.xml?
-        load_from_xml Nokogiri::XML(response.body).css("transaction").first
-      else
-        Response.new Errors.new(response)
-      end
-    end
-
-    # Send a get request to v3 API version, with the path given
-    def self.send_request(path)
-      Request.get(path, api_version)
-    end
-
-    # Serialize the XML object.
-    def self.load_from_xml(xml) # :nodoc:
-      new Serializer.new(xml).serialize
-    end
-
     # Normalize creditor fees object
     def creditor_fees=(creditor_fees)
       @creditor_fees = ensure_type(CreditorFee, creditor_fees)
@@ -197,6 +178,26 @@ module PagSeguro
 
     def after_initialize
       @errors = Errors.new
+    end
+
+    #
+    # Serialize the HTTP response into data.
+    def self.load_from_response(response) # :nodoc:
+      if response.success? and response.xml?
+        load_from_xml Nokogiri::XML(response.body).css("transaction").first
+      else
+        Response.new Errors.new(response)
+      end
+    end
+
+    # Send a get request to v3 API version, with the path given
+    def self.send_request(path)
+      Request.get(path, 'v3')
+    end
+
+    # Serialize the XML object.
+    def self.load_from_xml(xml) # :nodoc:
+      new Serializer.new(xml).serialize
     end
   end
 end
