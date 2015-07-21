@@ -61,8 +61,8 @@ describe PagSeguro::PaymentRequest do
     before { FakeWeb.register_uri :any, %r[.*?], body: "" }
 
     it "serializes payment request" do
-      PagSeguro::PaymentRequest::Serializer
-        .should_receive(:new)
+      expect(PagSeguro::PaymentRequest::Serializer)
+        .to receive(:new)
         .with(payment)
         .and_return(double.as_null_object)
 
@@ -72,15 +72,17 @@ describe PagSeguro::PaymentRequest do
     it "performs request" do
       params = double
 
-      params.should_receive(:merge).with({
+      expect(params).to receive(:merge).with({
         email: PagSeguro.email,
         token: PagSeguro.token
       }).and_return(params)
 
-      PagSeguro::PaymentRequest::Serializer.any_instance.stub to_params: params
+      allow_any_instance_of(PagSeguro::PaymentRequest::Serializer)
+        .to receive(:to_params)
+        .and_return(params)
 
-      PagSeguro::Request
-        .should_receive(:post)
+      expect(PagSeguro::Request)
+        .to receive(:post)
         .with("checkout", "v2", params)
 
       payment.register
@@ -88,10 +90,10 @@ describe PagSeguro::PaymentRequest do
 
     it "initializes response" do
       response = double
-      PagSeguro::Request.stub post: response
+      allow(PagSeguro::Request).to receive(:post).and_return(response)
 
-      PagSeguro::PaymentRequest::Response
-        .should_receive(:new)
+      expect(PagSeguro::PaymentRequest::Response)
+        .to receive(:new)
         .with(response)
 
       payment.register
@@ -99,7 +101,7 @@ describe PagSeguro::PaymentRequest do
 
     it "returns response" do
       response = double
-      PagSeguro::PaymentRequest::Response.stub new: response
+      allow(PagSeguro::PaymentRequest::Response).to receive(:new).and_return(response)
 
       expect(payment.register).to eql(response)
     end

@@ -3,10 +3,9 @@ require "spec_helper"
 describe PagSeguro::Transaction do
   describe ".find_by_notification_code" do
     it "finds transaction by the given notificationCode" do
-      PagSeguro::Transaction.stub :load_from_response
+      allow(PagSeguro::Transaction).to receive(:load_from_response)
 
-      PagSeguro::Request
-        .should_receive(:get)
+      expect(PagSeguro::Request).to receive(:get)
         .with("transactions/notifications/CODE", "v3")
         .and_return(double.as_null_object)
 
@@ -26,12 +25,12 @@ describe PagSeguro::Transaction do
   describe ".find_by_date" do
     it "initializes search with default options" do
       now = Time.now
-      Time.stub now: now
 
-      PagSeguro::SearchByDate
-        .should_receive(:new)
+      allow(Time).to receive(:now).and_return(now)
+
+      expect(PagSeguro::SearchByDate).to receive(:new)
         .with("transactions",
-          hash_including(starts_at: now - 86400, ends_at: now, per_page: 50), 0)
+          { starts_at: now - 86400, ends_at: now, per_page: 50 }, 0)
 
       PagSeguro::Transaction.find_by_date
     end
@@ -41,11 +40,10 @@ describe PagSeguro::Transaction do
       ends_at = starts_at + 180
       page = 0
 
-      PagSeguro::SearchByDate
-        .should_receive(:new)
+      allow(PagSeguro::SearchByDate).to receive(:new)
         .with(
           "transactions",
-          hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at),
+          { per_page: 10, starts_at: starts_at, ends_at: ends_at },
           page
         )
 
@@ -59,13 +57,12 @@ describe PagSeguro::Transaction do
   describe ".find_by_reference" do
     it 'initializes search with given reference code' do
       now = Time.now
-      Time.stub now: now
+      allow(Time).to receive(:now).and_return(now)
 
-      PagSeguro::SearchByReference
-        .should_receive(:new)
+      expect(PagSeguro::SearchByReference).to receive(:new)
         .with(
           "transactions",
-          hash_including(reference: 'ref1234'),
+          { reference: "ref1234" },
         )
 
       PagSeguro::Transaction.find_by_reference('ref1234')
@@ -75,13 +72,12 @@ describe PagSeguro::Transaction do
   describe ".find_abandoned" do
     it "initializes search with default options" do
       now = Time.now
-      Time.stub now: now
+      allow(Time).to receive(:now).and_return(now)
 
-      PagSeguro::SearchAbandoned
-        .should_receive(:new)
+      expect(PagSeguro::SearchAbandoned).to receive(:new)
         .with(
           "transactions/abandoned",
-          hash_including(per_page: 50, starts_at: now - 86400, ends_at: now - 900),
+          { per_page: 50, starts_at: now - 86400, ends_at: now - 900 },
           0
         )
 
@@ -93,11 +89,10 @@ describe PagSeguro::Transaction do
       ends_at = starts_at + 180
       page = 1
 
-      PagSeguro::SearchAbandoned
-        .should_receive(:new)
+      expect(PagSeguro::SearchAbandoned).to receive(:new)
         .with(
           "transactions/abandoned",
-          hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at),
+          { per_page: 10, starts_at: starts_at, ends_at: ends_at },
           page
         )
 
