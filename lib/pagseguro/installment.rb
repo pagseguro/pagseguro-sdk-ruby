@@ -27,8 +27,8 @@ module PagSeguro
       load_from_response Request.get(string, 'v2')
     end
 
-    # Serialize the HTTP response into data.
-    def self.load_from_response(response) # :nodoc:
+    private
+    def self.load_from_response(response)
       if response.success? and response.xml?
         Nokogiri::XML(response.body).css("installments > installment").map do |node|
           load_from_xml(node)
@@ -38,8 +38,7 @@ module PagSeguro
       end
     end
 
-    # Serialize the XML object.
-    def self.load_from_xml(xml) # :nodoc:
+    def self.load_from_xml(xml)
       new Serializer.new(xml).serialize
     end
   end
