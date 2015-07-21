@@ -5,7 +5,6 @@ require "bundler/setup"
 Bundler.require(:default, :development)
 
 I18n.enforce_available_locales = false
-require "test_notifier/runner/rspec"
 require "fakeweb"
 require "pagseguro"
 
