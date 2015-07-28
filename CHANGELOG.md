@@ -1,3 +1,19 @@
+## Next release - 2.5.0
+
+- Atualizado a sintaxe do rspec
+
+## Next release - 2.4.0
+
+- Estorno de transações
+- Cancelamento de transações
+- Consulta de histórico de status de transações
+
+## Next release - 2.3.0
+
+- Modelo de aplicações (autenticação na api como vendedor ou como aplicação)
+- Removendo utilização de threads para armazenar o objeto de configuração (a abordagem com threads não funciona no Rails 4, que é threadsafe)
+- Adicionando deprecation warnings para configuration writers do módulo PagSeguro. Será removido no futuro. Utilizar o bloco de configuração.
+
 ## Next release - 2.2.0
 
 - Checkout transparente
