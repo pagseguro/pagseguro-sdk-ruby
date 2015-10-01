@@ -70,7 +70,7 @@ payment.installment = {
 # payment.extra_params << { senderBirthDate: '07/05/1981' }
 
 puts "=> REQUEST"
-puts PagSeguro::TransactionRequest::Serializer.new(payment).to_params
+puts PagSeguro::TransactionRequest::RequestSerializer.new(payment).to_params
 puts
 
 transaction = payment.create
