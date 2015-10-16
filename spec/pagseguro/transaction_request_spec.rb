@@ -113,7 +113,7 @@ describe PagSeguro::TransactionRequest do |variable|
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
       it "does not create a transaction request" do
-        expect(transaction_request.create).to be_falsy
+        expect(transaction_request.create).not_to be_success
         expect(transaction_request.code).to be_nil
       end
 

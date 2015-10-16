@@ -10,8 +10,8 @@ RSpec.describe "Creating Transaction Request" do
         body: body, content_type: "text/xml"
     end
 
-    it "returns true" do
-      expect(transaction.create).to be_truthy
+    it "returns a success request" do
+      expect(transaction.create).to be_success
     end
 
     describe "#errors" do
@@ -37,8 +37,8 @@ RSpec.describe "Creating Transaction Request" do
         status: [400, "Bad Request"], body: body, content_type: "text/xml"
     end
 
-    it "returns false" do
-      expect(transaction.create).to be_falsey
+    it "returns not a success request" do
+      expect(transaction.create).not_to be_success
     end
 
     describe "#errors" do
