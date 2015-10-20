@@ -1,7 +1,7 @@
 language: ruby
 rvm:
-  - 2.2.2
-  - 2.1.6
+  - 2.2.3
+  - 2.1.7
   - 2.0.0
   - 1.9.3
   - jruby-19mode
@@ -9,4 +9,5 @@ rvm:
 notifications:
   email:
     - lucas.renan@codeminer42.com
-    - vitor.kusiaki@codeminer42.com
+    - dmitry.rocha@codeminer42.com
+    - rafael.belo@codeminer42.com
