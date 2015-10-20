@@ -73,30 +73,30 @@ puts "=> REQUEST"
 puts PagSeguro::TransactionRequest::RequestSerializer.new(payment).to_params
 puts
 
-transaction = payment.create
+payment.create
 
-if transaction.errors.any?
+if payment.errors.any?
   puts "=> ERRORS"
-  puts transaction.errors.join("\n")
+  puts payment.errors.join("\n")
 else
   puts "=> Transaction"
-  puts "  code: #{transaction.code}"
-  puts "  reference: #{transaction.reference}"
-  puts "  type: #{transaction.type_id}"
-  puts "  payment link: #{transaction.payment_link}"
-  puts "  status: #{transaction.status}"
-  puts "  payment method type: #{transaction.payment_method.type}"
-  puts "  created at: #{transaction.created_at}"
-  puts "  updated at: #{transaction.updated_at}"
-  puts "  gross amount: #{transaction.gross_amount.to_f}"
-  puts "  discount amount: #{transaction.discount_amount.to_f}"
-  puts "  net amount: #{transaction.net_amount.to_f}"
-  puts "  extra amount: #{transaction.extra_amount.to_f}"
-  puts "  installment count: #{transaction.installment_count}"
+  puts "  code: #{payment.code}"
+  puts "  reference: #{payment.reference}"
+  puts "  type: #{payment.type_id}"
+  puts "  payment link: #{payment.payment_link}"
+  puts "  status: #{payment.status}"
+  puts "  payment method type: #{payment.payment_method}"
+  puts "  created at: #{payment.created_at}"
+  puts "  updated at: #{payment.updated_at}"
+  puts "  gross amount: #{payment.gross_amount.to_f}"
+  puts "  discount amount: #{payment.discount_amount.to_f}"
+  puts "  net amount: #{payment.net_amount.to_f}"
+  puts "  extra amount: #{payment.extra_amount.to_f}"
+  puts "  installment count: #{payment.installment_count}"
 
   puts "    => Items"
-  puts "      items count: #{transaction.items.size}"
-  transaction.items.each do |item|
+  puts "      items count: #{payment.items.size}"
+  payment.items.each do |item|
     puts "      item id: #{item.id}"
     puts "      description: #{item.description}"
     puts "      quantity: #{item.quantity}"
@@ -104,19 +104,19 @@ else
   end
 
   puts "    => Sender"
-  puts "      name: #{transaction.sender.name}"
-  puts "      email: #{transaction.sender.email}"
-  puts "      phone: (#{transaction.sender.phone.area_code}) #{transaction.sender.phone.number}"
-  puts "      document: #{transaction.sender.document.type}: #{transaction.sender.document.value}"
+  puts "      name: #{payment.sender.name}"
+  puts "      email: #{payment.sender.email}"
+  puts "      phone: (#{payment.sender.phone.area_code}) #{payment.sender.phone.number}"
+  puts "      document: #{payment.sender.document}: #{payment.sender.document}"
 
   puts "    => Shipping"
-  puts "      street: #{transaction.shipping.address.street}, #{transaction.shipping.address.number}"
-  puts "      complement: #{transaction.shipping.address.complement}"
-  puts "      postal code: #{transaction.shipping.address.postal_code}"
-  puts "      district: #{transaction.shipping.address.district}"
-  puts "      city: #{transaction.shipping.address.city}"
-  puts "      state: #{transaction.shipping.address.state}"
-  puts "      country: #{transaction.shipping.address.country}"
-  puts "      type: #{transaction.shipping.type_name}"
-  puts "      cost: #{transaction.shipping.cost}"
+  puts "      street: #{payment.shipping.address.street}, #{payment.shipping.address.number}"
+  puts "      complement: #{payment.shipping.address.complement}"
+  puts "      postal code: #{payment.shipping.address.postal_code}"
+  puts "      district: #{payment.shipping.address.district}"
+  puts "      city: #{payment.shipping.address.city}"
+  puts "      state: #{payment.shipping.address.state}"
+  puts "      country: #{payment.shipping.address.country}"
+  puts "      type: #{payment.shipping.type_name}"
+  puts "      cost: #{payment.shipping.cost}"
 end
