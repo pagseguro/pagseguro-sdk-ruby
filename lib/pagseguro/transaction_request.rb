@@ -103,7 +103,7 @@ module PagSeguro
       response = Response.new(request, self)
       response.serialize
 
-      response
+      response.success?
     end
 
     def update_attributes(attrs)
