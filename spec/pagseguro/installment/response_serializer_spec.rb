@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PagSeguro::Installment::Serializer do
+describe PagSeguro::Installment::ResponseSerializer do
   context "when there are installments" do
     let(:source) { File.read("./spec/fixtures/installment/success.xml") }
     let(:xml) { Nokogiri::XML(source) }

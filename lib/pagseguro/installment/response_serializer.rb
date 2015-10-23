@@ -1,6 +1,6 @@
 module PagSeguro
   class Installment
-    class Serializer
+    class ResponseSerializer
       # The installment that will be serialized
       attr_reader :xml
 

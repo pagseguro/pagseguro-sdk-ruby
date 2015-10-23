@@ -189,11 +189,11 @@ module PagSeguro
       @status = ensure_type(PaymentStatus, status)
     end
 
+    private
     def self.api_version
       'v3'
     end
 
-    private
     def after_initialize
       @errors = Errors.new
     end
