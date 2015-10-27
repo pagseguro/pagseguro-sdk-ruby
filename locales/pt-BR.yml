@@ -2,6 +2,7 @@ pt-BR:
   pagseguro:
     errors:
       unauthorized: "Não autorizado."
+      not_found: "Não encontrado."
       "10001": "O parâmetro email deve ser informado."
       "10002": "O parâmetro token deve ser informado."
       "10003": "O valor informado no parâmetro email é inválido."
