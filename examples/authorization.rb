@@ -6,17 +6,15 @@ require_relative "boot"
 # redirect_url is a required param
 
 options = {
-  credentials: PagSeguro::ApplicationCredentials.new("app452", "1D47384E"),
   permissions: [:searches, :notifications],
   notification_url: 'foo.com.br',
   redirect_url: 'bar.com.br'
 }
 
-response = PagSeguro::Authorization.new(options).authorize
-
-puts "=> Response"
-puts response.code
-puts response.created_at
-
-puts "Use this link to confirm authorizations:"
-puts "  link: #{response.url}"
+authorization_request = PagSeguro::AuthorizationRequest.new(options)
+if authorization_request.create
+  print "Use this link to confirm authorizations: "
+  puts authorization_request.url
+else
+  puts authorization_request.errors.join("\n")
+end

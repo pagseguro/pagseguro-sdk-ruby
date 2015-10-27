@@ -38,7 +38,7 @@ module PagSeguro
     # Post and create an Authorization.
     # Return Boolean.
     def create
-      request = Request.post('authorizations/request', params)
+      request = Request.post('authorizations/request', 'v2', params)
       response = Response.new(request)
       update_attributes(response.serialize)
 
@@ -47,7 +47,7 @@ module PagSeguro
 
     # URL to confirm authorization after create one.
     def url
-      PagSeguro.site_url("authorization/request.jhtml?code=#{code}") if code
+      PagSeguro.site_url("v2/authorization/request.jhtml?code=#{code}") if code
     end
 
     def errors
