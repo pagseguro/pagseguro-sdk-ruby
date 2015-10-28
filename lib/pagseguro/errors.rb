@@ -12,6 +12,8 @@ module PagSeguro
       process(@response) if response
     end
 
+    # Adds errors.
+    # Accepts a response.
     def add(response)
       process(response)
     end

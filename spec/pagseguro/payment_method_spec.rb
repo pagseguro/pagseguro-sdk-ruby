@@ -9,6 +9,7 @@ end
 
 describe PagSeguro::PaymentMethod do
   context "type mapping" do
+    it_behaves_like "type mapping", nil, :not_set
     it_behaves_like "type mapping", 1, :credit_card
     it_behaves_like "type mapping", 2, :boleto
     it_behaves_like "type mapping", 3, :online_transfer

@@ -51,4 +51,3 @@
  - Criação de checkouts via API.
  - Tratamento de notificações de pagamento enviadas pelo PagSeguro.
  - Consulta de transações.
-

@@ -20,27 +20,18 @@ module PagSeguro
 
     # Find installment options by a given amount
     # Optional. Credit card brand
-    # Return an Array of PagSeguro::Installment instances
+    # Return a PagSeguro::Installment::Collection instance
     def self.find(amount, card_brand = nil)
-      string = "installments?amount=#{amount}"
-      string += "&cardBrand=#{card_brand}" if card_brand
-      load_from_response Request.get(string, api_version)
+      request = Request.get("installments", api_version, params(amount: amount, card_brand: card_brand))
+      collection = Collection.new
+      Response.new(request, collection).serialize
+
+      collection
     end
 
-    # Serialize the HTTP response into data.
-    def self.load_from_response(response) # :nodoc:
-      if response.success? and response.xml?
-        Nokogiri::XML(response.body).css("installments > installment").map do |node|
-          load_from_xml(node)
-        end
-      else
-        Response.new Errors.new(response)
-      end
-    end
-
-    # Serialize the XML object.
-    def self.load_from_xml(xml) # :nodoc:
-      new Serializer.new(xml).serialize
+    private
+    def self.params(options)
+      RequestSerializer.new(options).to_params
     end
 
     def self.api_version
