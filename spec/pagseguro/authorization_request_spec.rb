@@ -29,7 +29,7 @@ describe PagSeguro::AuthorizationRequest do
 
     before do
       expect(PagSeguro::Request).to receive(:post)
-        .with("authorizations/request", params)
+        .with("authorizations/request", 'v2', params)
         .and_return(request)
       expect(PagSeguro::AuthorizationRequest::Response).to receive(:new)
         .with(request)

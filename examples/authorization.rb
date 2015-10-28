@@ -11,17 +11,15 @@ require_relative "boot"
 # or
 # credentials = PagSeguro::ApplicationCredentials.new("app45", "1D4738")
 options = {
-  credentials: credentials,
   permissions: [:searches, :notifications],
   notification_url: 'foo.com.br',
   redirect_url: 'bar.com.br'
 }
 
-response = PagSeguro::Authorization.new(options).authorize
-
-puts "=> Response"
-puts response.code
-puts response.created_at
-
-puts "Use this link to confirm authorizations:"
-puts "  link: #{response.url}"
+authorization_request = PagSeguro::AuthorizationRequest.new(options)
+if authorization_request.create
+  print "Use this link to confirm authorizations: "
+  puts authorization_request.url
+else
+  puts authorization_request.errors.join("\n")
+end
