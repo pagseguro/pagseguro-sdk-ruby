@@ -1,9 +1,9 @@
 require_relative "boot"
 
-transaction = PagSeguro::Transaction.find_by_code("E69FCE5813A142C29EB9B9652BCDC1A8")
+transaction = PagSeguro::Transaction.find_by_code("9E60DBA75DF94059A3D8F66EA8280A65")
 
 if transaction.errors.any?
-  transaction.errors.join("\n")
+  puts transaction.errors.join("\n")
 else
   puts "=> Transaction"
   puts "  code: #{transaction.code}"
@@ -19,18 +19,19 @@ else
   puts "  intermediation rate amount: #{transaction.creditor_fees.intermediation_rate_amount.to_f}"
   puts "  intermediation fee amount: #{transaction.creditor_fees.intermediation_fee_amount.to_f}"
   puts "  commission fee amount: #{transaction.creditor_fees.commission_fee_amount.to_f}"
+  puts "  commission fee amount: #{transaction.creditor_fees.commission_fee_amount.to_f}"
   puts "  efrete: #{transaction.creditor_fees.efrete.to_f}"
   puts "  net amount: #{transaction.net_amount.to_f}"
   puts "  extra amount: #{transaction.extra_amount.to_f}"
-  puts "  installment count: #{transaction.installments}"
 
-  puts "    => Payment Release"
+  puts "    => Payments"
+  puts "      installment count: #{transaction.installments}"
   transaction.payment_releases.each do |release|
-    puts "      current installment: #{release.installment}"
-    puts "      total amount: #{release.total_amount.to_f}"
-    puts "      release amount: #{release.release_amount.to_f}"
-    puts "      status: #{release.status}"
-    puts "      release date: #{release.release_date}"
+    puts "    current installment: #{release.installment}"
+    puts "    total amount: #{release.total_amount.to_f}"
+    puts "    release amount: #{release.release_amount.to_f}"
+    puts "    status: #{release.status}"
+    puts "    release date: #{release.release_date}"
   end
 
   puts "    => Items"
