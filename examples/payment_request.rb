@@ -6,10 +6,13 @@ payment.abandon_url = "http://dev.simplesideias.com.br/?abandoned"
 payment.notification_url = "http://dev.simplesideias.com.br/?notification"
 payment.redirect_url = "http://dev.simplesideias.com.br/?redirect"
 
-# You can pass a credentials object to be used in your
-# payment request, if you don't want to use email/token config.
+# if you don't want use the application config, can give your credentials object to payment request
 #
-# payment.credentials = PagSeguro::ApplicationCredentials.new("app123", "qwerty", "authorizationcode")
+# AccountCredentials:
+# payment.credentials = PagSeguro::ApplicationCredentials.new("APP_ID", "APP_KEY", "AUTHORIZATION_CODE")
+#
+# AccountCredentials:
+payment.credentials = PagSeguro::ApplicationCredentials.new('EMAIL', 'TOKEN')
 
 payment.items << {
   id: 1234,

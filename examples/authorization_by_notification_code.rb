@@ -1,13 +1,23 @@
 require_relative 'boot'
 
-# credentials = PagSeguro::ApplicationCredentials.new("app452", "1D473")
-credentials = PagSeguro::AccountCredentials.new("app452", "1D473")
+# Authorization by notification code
+#
+#   You need to give:
+#     - authorization code
+#     - application credentials (APP_ID, APP_KEY)
+#
+#   You can pass this parameters to PagSeguro::Authorization#find_by_notification_code
+#
+# PS: For more details look the class PagSeguro::Authorization#find_by_notification_code
 
-options = {
-  credentials: credentials
-}
 
-authorization = PagSeguro::Authorization.find_by_notification_code('ad#213', options)
+credentials = PagSeguro::ApplicationCredentials.new('APP_ID', 'APP_KEY')
+
+options = { credentials: credentials } # Unnecessary if you set in application config
+
+authorization = PagSeguro::Authorization.find_by_notification_code('NOTIFICATION_CODE', options)
+
+puts authorization.errors.inspect
 
 if authorization.errors.any?
   puts authorization.errors.join("\n")

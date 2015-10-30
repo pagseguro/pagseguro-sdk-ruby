@@ -1,12 +1,22 @@
 require_relative "boot"
 require "active_support/all"
 
-# credentials = PagSeguro::ApplicationCredentials.new("app45", "1D47")
-#report = PagSeguro::Transaction.find_abandoned(starts_at: 30.days.ago, size: 1, credentials: credentials)
-report = PagSeguro::Transaction.find_abandoned(
-  starts_at: 30.days.ago,
-  size: 1
-)
+# Abandoned Transactions
+#
+#   The acount credentials (EMAIL, TOKEN) are required
+#
+#   You can pass the credentials parameters to PagSeguro::Transaction#find_abandoned
+
+options = {
+  credentials: PagSeguro::ApplicationCredentials.new('EMAIL', 'TOKEN')
+  # You can pass more arguments by params, look (/lib/pagseguro/transaction.rb)
+}
+
+report = PagSeguro::Transaction.find_abandoned(options)
+
+# OR through the application settings like the boot file example (/examples/boot.rb)
+#
+# report = PagSeguro::Transaction.find_abandoned
 
 while report.next_page?
   report.next_page!

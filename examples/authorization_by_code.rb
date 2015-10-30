@@ -1,20 +1,29 @@
 require_relative 'boot'
 
-# credentials = PagSeguro::ApplicationCredentials.new("app452", "1D473")
-credentials = PagSeguro::ApplicationCredentials.new("app45", "1D473")
+# Authorization by code
+#
+#   You need to give:
+#     - authorization code
+#     - application credentials (APP_ID, APP_KEY) OR account credentials (EMAIL, TOKEN)
+#
+#   You can pass this parameters to PagSeguro::Authorization#find_by_code
+#
+# PS: For more details look the class PagSeguro::Authorization#find_by_code
 
-options = {
-  credentials: credentials
-}
+# credentials = PagSeguro::AccountCredentials.new("EMAIL", "TOKEN")
+credentials = PagSeguro::ApplicationCredentials.new("APP_ID", "APP_KEY")
 
-authorization = PagSeguro::Authorization.find_by_code('D9EED', options)
+options = { credentials: credentials } # Unnecessary if you set in application config
+
+authorization = PagSeguro::Authorization.find_by_code('AUTHORIZATION_CODE', options)
 
 if authorization.errors.any?
   puts authorization.errors.join("\n")
 else
-  authorization.permissions.each do |permission|
-    puts "Permission: "
+  authorization.permissions.each do |permission, index|
+    puts "Permission #{index}: "
     puts "  code: #{permission.code}"
     puts "  status: #{permission.status}"
   end
+  puts
 end
