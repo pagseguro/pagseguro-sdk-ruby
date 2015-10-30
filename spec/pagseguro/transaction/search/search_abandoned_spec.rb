@@ -22,6 +22,21 @@ describe PagSeguro::SearchAbandoned do
           .and_return(transaction)
         expect(search.transactions).to eq([transaction, transaction])
       end
+
+      it 'returns an array whith given credentials' do
+        options_with_credentials = {
+          credentials: PagSeguro::ApplicationCredentials.new('APP_ID', 'APP_KEY')
+        }.merge(options)
+
+        expect(PagSeguro::Transaction).to receive(:load_from_xml)
+          .exactly(2)
+          .times
+          .and_return(transaction)
+
+        expect(
+          PagSeguro::SearchAbandoned.new('transactions/abandoned', options_with_credentials, 1).transactions
+        ).to eq([transaction, transaction])
+      end
     end
   end
 end

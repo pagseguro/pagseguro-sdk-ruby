@@ -7,7 +7,8 @@ module PagSeguro
           initialDate: options[:starts_at].xmlschema,
           finalDate: options[:ends_at].xmlschema,
           page: page,
-          maxPageResults: options.fetch(:per_page, 50)
+          maxPageResults: options.fetch(:per_page, 50),
+          credentials: (options[:credentials] if options.has_key? :credentials)
         })
       @errors = Errors.new(@response)
     end
