@@ -1,6 +1,6 @@
 # Biblioteca de integração PagSeguro em Ruby
 
-[![Build Status](https://travis-ci.org/pagseguro/ruby.svg?branch=2.3.0-dev-update-transaction-by-code)](https://travis-ci.org/pagseguro/ruby)
+[![Build Status](https://travis-ci.org/pagseguro/ruby.svg?branch=master)](https://travis-ci.org/pagseguro/ruby)
 [![Code Climate](https://codeclimate.com/github/pagseguro/ruby/badges/gpa.svg)](https://codeclimate.com/github/pagseguro/ruby)
 
 ## Descrição
