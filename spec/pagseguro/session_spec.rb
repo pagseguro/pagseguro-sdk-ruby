@@ -5,7 +5,8 @@ describe PagSeguro::Session do |variable|
     subject { PagSeguro::Session }
     let(:request) do
       double(:request, success?: true, xml?: true, data: xml_parsed,
-             body: raw_xml, unauthorized?: false, bad_request?: false)
+             body: raw_xml, unauthorized?: false, bad_request?: false,
+             not_found?: false)
     end
     let(:xml_parsed) { Nokogiri::XML(raw_xml) }
     let(:raw_xml) { File.read("./spec/fixtures/session/success.xml") }

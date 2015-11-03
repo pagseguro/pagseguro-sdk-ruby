@@ -99,7 +99,7 @@ describe PagSeguro::TransactionRequest do |variable|
 
     context "when request fails" do
       let :response_request do
-        double(:ResponseRequest, success?: false, unauthorized?: false, bad_request?: false, data: xml_parsed, body: raw_xml, :xml? => true)
+        double(:ResponseRequest, success?: false, unauthorized?: false, bad_request?: false, data: xml_parsed, not_found?: false, body: raw_xml, :xml? => true)
       end
 
       before do
