@@ -5,7 +5,7 @@ module PagSeguro
       @response = Request.get(@path, api_version,
         {
           reference: options[:reference],
-          credentials: (options[:credentials] if options.has_key? :credentials)
+          credentials: options[:credentials]
         })
       @errors = Errors.new(@response)
     end

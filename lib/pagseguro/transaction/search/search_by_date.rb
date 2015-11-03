@@ -8,9 +8,8 @@ module PagSeguro
           finalDate: options[:ends_at].xmlschema,
           page: page,
           maxPageResults: options.fetch(:per_page, 50),
-          credentials: (options[:credentials] if options.has_key? :credentials)
+          credentials: options[:credentials]
         })
-
       @errors = Errors.new(@response)
     end
   end
