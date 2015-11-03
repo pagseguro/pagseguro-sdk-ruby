@@ -23,7 +23,7 @@ describe PagSeguro::TransactionRequest::Response do
 
   context "#serialize" do
     let(:http_response) do
-      double(:HttpResponse, data: xml_parsed, body: raw_xml, success?: true, xml?: true, unauthorized?: false, bad_request?: false)
+      double(:HttpResponse, data: xml_parsed, body: raw_xml, success?: true, xml?: true, unauthorized?: false, bad_request?: false, not_found?: false)
     end
 
     let(:xml_parsed) { Nokogiri::XML(raw_xml) }

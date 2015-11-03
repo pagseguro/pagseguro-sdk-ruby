@@ -8,7 +8,7 @@ describe PagSeguro::Installment do
   it_assigns_attribute :interest_free
 
   let(:request) do
-    double(:request, success?: true, xml?: true, body: raw_xml, data: xml_parsed, unauthorized?: false)
+    double(:request, success?: true, xml?: true, body: raw_xml, data: xml_parsed, unauthorized?: false, not_found?: false)
   end
 
   let(:xml_parsed) { Nokogiri::XML(raw_xml) }
