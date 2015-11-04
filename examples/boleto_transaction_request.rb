@@ -1,5 +1,11 @@
 require_relative "boot"
 
+# Credit card transaction request
+#
+# You need to set your AccountCredentials (EMAIL, TOKEN) in the application config
+#
+# P.S: See the boot file example for more details
+
 payment = PagSeguro::BoletoTransactionRequest.new
 payment.notification_url = "http://www.meusite.com.br/notification"
 payment.payment_mode = "default"

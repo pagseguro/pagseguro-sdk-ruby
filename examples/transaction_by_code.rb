@@ -1,6 +1,19 @@
 require_relative "boot"
 
-transaction = PagSeguro::Transaction.find_by_code("9E60DBA75DF94059A3D8F66EA8280A65")
+# Transaction by code
+#
+#   You need to give:
+#     - transaction code
+#     - account credentials (EMAIL, TOKEN) OR application credentials (APP_ID, APP_KEY)
+#
+#   You can pass this parameters to PagSeguro::Transaction#find_by_code
+
+# credentials = PagSeguro::ApplicationCredentials.new('APP_ID', 'APP_KEY')
+credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
+
+options = { credentials: credentials } # Unnecessary if you set in application config
+
+transaction = PagSeguro::Transaction.find_by_code("TRANSACTION_CODE", options)
 
 if transaction.errors.any?
   puts transaction.errors.join("\n")

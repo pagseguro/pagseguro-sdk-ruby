@@ -7,7 +7,7 @@ describe PagSeguro::Transaction do
 
       PagSeguro::Request
         .should_receive(:get)
-        .with("transactions/notifications/CODE", "v3")
+        .with("transactions/notifications/CODE", "v3", {})
         .and_return(double.as_null_object)
 
       PagSeguro::Transaction.find_by_notification_code("CODE")
@@ -29,7 +29,7 @@ describe PagSeguro::Transaction do
 
       PagSeguro::Request
         .should_receive(:get)
-        .with("transactions/CODE", 'v3')
+        .with("transactions/CODE", 'v3', {})
         .and_return(double.as_null_object)
 
       PagSeguro::Transaction.find_by_code("CODE")
@@ -116,6 +116,26 @@ describe PagSeguro::Transaction do
 
       PagSeguro::Transaction.find_abandoned(
         { per_page: 10, starts_at: starts_at, ends_at: ends_at },
+        page
+      )
+    end
+
+    it "initializes search with given credential option" do
+      credentials = PagSeguro::AccountCredentials.new('email@example.com', 'token')
+      starts_at = Time.now - 3600
+      ends_at = starts_at + 180
+      page = 1
+
+      PagSeguro::SearchAbandoned
+        .should_receive(:new)
+        .with(
+          "transactions/abandoned",
+          hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at, credentials: credentials),
+          page
+        )
+
+      PagSeguro::Transaction.find_abandoned(
+        { per_page: 10, starts_at: starts_at, ends_at: ends_at, credentials: credentials },
         page
       )
     end

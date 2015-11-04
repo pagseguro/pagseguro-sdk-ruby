@@ -66,14 +66,14 @@ module PagSeguro
 
     # Find a transaction by its transactionCode
     # Return a PagSeguro::Transaction instance
-    def self.find_by_code(code)
-      load_from_response send_request("transactions/#{code}")
+    def self.find_by_code(code, options = {})
+      load_from_response send_request("transactions/#{code}", options)
     end
 
     # Find a transaction by its notificationCode.
     # Return a PagSeguro::Transaction instance.
-    def self.find_by_notification_code(code)
-      load_from_response send_request("transactions/notifications/#{code}")
+    def self.find_by_notification_code(code, options = {})
+      load_from_response send_request("transactions/notifications/#{code}", options)
     end
 
     # Search transactions within a date range.
@@ -102,8 +102,8 @@ module PagSeguro
     #
     # # +reference+: the transaction reference code
     #
-    def self.find_by_reference(reference)
-      SearchByReference.new("transactions", { reference: reference })
+    def self.find_by_reference(reference, options = {})
+      SearchByReference.new("transactions", { reference: reference }.merge(options))
     end
 
     # Get abandoned transactions.
@@ -191,8 +191,8 @@ module PagSeguro
     end
 
     # Send a get request to v3 API version, with the path given
-    def self.send_request(path)
-      Request.get(path, 'v3')
+    def self.send_request(path, options)
+      Request.get(path, 'v3', options)
     end
 
     # Serialize the XML object.

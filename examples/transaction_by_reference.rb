@@ -1,6 +1,18 @@
 require_relative 'boot'
 
-transaction = PagSeguro::Transaction.find_by_reference("REF1234")
+# Transaction by reference
+#
+#   You need to give:
+#     - reference code
+#     - account credentials (EMAIL, TOKEN)
+#
+#   You can pass this parameters to PagSeguro::Transaction#find_by_reference
+
+credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
+
+options = { credentials: credentials } # Unnecessary if you set in application config
+
+transaction = PagSeguro::Transaction.find_by_reference("REFERENCE_CODE", options)
 
 while transaction.next_page?
   transaction.next_page!

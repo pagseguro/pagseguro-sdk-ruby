@@ -1,12 +1,22 @@
 require_relative "boot"
 
-# credentials = PagSeguro::Credentials.new("app45", "1D4738")
-# transaction = PagSeguro::Transaction.find_by_notification_code("3D939", { credentials: credentials })
+# Transaction by notification code
+#
+#   You need to give:
+#     - transaction notification code
+#     - account credentials (EMAIL, TOKEN) OR application credentials (APP_ID, APP_KEY)
+#
+#   You can pass this parameters to PagSeguro::Transaction#find_by_code
 
-transaction = PagSeguro::Transaction.find_by_notification_code("3D939")
+# credentials = PagSeguro::ApplicationCredentials.new('APP_ID', 'APP_KEY')
+credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
+
+options = { credentials: credentials } # Unnecessary if you set in application config
+
+transaction = PagSeguro::Transaction.find_by_notification_code("NOTIFICATION_CODE", options)
 
 if transaction.errors.any?
-  transaction.errors.join("\n")
+  puts transaction.errors.join("\n")
 else
   puts "=> Transaction"
   puts "  code: #{transaction.code}"
@@ -26,15 +36,15 @@ else
   puts "  efrete: #{transaction.creditor_fees.efrete.to_f}"
   puts "  net amount: #{transaction.net_amount.to_f}"
   puts "  extra amount: #{transaction.extra_amount.to_f}"
-  puts "  installment count: #{transaction.installments}"
 
-  puts "    => Payment Release"
+  puts "    => Payments"
+  puts "      installment count: #{transaction.installments}"
   transaction.payment_releases.each do |release|
-    puts "      current installment: #{release.installment}"
-    puts "      total amount: #{release.total_amount.to_f}"
-    puts "      release amount: #{release.release_amount.to_f}"
-    puts "      status: #{release.status}"
-    puts "      release date: #{release.release_date}"
+    puts "    current installment: #{release.installment}"
+    puts "    total amount: #{release.total_amount.to_f}"
+    puts "    release amount: #{release.release_amount.to_f}"
+    puts "    status: #{release.status}"
+    puts "    release date: #{release.release_date}"
   end
 
   puts "    => Items"

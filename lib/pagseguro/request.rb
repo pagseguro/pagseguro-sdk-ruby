@@ -75,19 +75,17 @@ module PagSeguro
     def credentials_object(data)
       credentials = data.delete(:credentials)
       if credentials.respond_to? :app_id
-        general_credentials = {
+        {
           appId: credentials.app_id,
           appKey: credentials.app_key,
           authorizationCode: credentials.authorization_code
         }
       else
-        general_credentials = {
+        {
           email: credentials.email,
           token: credentials.token
         }
       end
-
-      general_credentials
     end
 
     def global_credentials(data)

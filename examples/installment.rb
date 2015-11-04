@@ -1,33 +1,40 @@
 require_relative "boot"
 
-credentials = PagSeguro.application_credentials
-credentials.authorization_code = "BF0C85F19BEB4011AC4D99C88C6E0638"
+# Installment
+#
+# Required AccountCredentials
+#
+#   You need to give:
+#     - amount
+#     - brand_card
+#     - account credentials (EMAIL, TOKEN)
+#
+#   You can pass this parameters to PagSeguro::Installment#find
 
-installments = PagSeguro::Installment.find("100.00")
+credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
+
+options = {
+  credentials: credentials # Unnecessary if you set in application config
+}
+
+installments = PagSeguro::Installment.find("100.00", nil, options)
 
 if installments.errors.any?
-  puts "=> ERRORS"
   puts installments.errors.join("\n")
-  puts installments.inspect
 else
   puts "=> INSTALLMENTS"
   puts
   installments.each do |installment|
     puts installment.inspect
   end
-end
 
-visa_installments = PagSeguro::Installment.find("100.00", :visa)
+  visa_installments = PagSeguro::Installment.find("100.00", :visa, options)
 
-puts
-if installments.errors.any?
-  puts "=> ERRORS"
-  puts installments.errors.join("\n")
-  puts installments.inspect
-else
+  puts
   puts "=> VISA INSTALLMENTS"
   puts
   visa_installments.each do |installment|
     puts installment.inspect
   end
 end
+
