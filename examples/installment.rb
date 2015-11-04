@@ -19,7 +19,9 @@ options = {
 
 installments = PagSeguro::Installment.find("100.00", nil, options)
 
-if installments.is_a? Array
+if installments.errors.any?
+  puts installments.errors.join("\n")
+else
   puts "=> INSTALLMENTS"
   puts
   installments.each do |installment|
@@ -34,7 +36,5 @@ if installments.is_a? Array
   visa_installments.each do |installment|
     puts installment.inspect
   end
-else
-  puts installments.errors.join("\n")
 end
 
