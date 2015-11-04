@@ -1,6 +1,12 @@
 # -*- encoding : utf-8 -*-
 require_relative "boot"
 
+# Payment request
+#
+# You need to set your AccountCredentials (EMAIL, TOKEN) in the application config
+#
+# P.S: See the boot file example for more details.
+
 payment = PagSeguro::PaymentRequest.new
 payment.abandon_url = "http://dev.simplesideias.com.br/?abandoned"
 payment.notification_url = "http://dev.simplesideias.com.br/?notification"
@@ -8,11 +14,8 @@ payment.redirect_url = "http://dev.simplesideias.com.br/?redirect"
 
 # if you don't want use the application config, can give your credentials object to payment request
 #
-# AccountCredentials:
-# payment.credentials = PagSeguro::ApplicationCredentials.new("APP_ID", "APP_KEY", "AUTHORIZATION_CODE")
-#
-# AccountCredentials:
-payment.credentials = PagSeguro::ApplicationCredentials.new('EMAIL', 'TOKEN')
+# payment.credentials = PagSeguro::AccountCredentials.new('rafaelrpbelo@gmail.com', 'E280E0A9B6FA48A2AA9E4E73B5A6FC60')
+
 
 payment.items << {
   id: 1234,
