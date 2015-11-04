@@ -1,5 +1,11 @@
 require_relative "boot"
 
+# Create Session
+#
+# You need to set your AccountCredentials (EMAIL, TOKEN) in the application config
+#
+# P.S: See the boot file example for more details.
+
 session = PagSeguro::Session.create
 
 if session.errors.any?
