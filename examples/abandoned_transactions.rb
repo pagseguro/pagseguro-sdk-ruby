@@ -8,7 +8,7 @@ require "active_support/all"
 #   You can pass the credentials parameters to PagSeguro::Transaction#find_abandoned
 
 options = {
-  credentials: PagSeguro::ApplicationCredentials.new('EMAIL', 'TOKEN')
+  credentials: PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
   # You can pass more arguments by params, look (/lib/pagseguro/transaction.rb)
 }
 
