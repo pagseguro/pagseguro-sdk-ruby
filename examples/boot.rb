@@ -4,11 +4,11 @@ require "pagseguro"
 I18n.locale = "pt-BR"
 
 PagSeguro.configure do |config|
-  # You can setup with TOKEN and EMAIL
+  # You can setup with Application Credentials trough TOKEN and EMAIL
   #   config.token = ENV.fetch("PAGSEGURO_TOKEN")
   #   config.email = ENV.fetch("PAGSEGURO_EMAIL")
   #
-  # OR with APP_ID and APP_KEY
+  # OR with Application Credentials through APP_ID and APP_KEY
   #   config.app_id = ENV.fetch("PAGSEGURO_APP_ID")
   #   config.app_key = ENV.fetch("PAGSEGURO_APP_KEY")
   #
