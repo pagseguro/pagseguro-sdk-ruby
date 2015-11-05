@@ -2,6 +2,7 @@ module PagSeguro
   class PaymentRequest
     include Extensions::MassAssignment
     include Extensions::EnsureType
+    include Extensions::Credentiable
 
     # Set the payment currency.
     # Defaults to BRL.
@@ -51,12 +52,6 @@ module PagSeguro
     # complete the payment.
     attr_accessor :abandon_url
 
-    # The email that identifies the request. Defaults to PagSeguro.email
-    attr_accessor :email
-
-    # The token that identifies the request. Defaults to PagSeguro.token
-    attr_accessor :token
-
     # The extra parameters for payment request
     attr_accessor :extra_params
 
@@ -77,10 +72,7 @@ module PagSeguro
 
     # Calls the PagSeguro web service and register this request for payment.
     def register
-      params = Serializer.new(self).to_params.merge({
-        email: email,
-        token: token
-      })
+      params = Serializer.new(self).to_params
       Response.new Request.post("checkout", api_version, params)
     end
 
@@ -88,11 +80,8 @@ module PagSeguro
     def before_initialize
       self.extra_params = []
       self.currency = "BRL"
-      self.email    = PagSeguro.email
-      self.token    = PagSeguro.token
     end
 
-    # The default PagSeguro API version
     def api_version
       'v2'
     end

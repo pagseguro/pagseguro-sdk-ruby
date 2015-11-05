@@ -4,7 +4,7 @@ describe PagSeguro::Search do
   let(:search) { PagSeguro::Search.new("foo", "bar", 1) }
   let(:source) { File.read("./spec/fixtures/transactions/search.xml") }
   let(:xml) { Nokogiri::XML(source) }
-  let(:response) { double(:response, data: xml, unauthorized?: false, bad_request?: false) }
+  let(:response) { double(:response, data: xml, unauthorized?: false, bad_request?: false, not_found?: false) }
 
   context 'when being initialized' do
     it 'initializes with passed page number' do

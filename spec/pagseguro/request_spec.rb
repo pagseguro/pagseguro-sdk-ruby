@@ -11,6 +11,10 @@ describe PagSeguro::Request do
   context "POST request" do
     before do
       FakeWeb.register_uri :post, %r[.+], body: "BODY"
+      PagSeguro.configure do |config|
+        config.app_id = nil
+        config.app_key = nil
+      end
     end
 
     it "includes credentials" do
@@ -50,12 +54,28 @@ describe PagSeguro::Request do
       FakeWeb.register_uri :get, %r[.+], body: "BODY"
     end
 
-    it "includes credentials" do
-      PagSeguro.email = "EMAIL"
-      PagSeguro.token = "TOKEN"
-      PagSeguro::Request.get("checkout", "v3")
+    context "when global acoount config is set" do
+      it "includes account credentials" do
+        PagSeguro.configure do |config|
+          config.email = "EMAIL"
+          config.token = "TOKEN"
+        end
+        PagSeguro::Request.get("checkout", "v3")
 
-      expect(FakeWeb.last_request.path).to include("email=EMAIL&token=TOKEN")
+        expect(FakeWeb.last_request.path).to include("email=EMAIL&token=TOKEN")
+      end
+    end
+
+    context "when global app config is set" do
+      it "includes application credentials" do
+        PagSeguro.configure do |config|
+          config.app_id = "APP123"
+          config.app_key = "APPKEY"
+        end
+        PagSeguro::Request.get("checkout", "v3")
+
+        expect(FakeWeb.last_request.path).to include("appId=APP123&appKey=APPKEY")
+      end
     end
 
     it "includes encoding" do

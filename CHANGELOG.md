@@ -1,8 +1,14 @@
-## Next release - 2.2.0
+## Stable
+
+2.3.0
+
+- Modelo de aplicações (autenticação na api como vendedor ou como aplicação)
+- Removendo utilização de threads para armazenar o objeto de configuração (a abordagem com threads não funciona no Rails 4, que é threadsafe)
+- Adicionando deprecation warnings para configuration writers do módulo PagSeguro. Será removido no futuro. Utilizar o bloco de configuração.
+
+2.2.0
 
 - Checkout transparente
-
-## Stable
 
 2.1.1
 

@@ -20,9 +20,10 @@ module PagSeguro
 
     # Find installment options by a given amount
     # Optional. Credit card brand
+
     # Return a PagSeguro::Installment::Collection instance
-    def self.find(amount, card_brand = nil)
-      request = Request.get("installments", api_version, params(amount: amount, card_brand: card_brand))
+    def self.find(amount, card_brand, options = {})
+      request = Request.get("installments", api_version, options.merge(params(amount: amount, card_brand: card_brand)))
       collection = Collection.new
       Response.new(request, collection).serialize
 
@@ -30,6 +31,7 @@ module PagSeguro
     end
 
     private
+
     def self.params(options)
       RequestSerializer.new(options).to_params
     end

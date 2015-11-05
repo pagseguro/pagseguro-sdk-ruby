@@ -2,9 +2,17 @@ require "spec_helper"
 
 describe PagSeguro do
   before do
-    PagSeguro.email = "EMAIL"
-    PagSeguro.token = "TOKEN"
+    PagSeguro.configure do |config|
+      config.app_id = "APP123"
+      config.app_key = "APPTOKEN"
+      config.email = "EMAIL"
+      config.token = "TOKEN"
+    end
     PagSeguro.receiver_email = "RECEIVER_EMAIL"
+  end
+
+  after do
+    PagSeguro.environment = :production
   end
 
   it { expect(PagSeguro.email).to eql("EMAIL") }
@@ -17,27 +25,20 @@ describe PagSeguro do
   end
 
   context "configuring library" do
-    it "yields PagSeguro" do
+    it "yields PagSeguro::Config" do
       expect {|block|
         PagSeguro.configure(&block)
       }.to yield_with_args(PagSeguro::Config)
-    end
-
-    it "is threadsafe" do
-      thread = Thread.new do
-        PagSeguro.configure do |config|
-          config.receiver_email = 'ANOTHER_RECEIVER_EMAIL'
-        end
-      end
-      thread.join
-
-      expect(PagSeguro.receiver_email).to eql("RECEIVER_EMAIL")
     end
   end
 
   context "default settings" do
     it { expect(PagSeguro.encoding).to eql("UTF-8") }
     it { expect(PagSeguro.environment).to eql(:production) }
+    it { expect(PagSeguro.account_credentials.email).to eql("EMAIL") }
+    it { expect(PagSeguro.account_credentials.token).to eql("TOKEN") }
+    it { expect(PagSeguro.application_credentials.app_id).to eql("APP123") }
+    it { expect(PagSeguro.application_credentials.app_key).to eql("APPTOKEN") }
   end
 
   describe ".api_url" do
@@ -58,7 +59,6 @@ describe PagSeguro do
 
       expect(PagSeguro.api_url("v2/some/path")).to eql("https://ws.sandbox.pagseguro.uol.com.br/v2/some/path")
     end
-
   end
 
   describe ".site_url" do

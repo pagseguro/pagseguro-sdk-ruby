@@ -46,11 +46,13 @@ module PagSeguro
     end
 
     def extended_data(data)
-      data.merge(
-        email: data[:email] || PagSeguro.email,
-        token: data[:token] || PagSeguro.token,
-        charset: PagSeguro.encoding
-      )
+      if data[:credentials]
+        data.merge!(credentials_object(data))
+      else
+        data.merge!(global_credentials(data))
+      end
+      data.merge!({ charset: PagSeguro.encoding })
+      data.delete_if { |key, value| value.nil? }
     end
 
     def extended_headers(request_method, headers)
@@ -68,6 +70,36 @@ module PagSeguro
       {
         "Accept-Charset" => PagSeguro.encoding
       }
+    end
+
+    def credentials_object(data)
+      credentials = data.delete(:credentials)
+      if credentials.respond_to? :app_id
+        {
+          appId: credentials.app_id,
+          appKey: credentials.app_key,
+          authorizationCode: credentials.authorization_code
+        }
+      else
+        {
+          email: credentials.email,
+          token: credentials.token
+        }
+      end
+    end
+
+    def global_credentials(data)
+      if PagSeguro.app_id && PagSeguro.app_key
+        {
+          appId: PagSeguro.app_id,
+          appKey: PagSeguro.app_key
+        }
+      else
+        {
+          email: data[:email] || PagSeguro.email,
+          token: data[:token] || PagSeguro.token
+        }
+      end
     end
   end
 

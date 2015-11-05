@@ -25,7 +25,7 @@ A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilit
  - Adicione a biblioteca ao seu Gemfile.
 
 ```ruby
-gem "pagseguro-oficial", "~> 2.2.0"
+gem "pagseguro-oficial", "~> 2.3.0"
 ```
 
  - Execute o comando `bundle install`.
@@ -36,8 +36,10 @@ Para fazer a autenticação, você precisará configurar as credenciais do PagSe
 
 ```ruby
 PagSeguro.configure do |config|
-  config.token = "seu token"
-  config.email = "seu e-mail"
+  config.token       = "seu token"
+  config.email       = "seu e-mail"
+  config.environment = :production # ou :sandbox. O padrão é production.
+  config.encoding    = "UTF-8" # ou ISO-8859-1. O padrão é UTF-8.
 end
 ```
 
@@ -199,6 +201,24 @@ visa_installments.each do |installment|
 end
 ```
 
+## Modelo de aplicações
+
+### Setando autorizações
+
+```ruby
+  options = {
+    credentials: PagSeguro::ApplicationCredentials.new("app4521929942", "1D47384E6565EBE664DAEF9AD690438B"),
+    permissions: [:searches, :notifications],
+    notification_url: 'foo.com.br',
+    redirect_url: 'bar.com.br'
+  }
+  response = PagSeguro::Authorization.new(options).authorize
+```
+Em seguida, acesse o link para confirmar as autorizações
+```ruby
+  response.url
+```
+
 ## API
 
 ### PagSeguro::PaymentRequest (utiliza versão V2)
@@ -286,10 +306,9 @@ payment.max_uses = 100
 payment.max_age = 3600  # em segundos
 ```
 
-#### Definindo environment e/ou encoding
+#### Definindo encoding
 
 ```ruby
-PagSeguro.environment = "production" # production ou sandbox
 PagSeguro.encoding = "UTF-8" # UTF-8 ou ISO-8859-1
 ```
 

@@ -1,0 +1,17 @@
+<authorization>
+  <code>9D7FF2E921216F1334EE9FBEB7B4EBBC</code>
+  <creationDate>2011-03-30T14:20:13.000-03:00</creationDate>
+  <reference>ref1234</reference>
+  <permissions>
+    <permission>
+      <code>CREATE_CHECKOUTS</code>
+      <status>APPROVED</status>
+      <lastUpdate>2011-03-30T15:35:44.000-03:00</lastUpdate>
+    </permission>
+    <permission>
+      <code>SEARCH_TRANSACTIONS</code>
+      <status>APPROVED</status>
+      <lastUpdate>2011-03-30T14:20:13.000-03:00</lastUpdate>
+    </permission>
+  </permissions>
+</authorization>

@@ -1,9 +1,22 @@
 require_relative "boot"
 
-transaction = PagSeguro::Transaction.find_by_code("E69FCE5813A142C29EB9B9652BCDC1A8")
+# Transaction by code
+#
+#   You need to give:
+#     - transaction code
+#     - account credentials (EMAIL, TOKEN) OR application credentials (APP_ID, APP_KEY)
+#
+#   You can pass this parameters to PagSeguro::Transaction#find_by_code
+
+# credentials = PagSeguro::ApplicationCredentials.new('APP_ID', 'APP_KEY')
+credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
+
+options = { credentials: credentials } # Unnecessary if you set in application config
+
+transaction = PagSeguro::Transaction.find_by_code("TRANSACTION_CODE", options)
 
 if transaction.errors.any?
-  transaction.errors.join("\n")
+  puts transaction.errors.join("\n")
 else
   puts "=> Transaction"
   puts "  code: #{transaction.code}"
@@ -19,18 +32,19 @@ else
   puts "  intermediation rate amount: #{transaction.creditor_fees.intermediation_rate_amount.to_f}"
   puts "  intermediation fee amount: #{transaction.creditor_fees.intermediation_fee_amount.to_f}"
   puts "  commission fee amount: #{transaction.creditor_fees.commission_fee_amount.to_f}"
+  puts "  commission fee amount: #{transaction.creditor_fees.commission_fee_amount.to_f}"
   puts "  efrete: #{transaction.creditor_fees.efrete.to_f}"
   puts "  net amount: #{transaction.net_amount.to_f}"
   puts "  extra amount: #{transaction.extra_amount.to_f}"
-  puts "  installment count: #{transaction.installments}"
 
-  puts "    => Payment Release"
+  puts "    => Payments"
+  puts "      installment count: #{transaction.installments}"
   transaction.payment_releases.each do |release|
-    puts "      current installment: #{release.installment}"
-    puts "      total amount: #{release.total_amount.to_f}"
-    puts "      release amount: #{release.release_amount.to_f}"
-    puts "      status: #{release.status}"
-    puts "      release date: #{release.release_date}"
+    puts "    current installment: #{release.installment}"
+    puts "    total amount: #{release.total_amount.to_f}"
+    puts "    release amount: #{release.release_amount.to_f}"
+    puts "    status: #{release.status}"
+    puts "    release date: #{release.release_date}"
   end
 
   puts "    => Items"

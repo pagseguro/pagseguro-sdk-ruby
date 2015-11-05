@@ -21,7 +21,8 @@ RSpec.describe PagSeguro::Session::Response do
   describe "#serialize" do
     let(:http_response) do
       double(:request, success?: true, xml?: true, data: xml_parsed,
-             body: raw_xml, unauthorized?: false, bad_request?: false)
+             body: raw_xml, unauthorized?: false, bad_request?: false,
+             not_found?: false)
     end
     let(:xml_parsed) { Nokogiri::XML(raw_xml) }
 

@@ -6,12 +6,24 @@ require "nokogiri"
 require "aitch"
 require "i18n"
 
+require "pagseguro/extensions/mass_assignment"
+require "pagseguro/extensions/ensure_type"
+require "pagseguro/extensions/credentiable"
+
 require "pagseguro/version"
 require "pagseguro/config"
 
-require "pagseguro/extensions/mass_assignment"
-require "pagseguro/extensions/ensure_type"
-
+require "pagseguro/account_credentials"
+require "pagseguro/application_credentials"
+require "pagseguro/authorization"
+require "pagseguro/authorization/collection"
+require "pagseguro/authorization/request_serializer"
+require "pagseguro/authorization/response_serializer"
+require "pagseguro/authorization/response"
+require "pagseguro/authorization_request"
+require "pagseguro/authorization_request/request_serializer"
+require "pagseguro/authorization_request/response_serializer"
+require "pagseguro/authorization_request/response"
 require "pagseguro/creditor_fee"
 require "pagseguro/errors"
 require "pagseguro/exceptions"
@@ -36,12 +48,15 @@ require "pagseguro/payment_request"
 require "pagseguro/payment_request/serializer"
 require "pagseguro/payment_request/response"
 require "pagseguro/payment_status"
+require "pagseguro/permission"
 require "pagseguro/request"
 require "pagseguro/sender"
 require "pagseguro/session"
 require "pagseguro/session/response"
 require "pagseguro/session/response_serializer"
 require "pagseguro/notification"
+require "pagseguro/notification/authorization"
+require "pagseguro/notification/transaction"
 require "pagseguro/transaction"
 require "pagseguro/transaction/response"
 require "pagseguro/transaction/serializer"
@@ -64,19 +79,44 @@ module PagSeguro
   class << self
     # Delegates some calls to the config object
     extend Forwardable
-    def_delegators :configuration, :email, :receiver_email, :token
-    def_delegators :configuration, :email=, :receiver_email=, :token=
+    def_delegators :configuration, :email, :receiver_email, :token,
+      :environment, :encoding, :app_id, :app_key
 
-    # The encoding that will be used.
-    attr_accessor :encoding
+    def email=(email)
+      warn "[DEPRECATION] `email=` is deprecated and will be removed. Please use configuration block instead."
+      configuration.email = email
+    end
 
-    # The PagSeguro environment.
-    # +production+ or +sandbox+.
-    attr_accessor :environment
+    def receiver_email=(receiver_email)
+      warn "[DEPRECATION] `receiver_email=` is deprecated and will be removed. Please use configuration block instead."
+      configuration.receiver_email = receiver_email
+    end
+
+    def token=(token)
+      warn "[DEPRECATION] `token=` is deprecated and will be removed. Please use configuration block instead."
+      configuration.token = token
+    end
+
+    def environment=(environment)
+      warn "[DEPRECATION] `environment=` is deprecated and will be removed. Please use configuration block instead."
+      configuration.environment = environment
+    end
+
+    def encoding=(encoding)
+      warn "[DEPRECATION] `encoding=` is deprecated and will be removed. Please use configuration block instead."
+      configuration.encoding = encoding
+    end
   end
 
-  self.encoding = "UTF-8"
-  self.environment = :production
+  # Returns an object with the configured account credentials
+  def self.account_credentials
+    PagSeguro::AccountCredentials.new(PagSeguro.email, PagSeguro.token)
+  end
+
+  # Returns an object with the configured application credentials
+  def self.application_credentials
+    PagSeguro::ApplicationCredentials.new(PagSeguro.app_id, PagSeguro.app_key)
+  end
 
   # Register endpoints by environment.
   def self.uris
@@ -99,9 +139,9 @@ module PagSeguro
     root[type.to_sym]
   end
 
-  # The configuration intance for the thread
+  # The configuration instance
   def self.configuration
-    Thread.current[:pagseguro_config] ||= PagSeguro::Config.new
+    @configuration ||= PagSeguro::Config.new
   end
 
   # Set the global configuration.
@@ -109,6 +149,9 @@ module PagSeguro
   #   PagSeguro.configure do |config|
   #     config.email = "john@example.com"
   #     config.token = "abc"
+  #     config.app_id = "app12345"
+  #     config.app_key = "adju3cmADc52C"
+  #     config.environment = :sandbox
   #   end
   #
   def self.configure(&block)

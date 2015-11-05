@@ -2,6 +2,7 @@ module PagSeguro
   class Transaction
     include Extensions::MassAssignment
     include Extensions::EnsureType
+    include Extensions::Credentiable
 
     # When the payment request was created.
     attr_accessor :created_at
@@ -65,14 +66,14 @@ module PagSeguro
 
     # Find a transaction by its transactionCode
     # Return a PagSeguro::Transaction instance
-    def self.find_by_code(code)
-      load_from_response send_request("transactions/#{code}")
+    def self.find_by_code(code, options = {})
+      load_from_response send_request("transactions/#{code}", options)
     end
 
     # Find a transaction by its notificationCode.
     # Return a PagSeguro::Transaction instance.
-    def self.find_by_notification_code(code)
-      load_from_response send_request("transactions/notifications/#{code}")
+    def self.find_by_notification_code(code, options = {})
+      load_from_response send_request("transactions/notifications/#{code}", options)
     end
 
     # Search transactions within a date range.
@@ -101,8 +102,8 @@ module PagSeguro
     #
     # # +reference+: the transaction reference code
     #
-    def self.find_by_reference(reference)
-      SearchByReference.new("transactions", { reference: reference })
+    def self.find_by_reference(reference, options = {})
+      SearchByReference.new("transactions", { reference: reference }.merge(options))
     end
 
     # Get abandoned transactions.
@@ -123,25 +124,6 @@ module PagSeguro
       }.merge(options)
 
       SearchAbandoned.new("transactions/abandoned", options, page)
-    end
-
-    # Serialize the HTTP response into data.
-    def self.load_from_response(response) # :nodoc:
-      if response.success? and response.xml?
-        load_from_xml Nokogiri::XML(response.body).css("transaction").first
-      else
-        Response.new Errors.new(response)
-      end
-    end
-
-    # Send a get request to v3 API version, with the path given
-    def self.send_request(path)
-      Request.get(path, api_version)
-    end
-
-    # Serialize the XML object.
-    def self.load_from_xml(xml) # :nodoc:
-      new Serializer.new(xml).serialize
     end
 
     # Normalize creditor fees object
@@ -196,6 +178,26 @@ module PagSeguro
 
     def after_initialize
       @errors = Errors.new
+    end
+
+    #
+    # Serialize the HTTP response into data.
+    def self.load_from_response(response) # :nodoc:
+      if response.success? and response.xml?
+        load_from_xml Nokogiri::XML(response.body).css("transaction").first
+      else
+        Response.new Errors.new(response)
+      end
+    end
+
+    # Send a get request to v3 API version, with the path given
+    def self.send_request(path, options)
+      Request.get(path, 'v3', options)
+    end
+
+    # Serialize the XML object.
+    def self.load_from_xml(xml) # :nodoc:
+      new Serializer.new(xml).serialize
     end
   end
 end

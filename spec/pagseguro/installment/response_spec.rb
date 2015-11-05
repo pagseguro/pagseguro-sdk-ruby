@@ -2,7 +2,8 @@ require "spec_helper"
 
 RSpec.describe PagSeguro::Installment::Response do
   let(:http_response) do
-    double(:request, success?: true, xml?: true, data: xml_parsed, body: raw_xml, unauthorized?: false)
+    double(:request, success?: true, xml?: true, data: xml_parsed,
+           body: raw_xml, unauthorized?: false, :not_found? => false)
   end
   let(:xml_parsed) { Nokogiri::XML(raw_xml) }
   let(:collection) { PagSeguro::Installment::Collection.new }
@@ -40,6 +41,7 @@ RSpec.describe PagSeguro::Installment::Response do
       before do
         allow(http_response).to receive(:success?).and_return(false)
         allow(http_response).to receive(:bad_request?).and_return(true)
+        allow(http_response).to receive(:not_found?).and_return(false)
       end
 
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
