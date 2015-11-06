@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PagSeguro::Refund::ResponseSerializer do
+describe PagSeguro::TransactionRefund::ResponseSerializer do
   context "for existing refund response" do
     let(:source) { File.read("./spec/fixtures/refund/success.xml") }
     let(:xml) { Nokogiri::XML(source) }
