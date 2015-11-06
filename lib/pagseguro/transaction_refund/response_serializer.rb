@@ -1,5 +1,5 @@
 module PagSeguro
-  class Refund
+  class TransactionRefund
     class ResponseSerializer
       attr_reader :xml
 
