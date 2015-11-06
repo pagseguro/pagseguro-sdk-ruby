@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PagSeguro::Refund do
+describe PagSeguro::TransactionRefund do
   let(:xml_parsed) { Nokogiri::XML(raw_xml) }
 
   it_assigns_attribute :transaction_code
@@ -11,7 +11,7 @@ describe PagSeguro::Refund do
   end
 
   describe "#register" do
-    let(:refund) { PagSeguro::Refund.new }
+    let(:refund) { PagSeguro::TransactionRefund.new }
 
     context 'a correct response' do
       before { FakeWeb.register_uri :any, %r[.*?], body: raw_xml }
@@ -30,8 +30,8 @@ describe PagSeguro::Refund do
         refund.register
       end
 
-      it "returns a PagSeguro::Refund" do
-        expect(refund.register).to be_a(PagSeguro::Refund)
+      it "returns a PagSeguro::TransactionRefund" do
+        expect(refund.register).to be_a(PagSeguro::TransactionRefund)
       end
     end
 
@@ -47,14 +47,14 @@ describe PagSeguro::Refund do
         double(:ResponseRequest, success?: false, unauthorized?: false, not_found?: false, bad_request?: true, data: xml_parsed, body: raw_xml, :xml? => true)
       end
 
-      it "returns a PagSeguro::Refund with errors" do
+      it "returns a PagSeguro::TransactionRefund with errors" do
         expect(refund.register.errors).not_to be_empty
       end
     end
   end
 
   it '#update_attributes' do
-    refund = PagSeguro::Refund.new
+    refund = PagSeguro::TransactionRefund.new
 
     expect(refund).to receive(:result=).with("OK")
 

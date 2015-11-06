@@ -1,6 +1,6 @@
 require_relative "boot"
 
-refund = PagSeguro::Refund.new
+refund = PagSeguro::TransactionRefund.new
 refund.transaction_code = "D5D5BE444148407891E497B421975599"
 
 # Partial refund
