@@ -1,5 +1,5 @@
-require_relative "boot"
 require "active_support/all"
+require_relative "../boot"
 
 # Abandoned Transactions
 #

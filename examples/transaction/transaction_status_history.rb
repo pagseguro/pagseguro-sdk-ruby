@@ -1,4 +1,4 @@
-require_relative "boot"
+require_relative "../boot"
 
 response = PagSeguro::Transaction.find_status_history("transaction_code")
 
