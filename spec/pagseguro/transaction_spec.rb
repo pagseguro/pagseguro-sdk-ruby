@@ -21,6 +21,22 @@ describe PagSeguro::Transaction do
         expect(subject).to be_a(PagSeguro::Transaction)
       end
 
+      context "returns transaction with correct attributes" do
+        it { expect(subject.code).to eq("667A3914-4F9F-4705-0EB6-CA6FA0DF8A19") }
+        it { expect(subject.reference).to eq("REF1234") }
+        it { expect(subject.type_id).to eq("1") }
+        it { expect(subject.payment_link).to eq("https://pagseguro.uol.com.br/checkout/imprimeBoleto.jhtml?code=667D39144F9F47059FB6CA6FA0DF8A20") }
+        it { expect(subject.status).to be_a(PagSeguro::PaymentStatus) }
+        it { expect(subject.status.id).to eq("1") }
+        it { expect(subject.payment_method.type).to eq(:boleto) }
+        it { expect(subject.gross_amount).to eq(459.5) }
+        it { expect(subject.discount_amount).to eq(0.0) }
+        it { expect(subject.net_amount).to eq(445.77) }
+        it { expect(subject.extra_amount).to eq(0.0) }
+        it { expect(subject.installments).to eq(1) }
+        it { expect(subject.sender.name).to eq("JOHN DOE") }
+      end
+
       it "returns a collection with errors object" do
         expect(subject.errors).to be_a(PagSeguro::Errors)
       end
