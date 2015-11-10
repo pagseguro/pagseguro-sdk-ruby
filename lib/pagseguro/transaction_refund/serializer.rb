@@ -1,6 +1,6 @@
 module PagSeguro
-  class Refund
-    class RequestSerializer
+  class TransactionRefund
+    class Serializer
       # The refund that will be serialized.
       attr_reader :refund
 
@@ -12,7 +12,7 @@ module PagSeguro
         {}.tap do |data|
           data[:transactionCode] = refund.transaction_code
           data[:refundValue] = to_amount(refund.value)
-        end.delete_if { |_, value| value.nil? }
+        end
       end
 
       private
