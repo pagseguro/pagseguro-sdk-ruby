@@ -1,5 +1,11 @@
 require_relative "../boot"
 
+# Transaction cancellation
+#
+#   You need:
+#     - give TRANSACTION CODE to TransactionCancellation#transaction_code
+#     - set your AccountCredentials (EMAIL, TOKEN) in the application config (P.S.: See the boot file example)
+
 cancellation = PagSeguro::TransactionCancellation.new
 cancellation.transaction_code = "AFB8FCF29496401681257C1ECE3A98FF"
 
