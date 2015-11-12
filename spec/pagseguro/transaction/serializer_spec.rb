@@ -5,7 +5,7 @@ describe PagSeguro::Transaction::Serializer do
   context "for existing transactions" do
     let(:source) { File.read("./spec/fixtures/transactions/success.xml") }
     let(:xml) { Nokogiri::XML(source) }
-    let(:serializer) { described_class.new(xml.css("transaction")) }
+    let(:serializer) { described_class.new(xml.css("transaction").first) }
     subject(:data) { serializer.serialize }
 
     it { expect(data).to include(created_at: Time.parse("2013-05-01T01:40:27.000-03:00")) }

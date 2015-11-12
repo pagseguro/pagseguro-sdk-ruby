@@ -192,6 +192,11 @@ module PagSeguro
       attrs.each { |name, value| send("#{name}=", value) }
     end
 
+    # Serialize the XML object.
+    def self.load_from_xml(xml) # :nodoc:
+      new Serializer.new(xml).serialize
+    end
+
     private
     def self.api_version
       'v3'

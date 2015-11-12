@@ -32,13 +32,13 @@ module PagSeguro
 
       private
       def serialize_general(data)
-        data[:code] = xml.css("transaction > code").text
-        data[:reference] = xml.css("transaction > reference").text
-        data[:type_id] = xml.css("transaction > type").text
-        data[:payment_link] = xml.css("transaction > paymentLink").text
-        data[:status] = xml.css("transaction > status").text
+        data[:code] = xml.at_css("code").text
+        data[:reference] = xml.css("reference").text
+        data[:type_id] = xml.at_css("type").text
+        data[:payment_link] = xml.css("paymentLink").text
+        data[:status] = xml.at_css("status").text
 
-        cancellation_source = xml.css("transaction > cancellationSource")
+        cancellation_source = xml.css("cancellationSource")
         data[:cancellation_source] = cancellation_source.text if cancellation_source.any?
 
         data[:payment_method] = {

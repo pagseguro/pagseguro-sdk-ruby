@@ -64,7 +64,7 @@ describe PagSeguro::Transaction::Response do
     let(:parsed_xml) { Nokogiri::XML(raw_xml) }
 
     context "when request succeeds" do
-      let(:raw_xml) { File.read("./spec/fixtures/transactions/status_history.xml") }
+      let(:raw_xml) { File.read("./spec/fixtures/transactions/success.xml") }
 
       it "returns a transaction" do
         expect(subject.serialize).to be_a(PagSeguro::Transaction)

@@ -29,13 +29,8 @@ describe PagSeguro::Search do
     end
 
     describe '#transactions' do
-      let(:transaction) { double(:transaction) }
-
       it 'returns an array of transactions' do
-        expect(PagSeguro::Transaction).to receive(:load_from_xml).exactly(2)
-          .times
-          .and_return(transaction)
-        expect(search.transactions).to eq([transaction, transaction])
+        expect(search.transactions.size).to eq(2)
       end
     end
 
