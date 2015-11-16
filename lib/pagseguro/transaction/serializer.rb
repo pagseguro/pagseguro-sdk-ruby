@@ -20,12 +20,23 @@ module PagSeguro
         end
       end
 
+      def serialize_status_history
+        xml.css("status").map do |node|
+          PagSeguro::TransactionStatus.new(
+            code: node.css("code").text,
+            date: Time.parse(node.css("date").text),
+            notification_code: node.css("notificationCode").text
+          )
+        end
+      end
+
+      private
       def serialize_general(data)
-        data[:code] = xml.css("> code").text
+        data[:code] = xml.at_css("code").text
         data[:reference] = xml.css("reference").text
-        data[:type_id] = xml.css("> type").text
+        data[:type_id] = xml.at_css("type").text
         data[:payment_link] = xml.css("paymentLink").text
-        data[:status] = xml.css("> status").text
+        data[:status] = xml.at_css("status").text
 
         cancellation_source = xml.css("cancellationSource")
         data[:cancellation_source] = cancellation_source.text if cancellation_source.any?

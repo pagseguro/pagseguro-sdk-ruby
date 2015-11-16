@@ -1,4 +1,4 @@
-require_relative "boot"
+require_relative "../boot"
 
 # Invalid transaction by notification code
 #

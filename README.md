@@ -12,7 +12,8 @@ A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilit
  - Consultar [transações por intervalo de datas] \(este serviço utiliza a versão **V3** da API)
  - Consultar [transações abandonadas] \(este serviço utiliza a versão **V2** da API\)
  - Receber [notificações] \(este serviço utiliza a versão **V3** da API\)
-
+ - Enviar estorno de transações \(este serviço utiliza a versão **V2** da API\)
+  - Cancelar transações \(este serviço utiliza a versão **V2** da API\)
 
 ## Requisitos
 
@@ -25,7 +26,7 @@ A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilit
  - Adicione a biblioteca ao seu Gemfile.
 
 ```ruby
-gem "pagseguro-oficial", "~> 2.3.0"
+gem "pagseguro-oficial", "~> 2.4.0"
 ```
 
  - Execute o comando `bundle install`.
@@ -178,6 +179,21 @@ while report.next_page?
 end
 ```
 
+### Histórico de status de transações
+
+É possível consultar o histórico de mudanças de status em transações
+
+```ruby
+response = PagSeguro::Transaction.find_status_history("transaction_code")
+
+response.each do |status|
+  puts "STATUS:"
+  puts "  code: #{status.code}"
+  puts "  date: #{status.date}"
+  puts "  notification_code: #{status.notification_code}"
+end
+```
+
 ### Consultar opções de parcelamento
 
 Você pode consultar as opções de parcelamento para um determinado valor.
@@ -217,6 +233,42 @@ end
 Em seguida, acesse o link para confirmar as autorizações
 ```ruby
   response.url
+```
+
+### Estorno de Transações
+
+Você pode estornar pagamentos que as transações estiverem com status: Paga (3), Disponível (4), Em disputa (5).
+
+```ruby
+  refund = PagSeguro::Refund.new
+  refund.transaction_code = "D5D5BE444148407891E497B421975599"
+
+  response = refund.register
+
+  if response.errors.any?
+    puts response.errors.join("\n")
+  else
+    puts "=> REFUND RESPONSE"
+    puts response.result
+  end
+```
+
+### Cancelamento de Transações
+
+Você pode cancelar transações que estiverem com status: Aguardando pagamento ou Em análise.
+
+```ruby
+  cancellation = PagSeguro::TransactionCancellation.new
+  cancellation.transaction_code = "AFB8FCF29496401681257C1ECE3A98FF"
+
+  cancellation.register
+
+  if cancellation.errors.any?
+    puts cancellation.errors.join("\n")
+  else
+    puts "=> CANCELLATION RESPONSE"
+    puts cancellation.result
+  end
 ```
 
 ## API

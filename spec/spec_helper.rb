@@ -25,4 +25,13 @@ RSpec.configure do |config|
     load "./lib/pagseguro.rb"
     FakeWeb.clean_registry
   end
+
+  config.after do
+    PagSeguro.configure do |config|
+      config.app_id = nil
+      config.app_key = nil
+      config.email = nil
+      config.token = nil
+    end
+  end
 end
