@@ -39,5 +39,19 @@ module PagSeguro
     def self.api_version
       'v2'
     end
+
+    def self.load_from_response(response)
+      if response.success? and response.xml?
+        Nokogiri::XML(response.body).css("installments > installment").map do |node|
+          load_from_xml(node)
+        end
+      else
+        Response.new Errors.new(response)
+      end
+    end
+
+    def self.load_from_xml(xml)
+      new Serializer.new(xml).serialize
+    end
   end
 end

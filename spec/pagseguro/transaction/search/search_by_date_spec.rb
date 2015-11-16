@@ -1,26 +1,28 @@
 require 'spec_helper'
 
 describe PagSeguro::SearchByDate do
-  describe 'it searches transactions by date' do
-    let(:options) { { starts_at: Time.now, ends_at: Time.now, per_page: 1 } }
-    let(:search) { PagSeguro::SearchByDate.new("transactions", options, 1) }
-    let(:source) { File.read("./spec/fixtures/transactions/search.xml") }
-    let(:xml) { Nokogiri::XML(source) }
-    let(:response) { double(:response, data: xml, unauthorized?: false, bad_request?: false) }
+  subject do
+    PagSeguro::SearchByDate.new("transactions", options, 1)
+  end
 
-    describe 'the search by date' do
-      before do
-        FakeWeb.register_uri :get, %r[#{PagSeguro.api_url('v3/transactions')}.*], body: xml
-      end
+  before do
+    FakeWeb.register_uri :get,
+      %r{https://ws.pagseguro.uol.com.br/v3/transactions.*finalDate=2015-11-12T16%3A59.*initialDate=2015-11-12T15%3A34.*page=1},
+      body: body
+  end
 
-      let(:transaction) { double(:transaction) }
+  let(:options) do
+    {
+      starts_at: Time.new(2015, 11, 12, 15, 34),
+      ends_at: Time.new(2015, 11, 12, 16, 59),
+      per_page: 1
+    }
+  end
 
-      it 'returns an array of transactions' do
-        expect(PagSeguro::Transaction).to receive(:load_from_xml).exactly(2)
-          .times
-          .and_return(transaction)
-        expect(search.transactions).to eq([transaction, transaction])
-      end
-    end
+  let(:source) { File.read("./spec/fixtures/transactions/search.xml") }
+  let(:body) { Nokogiri::XML(source) }
+
+  it 'searches transactions by date' do
+    expect(subject.transactions.size).to eq(2)
   end
 end
