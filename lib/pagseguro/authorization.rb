@@ -17,7 +17,7 @@ module PagSeguro
 
     # Find an authorization by it's notification code
     def self.find_by_notification_code(code, options = {})
-      request = Request.get("authorizations/notifications/#{code}", "v2", options)
+      request = Request.get("authorizations/notifications/#{code}", api_version, options)
       authorization = PagSeguro::Authorization.new
       Response.new(request, authorization).serialize
 
@@ -26,7 +26,7 @@ module PagSeguro
 
     # Find an authorization by it's code
     def self.find_by_code(code, options = {})
-      request = Request.get("authorizations/#{code}", "v2", options)
+      request = Request.get("authorizations/#{code}", api_version, options)
       authorization = PagSeguro::Authorization.new
       Response.new(request, authorization).serialize
 
@@ -34,7 +34,7 @@ module PagSeguro
     end
 
     def self.find_by_date(options)
-      request = Request.get("authorizations", "v2", RequestSerializer.new(options).to_params)
+      request = Request.get("authorizations", api_version, RequestSerializer.new(options).to_params)
       collection = Collection.new
       Response.new(request, collection).serialize_collection
 
@@ -47,6 +47,12 @@ module PagSeguro
 
     def errors
       @errors ||= Errors.new
+    end
+
+    private
+
+    def self.api_version
+      'v2'
     end
   end
 end
