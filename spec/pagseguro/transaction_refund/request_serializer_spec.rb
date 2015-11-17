@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe PagSeguro::Refund::RequestSerializer do
-  subject(:serializer) { PagSeguro::Refund::RequestSerializer.new(refund) }
+describe PagSeguro::TransactionRefund::RequestSerializer do
+  subject(:serializer) { PagSeguro::TransactionRefund::RequestSerializer.new(refund) }
 
   let(:refund) do
-    PagSeguro::Refund.new transaction_code: "1234",
+    PagSeguro::TransactionRefund.new transaction_code: "1234",
       value: "100.50"
   end
 

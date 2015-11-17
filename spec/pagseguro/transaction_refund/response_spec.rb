@@ -1,11 +1,11 @@
 require "spec_helper"
 
-describe PagSeguro::Refund::Response do
+describe PagSeguro::TransactionRefund::Response do
   let(:refund) do
-    PagSeguro::Refund.new
+    PagSeguro::TransactionRefund.new
   end
 
-  subject { PagSeguro::Refund::Response.new(http_response, refund) }
+  subject { PagSeguro::TransactionRefund::Response.new(http_response, refund) }
 
   context '#success?' do
     let(:http_response) do
