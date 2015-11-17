@@ -1,5 +1,5 @@
 module PagSeguro
-  class Refund
+  class TransactionRefund
     class Response
       def initialize(response, refund)
         @response = response

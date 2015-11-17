@@ -1,7 +1,7 @@
 require "spec_helper"
 
-describe PagSeguro::Refund::Serializer do
-  let(:refund) { PagSeguro::Refund.new }
+describe PagSeguro::TransactionRefund::Serializer do
+  let(:refund) { PagSeguro::TransactionRefund.new }
   let(:params) { serializer.to_params }
   subject(:serializer) { described_class.new(refund) }
 
