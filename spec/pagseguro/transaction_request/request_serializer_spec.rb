@@ -6,7 +6,7 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
   subject(:serializer) { described_class.new(transaction_request) }
 
   before do
-    transaction_request.stub({
+    allow(transaction_request).to receive_messages({
       payment_method: "creditCard",
       credit_card_token: "4as56d4a56d456as456dsa"
     })
@@ -14,15 +14,15 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
 
   context "global configuration serialization" do
     before do
-      PagSeguro.receiver_email = "RECEIVER"
+      PagSeguro.configuration.receiver_email = "RECEIVER"
     end
 
-    it { expect(params).to include(receiverEmail: PagSeguro.receiver_email) }
+    it { expect(params).to include(receiverEmail: PagSeguro.configuration.receiver_email) }
   end
 
   context "generic attributes serialization" do
     before do
-      transaction_request.stub({
+      allow(transaction_request).to receive_messages({
         currency: "BRL",
         reference: "REF123",
         extra_amount: 1234.50,
@@ -95,7 +95,7 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
         }
       })
 
-      transaction_request.stub({holder: holder})
+      allow(transaction_request).to receive(:holder).and_return(holder)
     end
 
     it { expect(params).to include(creditCardHolderName: "Jose Comprador") }
@@ -117,7 +117,7 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
         complement: "COMPLEMENT"
       })
 
-      transaction_request.stub(billing_address: address)
+      allow(transaction_request).to receive(:billing_address).and_return(address)
     end
 
     it { expect(params).to include(billingAddressStreet: "STREET") }
@@ -143,7 +143,7 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
         }
       })
 
-      transaction_request.stub(sender: sender)
+      allow(transaction_request).to receive(:sender).and_return(sender)
     end
 
     it { expect(params).to include(senderHash: "HASH") }
@@ -190,7 +190,7 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
         quantity: "1"
       })
 
-      transaction_request.stub({installment: installment})
+      allow(transaction_request).to receive(:installment).and_return(installment)
     end
 
     it { expect(params).to include(installmentValue: "459.50") }
@@ -199,7 +199,7 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
 
   context "extra params serialization" do
     before do
-      transaction_request.stub({
+      allow(transaction_request).to receive_messages({
         extra_params: [
           { extraParam: 'param_value' },
           { newExtraParam: 'extra_param_value' }

@@ -16,7 +16,7 @@ describe PagSeguro::Errors do
     subject(:errors) { PagSeguro::Errors.new(response) }
 
     before do
-      response.stub unauthorized?: true, bad_request?: false, not_found?: false
+      allow(response).to receive_messages(unauthorized?: true, bad_request?: false, not_found?: false)
       errors.add(http_response)
     end
 
@@ -28,7 +28,7 @@ describe PagSeguro::Errors do
     subject(:errors) { PagSeguro::Errors.new(response) }
 
     before do
-      response.stub unauthorized?: true, bad_request?: false, not_found?: true
+      allow(response).to receive_messages(unauthorized?: true, bad_request?: false, not_found?: true)
       errors.add(http_response)
     end
 
@@ -52,7 +52,7 @@ describe PagSeguro::Errors do
     subject(:errors) { PagSeguro::Errors.new(response) }
 
     before do
-      response.stub data: xml, unauthorized?: false, bad_request?: true, not_found?: true
+      allow(response).to receive_messages(data: xml, unauthorized?: false, bad_request?: true, not_found?: true)
     end
 
     it { expect(errors).to include("Sample message") }
@@ -74,7 +74,7 @@ describe PagSeguro::Errors do
     subject(:errors) { PagSeguro::Errors.new(response) }
 
     before do
-      response.stub data: xml, unauthorized?: false, bad_request?: true, not_found?: false
+      allow(response).to receive_messages(data: xml, unauthorized?: false, bad_request?: true, not_found?: false)
     end
 
     it { expect(errors).to include("O parâmetro email deve ser informado.") }
@@ -97,7 +97,7 @@ describe PagSeguro::Errors do
     subject(:errors) { PagSeguro::Errors.new(response) }
 
     before do
-      response.stub data: xml, unauthorized?: false, bad_request?: true, not_found?: true
+      allow(response).to receive_messages(data: xml, unauthorized?: false, bad_request?: true, not_found?: true)
       errors.add(http_response)
     end
 
