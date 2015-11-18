@@ -1,6 +1,6 @@
 module PagSeguro
   class PaymentRequest
-    class Serializer
+    class RequestSerializer
       # The payment request that will be serialized.
       attr_reader :payment_request
 

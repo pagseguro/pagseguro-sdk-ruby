@@ -1,21 +1,21 @@
 module PagSeguro
   class TransactionRefund
     class Response
-      def initialize(response, refund)
+      def initialize(response, object)
         @response = response
-        @refund = refund
+        @object = object
       end
 
       def serialize
         if success?
           xml = Nokogiri::XML(response.body)
-          serialize = ResponseSerializer.new(xml).serialize
-          refund.update_attributes(serialize)
+          serializer = ResponseSerializer.new(xml).serialize
+          object.update_attributes(serializer)
         else
-          refund.errors.add(response)
+          object.errors.add(response)
         end
 
-        refund
+        object
       end
 
       def success?
@@ -26,8 +26,8 @@ module PagSeguro
       # The request response.
       attr_reader :response
 
-      # The refund object to return
-      attr_reader :refund
+      # The PagSeguro::Refund object to return
+      attr_reader :object
     end
   end
 end

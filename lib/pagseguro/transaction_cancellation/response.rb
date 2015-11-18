@@ -1,20 +1,21 @@
 module PagSeguro
   class TransactionCancellation
     class Response
-      def initialize(response, cancellation)
+      def initialize(response, object)
         @response = response
-        @cancellation = cancellation
+        @object = object
       end
 
       def serialize
         if success?
           xml = Nokogiri::XML(response.body)
-          cancellation.update_attributes(ResponseSerializer.new(xml).serialize)
+          serializer = ResponseSerializer.new(xml).serialize
+          object.update_attributes(serializer)
         else
-          cancellation.errors.add(response)
+          object.errors.add(response)
         end
 
-        cancellation
+        object
       end
 
       def success?
@@ -26,7 +27,7 @@ module PagSeguro
       attr_reader :response
 
       # The PagSeguro::TransactionCancellation instance.
-      attr_reader :cancellation
+      attr_reader :object
     end
   end
 end

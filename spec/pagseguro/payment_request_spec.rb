@@ -35,7 +35,7 @@ describe PagSeguro::PaymentRequest do
     before { FakeWeb.register_uri :any, %r[.*?], body: "" }
 
     it "serializes payment request" do
-      expect(PagSeguro::PaymentRequest::Serializer)
+      allow_any_instance_of(PagSeguro::PaymentRequest::RequestSerializer)
         .to receive(:new)
         .with(payment)
         .and_return(double.as_null_object)
@@ -44,9 +44,9 @@ describe PagSeguro::PaymentRequest do
     end
 
     it "performs request" do
-      params = double
+      params = double(:Params)
 
-      allow_any_instance_of(PagSeguro::PaymentRequest::Serializer).to receive(:to_params).and_return(params)
+      allow_any_instance_of(PagSeguro::PaymentRequest::RequestSerializer).to receive(:to_params).and_return(params)
 
       expect(PagSeguro::Request)
         .to receive(:post)
