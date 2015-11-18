@@ -14,16 +14,16 @@ describe PagSeguro::Request do
     end
 
     it "includes credentials" do
-      PagSeguro.email = "EMAIL"
-      PagSeguro.token = "TOKEN"
+      PagSeguro.configuration.email = "EMAIL"
+      PagSeguro.configuration.token = "TOKEN"
       PagSeguro::Request.post("checkout", "v3")
 
       expect(FakeWeb.last_request.body).to include("email=EMAIL&token=TOKEN")
     end
 
     it "includes custom credentials" do
-      PagSeguro.email = "EMAIL"
-      PagSeguro.token = "TOKEN"
+      PagSeguro.configuration.email = "EMAIL"
+      PagSeguro.configuration.token = "TOKEN"
       PagSeguro::Request.post("checkout", "v3", email: 'foo', token: 'bar')
 
       expect(FakeWeb.last_request.body).to include("email=foo&token=bar")

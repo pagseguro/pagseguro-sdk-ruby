@@ -7,10 +7,10 @@ describe PagSeguro::PaymentRequest::Serializer do
 
   context "global configuration serialization" do
     before do
-      PagSeguro.receiver_email = "RECEIVER"
+      PagSeguro.configuration.receiver_email = "RECEIVER"
     end
 
-    it { expect(params).to include(receiverEmail: PagSeguro.receiver_email) }
+    it { expect(params).to include(receiverEmail: PagSeguro.configuration.receiver_email) }
   end
 
   context "generic attributes serialization" do

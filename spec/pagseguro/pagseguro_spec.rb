@@ -7,12 +7,12 @@ describe PagSeguro do
       config.app_key = "APPTOKEN"
       config.email = "EMAIL"
       config.token = "TOKEN"
+      config.receiver_email = "RECEIVER_EMAIL"
     end
-    PagSeguro.receiver_email = "RECEIVER_EMAIL"
   end
 
   after do
-    PagSeguro.environment = :production
+    PagSeguro.configuration.environment = :production
   end
 
   it { expect(PagSeguro.email).to eql("EMAIL") }
@@ -33,8 +33,8 @@ describe PagSeguro do
   end
 
   context "default settings" do
-    it { expect(PagSeguro.encoding).to eql("UTF-8") }
-    it { expect(PagSeguro.environment).to eql(:production) }
+    it { expect(PagSeguro.configuration.encoding).to eql("UTF-8") }
+    it { expect(PagSeguro.configuration.environment).to eql(:production) }
     it { expect(PagSeguro.account_credentials.email).to eql("EMAIL") }
     it { expect(PagSeguro.account_credentials.token).to eql("TOKEN") }
     it { expect(PagSeguro.application_credentials.app_id).to eql("APP123") }
@@ -43,7 +43,7 @@ describe PagSeguro do
 
   describe ".api_url" do
     it "raises when environment has no endpoint" do
-      PagSeguro.environment = :invalid
+      PagSeguro.configuration.environment = :invalid
 
       expect {
         PagSeguro.api_url("/")
@@ -55,7 +55,7 @@ describe PagSeguro do
     end
 
     it "returns sandbox api url when the environment is :sandbox" do
-      PagSeguro.environment = :sandbox
+      PagSeguro.configuration.environment = :sandbox
 
       expect(PagSeguro.api_url("v2/some/path")).to eql("https://ws.sandbox.pagseguro.uol.com.br/v2/some/path")
     end
@@ -63,7 +63,7 @@ describe PagSeguro do
 
   describe ".site_url" do
     it "raises when environment has no endpoint" do
-      PagSeguro.environment = :invalid
+      PagSeguro.configuration.environment = :invalid
 
       expect {
         PagSeguro.site_url("/")
@@ -75,7 +75,7 @@ describe PagSeguro do
     end
 
     it "returns sandbox site url when the environment is :sandbox" do
-      PagSeguro.environment = :sandbox
+      PagSeguro.configuration.environment = :sandbox
       expect(PagSeguro.site_url("v2/some/path")).to eql("https://sandbox.pagseguro.uol.com.br/v2/some/path")
     end
   end
