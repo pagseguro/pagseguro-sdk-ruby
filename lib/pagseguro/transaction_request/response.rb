@@ -1,20 +1,21 @@
 module PagSeguro
   class TransactionRequest
     class Response
-      def initialize(response, transaction_request)
+      def initialize(response, object)
         @response = response
-        @transaction_request = transaction_request
+        @object = object
       end
 
       def serialize
         if success?
           xml = Nokogiri::XML(response.body).css("transaction").first
-          transaction_request.update_attributes(ResponseSerializer.new(xml).serialize)
+          serializer = ResponseSerializer.new(xml).serialize
+          object.update_attributes(serializer)
         else
-          transaction_request.errors.add(response)
+          object.errors.add(response)
         end
 
-        transaction_request
+        object
       end
 
       def success?
@@ -25,8 +26,8 @@ module PagSeguro
       # The request response.
       attr_reader :response
 
-      # The TransactionRequest instance.
-      attr_reader :transaction_request
+      # The PagSeguro::TransactionRequest instance.
+      attr_reader :object
     end
   end
 end
