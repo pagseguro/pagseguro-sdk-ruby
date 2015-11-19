@@ -1,6 +1,6 @@
 require_relative "../../boot"
 
-# Transaction by notification code
+# Search Transaction by Notification Code
 #
 #   You need to give:
 #     - transaction notification code

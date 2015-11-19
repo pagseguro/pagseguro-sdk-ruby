@@ -1,6 +1,6 @@
 require_relative "../../boot"
 
-# Search: Authorization by code
+# Search Authorization by Code
 #
 #   You need to give:
 #     - authorization code
