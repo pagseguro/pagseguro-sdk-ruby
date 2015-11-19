@@ -99,13 +99,20 @@ describe PagSeguro::TransactionRequest do |variable|
 
     context "when request fails" do
       let :response_request do
-        double(:ResponseRequest, success?: false, unauthorized?: false, bad_request?: false, data: xml_parsed, not_found?: false, body: raw_xml, :xml? => true)
+        double(
+          :ResponseRequest,
+          success?: false,
+          unauthorized?: false,
+          bad_request?: true,
+          not_found?: false,
+          forbidden?: false,
+          xml?: true,
+          data: xml_parsed,
+          body: raw_xml
+        )
       end
 
       before do
-        allow(response_request).to receive(:success?).and_return(false)
-        allow(response_request).to receive(:bad_request?).and_return(true)
-
         allow(PagSeguro::Request).to receive(:post)
           .and_return(response_request)
       end

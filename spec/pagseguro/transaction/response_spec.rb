@@ -38,11 +38,15 @@ describe PagSeguro::Transaction::Response do
 
     context "when request fails" do
       before do
-        allow(http_response).to receive(:success?).and_return(false)
-        allow(http_response).to receive(:bad_request?).and_return(true)
-        allow(http_response).to receive(:not_found?).and_return(true)
-        allow(http_response).to receive(:body).and_return(raw_xml)
+        allow(http_response).to receive_messages(
+          success?: false,
+          bad_request?: true,
+          not_found?: true,
+          forbidden?: false,
+          body: raw_xml
+        )
       end
+
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
       it "returns PagSeguro::Transaction::StatusCollection instance" do
@@ -77,11 +81,15 @@ describe PagSeguro::Transaction::Response do
 
     context "when request fails" do
       before do
-        allow(http_response).to receive(:success?).and_return(false)
-        allow(http_response).to receive(:bad_request?).and_return(true)
-        allow(http_response).to receive(:not_found?).and_return(false)
-        allow(http_response).to receive(:body).and_return(raw_xml)
+        allow(http_response).to receive_messages(
+          success?: false,
+          bad_request?: true,
+          not_found?: false,
+          forbidden?: false,
+          body: raw_xml
+        )
       end
+
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
       it "returns the transaction" do

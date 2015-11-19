@@ -81,8 +81,7 @@ module PagSeguro
     def self.find_status_history(code)
       request = send_request("transactions/#{code}/statusHistory")
       collection = StatusCollection.new
-      response = Response.new(request, collection)
-      response.serialize_statuses
+      Response.new(request, collection).serialize_statuses
 
       collection
     end
