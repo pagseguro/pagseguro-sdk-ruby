@@ -1,6 +1,6 @@
-require_relative "../boot"
+require_relative "../../boot"
 
-# Transaction by code
+# Search Transaction by Code
 #
 #   You need to give:
 #     - transaction code

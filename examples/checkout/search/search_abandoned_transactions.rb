@@ -1,7 +1,7 @@
 require "active_support/all"
-require_relative "../boot"
+require_relative "../../boot"
 
-# Abandoned Transactions
+# Search Abandoned Transactions
 #
 #   The acount credentials (EMAIL, TOKEN) are required
 #

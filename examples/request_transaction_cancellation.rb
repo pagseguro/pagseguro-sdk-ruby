@@ -1,6 +1,6 @@
-require_relative "../boot"
+require_relative "boot"
 
-# Transaction cancellation
+# Request Transaction Cancellation
 #
 #   You need:
 #     - give TRANSACTION CODE to TransactionCancellation#transaction_code
