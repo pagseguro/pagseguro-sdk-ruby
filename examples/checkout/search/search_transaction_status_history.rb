@@ -1,6 +1,6 @@
-require_relative "../boot"
+require_relative "../../boot"
 
-# Transaction status history
+# Search Transaction Status History
 #
 # You need to set your credentials in the application config
 #

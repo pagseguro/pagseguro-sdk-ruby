@@ -1,6 +1,6 @@
 require_relative "../boot"
 
-# Authorization
+# Create Authorization
 #
 #   You need to give:
 #     - notification_url

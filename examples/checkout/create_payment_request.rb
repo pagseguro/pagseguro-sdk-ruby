@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
-require_relative "boot"
+require_relative "../boot"
 
-# Payment request
+# Create Payment Request
 #
 # You need to set your AccountCredentials (EMAIL, TOKEN) in the application config
 #

@@ -1,6 +1,6 @@
 require_relative "boot"
 
-# Installment
+# Get Installments
 #
 # Required AccountCredentials
 #
