@@ -79,7 +79,7 @@ describe PagSeguro::TransactionRequest do |variable|
     end
 
     before do
-      PagSeguro.receiver_email = "RECEIVER"
+      PagSeguro.configuration.receiver_email = "RECEIVER"
 
       allow(transaction_request).to receive(:payment_method).and_return("credit_card")
 
