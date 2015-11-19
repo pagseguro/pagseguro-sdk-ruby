@@ -1,9 +1,9 @@
-require_relative "../boot"
+require_relative "../../boot"
 
-# Transaction by notification code
+# Search Transaction by Code
 #
 #   You need to give:
-#     - transaction notification code
+#     - transaction code
 #     - account credentials (EMAIL, TOKEN) OR application credentials (APP_ID, APP_KEY)
 #
 #   You can pass this parameters to PagSeguro::Transaction#find_by_code
@@ -13,7 +13,7 @@ credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
 
 options = { credentials: credentials } # Unnecessary if you set in application config
 
-transaction = PagSeguro::Transaction.find_by_notification_code("NOTIFICATION_CODE", options)
+transaction = PagSeguro::Transaction.find_by_code("TRANSACTION_CODE", options)
 
 if transaction.errors.any?
   puts transaction.errors.join("\n")

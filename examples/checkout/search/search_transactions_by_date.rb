@@ -1,7 +1,7 @@
-require_relative "../boot"
+require_relative "../../boot"
 require "active_support/all"
 
-# Transactions by date
+# Search Transactions by Date
 #
 #   You need to give:
 #     - reference code

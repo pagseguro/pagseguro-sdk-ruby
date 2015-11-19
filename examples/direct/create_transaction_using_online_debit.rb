@@ -1,12 +1,12 @@
 require_relative "../boot"
 
-# Credit card transaction request
+# Create Transaction Using Oline Debit
 #
 # You need to set your AccountCredentials (EMAIL, TOKEN) in the application config
 #
 # P.S: See the boot file example for more details.
 
-payment = PagSeguro::CreditCardTransactionRequest.new
+payment = PagSeguro::OnlineDebitTransactionRequest.new
 payment.notification_url = "http://www.meusite.com.br/notification"
 payment.payment_mode = "gateway"
 
@@ -17,9 +17,9 @@ payment.items << {
   weight: 0
 }
 
-payment.reference = "REF1234-credit-card"
+payment.reference = "REF1234-online-debit"
 payment.sender = {
-  hash: "f8d95a0747cdddf277a111ec1bab1d68628e095243b7a56382ec01f260216313",
+  hash: "7e215170790948f45e26175c2192c77e88c0e4c361a5860b99d2e9a97af982e6",
   name: "Joao Comprador",
   email: "joao@sandbox.pagseguro.com.br",
   cpf: "75073461100",
@@ -42,34 +42,10 @@ payment.shipping = {
   }
 }
 
-payment.billing_address = {
-  street: "Av. Brig. Faria Lima",
-  number: "1384",
-  complement: "5º andar",
-  city: "São Paulo",
-  state: "SP",
-  district: "Jardim Paulistano",
-  postal_code: "01452002"
+payment.bank = {
+  name: "itau"
 }
 
-payment.credit_card_token = "41c1f784216748ccae689fcd854aaca1"
-payment.holder = {
-  name: "João Comprador",
-  birth_date: "07/05/1981",
-  document: {
-    type: "CPF",
-    value: "00000000191"
-  },
-  phone: {
-    area_code: 11,
-    number: "123456789"
-  }
-}
-
-payment.installment = {
-  value: 459.50,
-  quantity: 1
-}
 
 # Add extras params to request
 # payment.extra_params << { paramName: 'paramValue' }
@@ -113,7 +89,7 @@ else
   puts "      name: #{payment.sender.name}"
   puts "      email: #{payment.sender.email}"
   puts "      phone: (#{payment.sender.phone.area_code}) #{payment.sender.phone.number}"
-  puts "      document: #{payment.sender.document}: #{payment.sender.document}"
+  puts "      document: #{payment.sender.document}"
 
   puts "    => Shipping"
   puts "      street: #{payment.shipping.address.street}, #{payment.shipping.address.number}"

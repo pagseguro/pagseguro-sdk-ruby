@@ -1,6 +1,6 @@
 require_relative "../boot"
 
-# Credit card transaction request
+# Create Transaction Using Boleto
 #
 # You need to set your AccountCredentials (EMAIL, TOKEN) in the application config
 #
