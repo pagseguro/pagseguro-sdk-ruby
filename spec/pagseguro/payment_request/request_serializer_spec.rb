@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PagSeguro::PaymentRequest::Serializer do
+describe PagSeguro::PaymentRequest::RequestSerializer do
   let(:payment_request) { PagSeguro::PaymentRequest.new }
   let(:params) { serializer.to_params }
   subject(:serializer) { described_class.new(payment_request) }

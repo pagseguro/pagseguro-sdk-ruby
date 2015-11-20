@@ -29,7 +29,7 @@ module PagSeguro
       end
 
       def success?
-        (response.success? && response.xml?) ? true : false
+        response.success? && response.xml?
       end
 
       private
