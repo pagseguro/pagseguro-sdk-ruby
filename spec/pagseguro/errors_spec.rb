@@ -3,7 +3,15 @@ require "spec_helper"
 
 describe PagSeguro::Errors do
   let(:response) { double }
-  let(:http_response) { double(:http_response, unauthorized?: true, bad_request?: false, not_found?: false) }
+  let(:http_response) do
+    double(
+      :http_response,
+      unauthorized?: true,
+      bad_request?: false,
+      not_found?: false,
+      forbidden?: false,
+    )
+  end
 
   context "when have no response" do
     it "returns errors" do
@@ -16,7 +24,12 @@ describe PagSeguro::Errors do
     subject(:errors) { PagSeguro::Errors.new(response) }
 
     before do
-      allow(response).to receive_messages(unauthorized?: true, bad_request?: false, not_found?: false)
+      allow(response).to receive_messages(
+        unauthorized?: true,
+        bad_request?: false,
+        not_found?: false,
+        forbidden?: false,
+      )
       errors.add(http_response)
     end
 
@@ -28,12 +41,34 @@ describe PagSeguro::Errors do
     subject(:errors) { PagSeguro::Errors.new(response) }
 
     before do
-      allow(response).to receive_messages(unauthorized?: true, bad_request?: false, not_found?: true)
+      allow(response).to receive_messages(
+        unauthorized?: true,
+        bad_request?: false,
+        not_found?: true,
+        forbidden?: false
+      )
       errors.add(http_response)
     end
 
     it { expect(errors).not_to be_empty }
     it { expect(errors).to include(I18n.t("pagseguro.errors.not_found")) }
+  end
+
+  context 'when forbidden' do
+    subject(:errors) { PagSeguro::Errors.new(response) }
+
+    before do
+      allow(response).to receive_messages(
+        unauthorized?: true,
+        bad_request?: false,
+        not_found?: false,
+        forbidden?: true
+      )
+      errors.add(http_response)
+    end
+
+    it { expect(errors).not_to be_empty }
+    it { expect(errors).to include(I18n.t("pagseguro.errors.forbidden")) }
   end
 
   context "when message can't be translated" do
@@ -52,7 +87,13 @@ describe PagSeguro::Errors do
     subject(:errors) { PagSeguro::Errors.new(response) }
 
     before do
-      allow(response).to receive_messages(data: xml, unauthorized?: false, bad_request?: true, not_found?: true)
+      allow(response).to receive_messages(
+        data: xml,
+        unauthorized?: false,
+        bad_request?: true,
+        not_found?: true,
+        forbidden?: false
+      )
     end
 
     it { expect(errors).to include("Sample message") }
@@ -74,7 +115,13 @@ describe PagSeguro::Errors do
     subject(:errors) { PagSeguro::Errors.new(response) }
 
     before do
-      allow(response).to receive_messages(data: xml, unauthorized?: false, bad_request?: true, not_found?: false)
+      allow(response).to receive_messages(
+        data: xml,
+        unauthorized?: false,
+        bad_request?: true,
+        not_found?: false,
+        forbidden?: false
+      )
     end
 
     it { expect(errors).to include("O parâmetro email deve ser informado.") }
@@ -97,7 +144,13 @@ describe PagSeguro::Errors do
     subject(:errors) { PagSeguro::Errors.new(response) }
 
     before do
-      allow(response).to receive_messages(data: xml, unauthorized?: false, bad_request?: true, not_found?: true)
+      allow(response).to receive_messages(
+        data: xml,
+        unauthorized?: false,
+        bad_request?: true,
+        not_found?: true,
+        forbidden?: true
+      )
       errors.add(http_response)
     end
 
