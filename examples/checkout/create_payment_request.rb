@@ -53,7 +53,7 @@ payment.shipping = {
 # payment.extra_params << { extraAmount: '-15.00' }
 
 puts "=> REQUEST"
-puts PagSeguro::PaymentRequest::Serializer.new(payment).to_params
+puts PagSeguro::PaymentRequest::RequestSerializer.new(payment).to_params
 
 response = payment.register
 
