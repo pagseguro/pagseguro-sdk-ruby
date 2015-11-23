@@ -92,7 +92,7 @@ describe PagSeguro::TransactionRequest do |variable|
       let(:raw_xml) { File.read("./spec/fixtures/transaction_request/success.xml") }
 
       it "creates a transaction request" do
-        expect(transaction_request.create).not_to be_a(PagSeguro::TransactionRequest)
+        expect(transaction_request.create).to be_a(PagSeguro::TransactionRequest)
         expect(transaction_request.code).to eq("9E884542-81B3-4419-9A75-BCC6FB495EF1")
       end
     end
@@ -120,8 +120,7 @@ describe PagSeguro::TransactionRequest do |variable|
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
       it "does not create a transaction request" do
-        expect(transaction_request.create).to be_falsy
-        expect(transaction_request.code).to be_nil
+        expect { transaction_request.create }.not_to change { transaction_request.code }
       end
 
       it "add errors" do
