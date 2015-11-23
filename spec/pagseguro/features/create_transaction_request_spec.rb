@@ -37,8 +37,8 @@ RSpec.describe "Creating Transaction Request" do
         status: [400, "Bad Request"], body: body, content_type: "text/xml"
     end
 
-    it "returns false" do
-      expect(transaction.create).to be_falsey
+    it "does not change attributes" do
+      expect { transaction.create }.not_to change { transaction.code }
     end
 
     describe "#errors" do

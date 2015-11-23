@@ -100,10 +100,7 @@ module PagSeguro
     # Return boolean.
     def create
       request = Request.post("transactions", api_version, params)
-      response = Response.new(request, self)
-      response.serialize
-
-      response.success?
+      Response.new(request, self).serialize
     end
 
     def update_attributes(attrs)
