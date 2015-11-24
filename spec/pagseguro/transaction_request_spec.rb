@@ -57,7 +57,7 @@ describe PagSeguro::TransactionRequest do |variable|
 
   describe "#extra_params" do
     it "is empty before initialization" do
-      expect(subject.extra_params).to eql([])
+      expect(subject.extra_params).to be_empty
     end
 
     it "allows extra parameter addition" do
