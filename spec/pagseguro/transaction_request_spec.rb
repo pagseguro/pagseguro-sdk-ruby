@@ -102,10 +102,9 @@ describe PagSeguro::TransactionRequest do |variable|
         double(
           :ResponseRequest,
           success?: false,
-          unauthorized?: false,
+          error?: true,
           bad_request?: true,
-          not_found?: false,
-          forbidden?: false,
+          error: Aitch::BadRequestError,
           xml?: true,
           data: xml_parsed,
           body: raw_xml

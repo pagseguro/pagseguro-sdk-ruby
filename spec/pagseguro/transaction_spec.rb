@@ -50,9 +50,8 @@ describe PagSeguro::Transaction do
       before do
         allow(request).to receive_messages(
           success?: false,
-          bad_request?: true,
-          not_found?: false,
-          forbidden?: false
+          error?: true,
+          error: Aitch::BadRequestError
         )
       end
 
@@ -76,7 +75,7 @@ describe PagSeguro::Transaction do
     end
     let(:parsed_xml) { Nokogiri::XML(raw_xml) }
     let(:request) do
-      double(:Request, xml?: true, success?: true, unauthorized?: false,
+      double(:Request, xml?: true, success?: true, error?: false,
              bad_request?: false, body: raw_xml, data: parsed_xml)
     end
     subject { PagSeguro::Transaction.find_by_code("CODE") }
@@ -101,9 +100,8 @@ describe PagSeguro::Transaction do
       before do
         allow(request).to receive_messages(
           success?: false,
-          bad_request?: true,
-          not_found?: false,
-          forbidden?: false
+          error?: true,
+          error: Aitch::BadRequestError
         )
       end
 
@@ -140,8 +138,7 @@ describe PagSeguro::Transaction do
     end
     let(:parsed_xml) { Nokogiri::XML(raw_xml) }
     let(:response) do
-      double(:Response, xml?: true, success?: true, unauthorized?: false,
-             bad_request?: false, body: raw_xml, data: parsed_xml)
+      double(:Response, xml?: true, success?: true, errors?: false, body: raw_xml, data: parsed_xml)
     end
     subject { PagSeguro::Transaction.find_status_history("CODE") }
 
@@ -165,9 +162,8 @@ describe PagSeguro::Transaction do
       before do
         allow(response).to receive_messages(
           success?: false,
-          bad_request?: true,
-          not_found?: false,
-          forbidden?: false
+          error?: true,
+          error: Aitch::NotFoundError
         )
       end
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }

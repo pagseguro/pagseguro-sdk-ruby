@@ -24,9 +24,12 @@ describe PagSeguro::TransactionCancellation::Response do
 
     context "when request fails" do
       before do
-        allow(http_response).to receive(:success?).and_return(false)
-        allow(http_response).to receive(:bad_request?).and_return(true)
-        allow(http_response).to receive(:body).and_return(raw_xml)
+        allow(http_response).to receive_messages(
+          success?: false,
+          error?: true,
+          error: Aitch::BadRequestError,
+          body: raw_xml
+        )
       end
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
