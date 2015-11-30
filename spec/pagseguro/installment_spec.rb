@@ -35,8 +35,8 @@ describe PagSeguro::Installment do
       before do
         allow(request).to receive_messages(
           success?: false,
-          forbidden?: false,
-          bad_request?: true
+          error?: true,
+          error: Aitch::BadRequestError
         )
       end
 

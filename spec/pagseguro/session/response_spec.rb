@@ -42,9 +42,8 @@ RSpec.describe PagSeguro::Session::Response do
       before do
         allow(http_response).to receive_messages(
           success?: false,
-          bad_request?: true,
-          not_found?: false,
-          forbidden?: false
+          error?: true,
+          error: Aitch::BadRequestError
         )
       end
 

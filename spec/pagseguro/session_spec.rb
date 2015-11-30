@@ -27,9 +27,8 @@ describe PagSeguro::Session do |variable|
       before do
         allow(request).to receive_messages(
           success?: false,
-          bad_request?: true,
-          not_found?: false,
-          forbidden?: false
+          error?: true,
+          error: Aitch::BadRequestError
         )
       end
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
