@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<authorizationSearchResult>
+  <date>2015-12-03T15:58:33.000-02:00</date>
+  <authorizations>
+    <authorization>
+      <code>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</code>
+      <creationDate>2015-10-28T17:23:05.000-02:00</creationDate>
+      <account>
+        <publicKey>PUB11111111111111111111111111111111</publicKey>
+      </account>
+      <permissions>
+        <permission>
+          <code>SEARCH_TRANSACTIONS</code>
+          <status>APPROVED</status>
+          <lastUpdate>2015-10-28T17:23:08.000-02:00</lastUpdate>
+        </permission>
+        <permission>
+          <code>RECEIVE_TRANSACTION_NOTIFICATIONS</code>
+          <status>APPROVED</status>
+          <lastUpdate>2015-10-28T17:23:08.000-02:00</lastUpdate>
+        </permission>
+      </permissions>
+    </authorization>
+    <authorization>
+      <code>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</code>
+      <creationDate>2015-10-27T17:54:01.000-02:00</creationDate>
+      <account>
+        <publicKey>PUBC2222222222222222222222222222222</publicKey>
+      </account>
+      <permissions>
+        <permission>
+          <code>SEARCH_TRANSACTIONS</code>
+          <status>APPROVED</status>
+          <lastUpdate>2015-10-27T17:54:04.000-02:00</lastUpdate>
+        </permission>
+        <permission>
+          <code>RECEIVE_TRANSACTION_NOTIFICATIONS</code>
+          <status>APPROVED</status>
+          <lastUpdate>2015-10-27T17:54:04.000-02:00</lastUpdate>
+        </permission>
+      </permissions>
+    </authorization>
+  </authorizations>
+  <resultsInThisPage>2</resultsInThisPage>
+  <currentPage>1</currentPage>
+  <totalPages>1</totalPages>
+</authorizationSearchResult>

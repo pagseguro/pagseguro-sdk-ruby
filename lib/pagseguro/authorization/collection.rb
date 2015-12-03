@@ -3,9 +3,11 @@ module PagSeguro
     class Collection
       extend Forwardable
 
+      attr_writer :authorizations
+
       def_delegators :@authorizations, :each, :empty?, :any?
 
-      def initialize(options)
+      def initialize(options = {})
         @errors = options[:errors] if options[:errors]
         @authorizations = instantiate_authorizations(options[:authorizations])
       end
