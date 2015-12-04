@@ -6,7 +6,7 @@ require_relative "boot"
 #
 #   You need to give:
 #     - amount
-#     - brand_card
+#     - card_brand
 #     - account credentials (EMAIL, TOKEN)
 #
 #   You can pass this parameters to PagSeguro::Installment#find
