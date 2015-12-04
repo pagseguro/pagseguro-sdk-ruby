@@ -49,10 +49,12 @@ describe PagSeguro::Authorization do
   end
 
   describe "find_by_date" do
-    let(:date_options) { { initial_date: Date.today, final_date: Date.today + 1 } }
+    let(:date_options) { { initial_date: initial_date, final_date: final_date } }
+    let(:initial_date) { Time.new(2015, 11, 1, 12, 0) }
+    let(:final_date) { Time.new(2015, 11, 2, 12, 0) }
     before do
       expect(PagSeguro::Request).to receive(:get)
-        .with("authorizations", 'v2', {})
+        .with("authorizations", 'v2', { initialDate: initial_date.xmlschema, finalDate: final_date.xmlschema })
         .and_return(request)
       expect(PagSeguro::Authorization::Collection).to receive(:new)
         .and_return(collection)
