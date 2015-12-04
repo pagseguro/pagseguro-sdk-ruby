@@ -8,10 +8,8 @@ describe PagSeguro::Search do
     double(
       :response,
       data: xml,
-      unauthorized?: false,
-      bad_request?: false,
-      not_found?: false,
-      forbidden?: false
+      error?: false,
+      error: nil
     )
   end
 

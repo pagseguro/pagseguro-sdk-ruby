@@ -6,10 +6,8 @@ describe PagSeguro::Errors do
   let(:http_response) do
     double(
       :http_response,
-      unauthorized?: true,
-      bad_request?: false,
-      not_found?: false,
-      forbidden?: false,
+      error?: true,
+      error: Aitch::UnauthorizedError
     )
   end
 
@@ -25,10 +23,8 @@ describe PagSeguro::Errors do
 
     before do
       allow(response).to receive_messages(
-        unauthorized?: true,
-        bad_request?: false,
-        not_found?: false,
-        forbidden?: false,
+        error?: true,
+        error: Aitch::UnauthorizedError
       )
       errors.add(http_response)
     end
@@ -42,10 +38,8 @@ describe PagSeguro::Errors do
 
     before do
       allow(response).to receive_messages(
-        unauthorized?: true,
-        bad_request?: false,
-        not_found?: true,
-        forbidden?: false
+        error?: true,
+        error: Aitch::NotFoundError
       )
       errors.add(http_response)
     end
@@ -59,10 +53,8 @@ describe PagSeguro::Errors do
 
     before do
       allow(response).to receive_messages(
-        unauthorized?: true,
-        bad_request?: false,
-        not_found?: false,
-        forbidden?: true
+        error?: true,
+        error: Aitch::ForbiddenError
       )
       errors.add(http_response)
     end
@@ -89,10 +81,8 @@ describe PagSeguro::Errors do
     before do
       allow(response).to receive_messages(
         data: xml,
-        unauthorized?: false,
-        bad_request?: true,
-        not_found?: true,
-        forbidden?: false
+        error?: true,
+        error: Aitch::BadRequestError
       )
     end
 
@@ -117,10 +107,8 @@ describe PagSeguro::Errors do
     before do
       allow(response).to receive_messages(
         data: xml,
-        unauthorized?: false,
-        bad_request?: true,
-        not_found?: false,
-        forbidden?: false
+        error?: true,
+        error: Aitch::BadRequestError
       )
     end
 
@@ -146,10 +134,8 @@ describe PagSeguro::Errors do
     before do
       allow(response).to receive_messages(
         data: xml,
-        unauthorized?: false,
-        bad_request?: true,
-        not_found?: true,
-        forbidden?: true
+        error?: true,
+        error: Aitch::BadRequestError
       )
       errors.add(http_response)
     end

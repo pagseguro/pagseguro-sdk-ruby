@@ -47,10 +47,8 @@ describe PagSeguro::TransactionRefund do
         double(
           :ResponseRequest,
           success?: false,
-          unauthorized?: false,
-          not_found?: false,
-          bad_request?: true,
-          forbidden?: true,
+          error?: true,
+          error: Aitch::ForbiddenError,
           xml?: true,
           data: xml_parsed,
           body: raw_xml
