@@ -54,13 +54,13 @@ describe PagSeguro::Items do
     end
 
     let(:item) do
-      PagSeguro::Item.new(id: 1234, description: "Tea", quantity: 1)
+      PagSeguro::Item.new(id: 1234, description: "Tea", quantity: 1, amount: 300.0)
     end
 
-    context "when add an item with same id and description" do
+    context "when add same item" do
       context "and no quantity is informed" do
         let(:other_item) do
-          { id: 1234, description: "Tea" }
+          { id: 1234, description: "Tea", amount: 300.0 }
         end
 
         it "increases one in item quantity" do
@@ -74,7 +74,7 @@ describe PagSeguro::Items do
 
       context "and quantity is informed" do
         let(:other_item) do
-          { id: 1234, description: "Tea", quantity: 20 }
+          { id: 1234, description: "Tea", quantity: 20, amount: 300.0 }
         end
 
         it "increases item quantity" do
@@ -105,6 +105,20 @@ describe PagSeguro::Items do
       context "with only id equals" do
         let(:other_item) do
           { id: 1234, description: "Coffee" }
+        end
+
+        it "does not increase item quantity" do
+          expect { subject << other_item }.not_to change { item.quantity }
+        end
+
+        it "increases subject size" do
+          expect { subject << other_item }.to change { subject.size }.by(1)
+        end
+      end
+
+      context "with only amount equals" do
+        let(:other_item) do
+          { id: 4321, description: "Coffee", amount: 300.0 }
         end
 
         it "does not increase item quantity" do
