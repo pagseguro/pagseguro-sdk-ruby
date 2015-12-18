@@ -31,7 +31,7 @@ module PagSeguro
     # Returns boolean.
     def include?(item)
       @store.detect do |stored_item|
-        stored_item.id == item.id && stored_item.description == item.description
+        stored_item.id == item.id && stored_item.description == item.description && stored_item.amount == item.amount
       end
     end
   end
