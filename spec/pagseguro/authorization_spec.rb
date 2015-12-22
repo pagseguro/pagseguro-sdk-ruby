@@ -68,4 +68,19 @@ describe PagSeguro::Authorization do
       expect(PagSeguro::Authorization.find_by_date(date_options)).to eq (collection)
     end
   end
+
+  describe "find_by_reference" do
+    let(:reference) { { reference: 'REF1111' } }
+    before do
+      expect(PagSeguro::Request).to receive(:get)
+        .with("authorizations", 'v2', options.merge(reference))
+        .and_return(request)
+      expect(PagSeguro::Authorization::Collection).to receive(:new)
+        .and_return(collection)
+      expect(PagSeguro::Authorization::Response).to receive(:new)
+        .with(request, collection)
+        .and_return(response)
+      expect(response).to receive(:serialize_collection)
+    end
+  end
 end
