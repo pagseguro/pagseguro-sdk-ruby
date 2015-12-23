@@ -18,7 +18,8 @@ options = {
   credentials: credentials, # Unnecessary if you set in application config
   permissions: [:searches, :notifications],
   notification_url: 'http://example.com/',
-  redirect_url: 'http://example.com/'
+  redirect_url: 'http://example.com/',
+  reference: 'REF4321' # optional
 }
 
 authorization_request = PagSeguro::AuthorizationRequest.new(options)

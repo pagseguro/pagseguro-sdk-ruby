@@ -41,6 +41,14 @@ module PagSeguro
       collection
     end
 
+    def self.find_by_reference(reference)
+      request = Request.get("authorizations", api_version, reference)
+      collection = Collection.new
+      Response.new(request, collection).serialize_collection
+
+      collection
+    end
+
     def update_attributes(attrs)
       attrs.map { |name, value| send("#{name}=", value) }
     end
