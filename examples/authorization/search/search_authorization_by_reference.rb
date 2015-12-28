@@ -6,16 +6,26 @@ require_relative "../../boot"
 #     - reference
 #     - application credentials (APP_ID, APP_KEY)
 #
-#   You can pass this parameters to PagSeguro::Authorization#find_by_reference
+#   You can pass this parameters to PagSeguro::Authorization#find_by
 
 credentials = PagSeguro::ApplicationCredentials.new("APP_ID", "APP_KEY")
 
-options = { credentials: credentials, reference: 'REF1234' }
+options = {
+  reference: 'REF4321',
+  credentials: credentials
+}
 
-authorization = PagSeguro::Authorization.find_by_code('AUTHORIZATION_CODE', options)
+collection = PagSeguro::Authorization.find_by(options)
 
-if authorization.errors.any?
-  puts authorization.errors.join("\n")
+if collection.errors.any?
+  puts collection.errors.join("\n")
 else
-  puts authorization.inspect
+  collection.each do |authorization|
+    puts "# #{authorization.code}"
+    authorization.permissions.each do |permission|
+      puts "Permission: "
+      puts permission.code
+      puts permission.status
+    end
+  end
 end
