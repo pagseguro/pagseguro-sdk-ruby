@@ -26,11 +26,26 @@ module PagSeguro
 
           serialize_sender(data, payment_request.sender)
           serialize_shipping(data, payment_request.shipping)
+          serialize_receivers(data, payment_request.receivers)
           serialize_extra_params(data, payment_request.extra_params)
         end.delete_if { |_, value| value.nil? }
       end
 
       private
+
+      def serialize_receivers(data, receivers)
+        receivers.each.with_index(1) do |receiver, idx|
+          data["receiver[#{idx}].email"] = receiver.email
+          serialize_receiver_split(data, receiver, idx, receiver.split)
+        end
+      end
+
+      def serialize_receiver_split(data, receiver, idx, split)
+        data["receiver[#{idx}].split.amount"] = receiver.split.amount
+        data["receiver[#{idx}].split.feePercent"] = receiver.split.fee_percent
+        data["receiver[#{idx}].split.ratePercent"] = receiver.split.rate_percent
+      end
+
       def serialize_item(data, item, index)
         data["itemId#{index}"] = item.id
         data["itemDescription#{index}"] = item.description
