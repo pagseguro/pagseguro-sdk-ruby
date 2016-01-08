@@ -24,6 +24,21 @@ payment.items << {
   weight: 0
 }
 
+payment.receivers = [
+  {
+    email: 'a@example.com',
+    split: {
+      amount: '400.00',
+    },
+  },
+  {
+    email: 'b@example.com',
+    split: {
+      amount: '59.50',
+    },
+  }
+]
+
 payment.reference = "REF1234"
 payment.sender = {
   name: "Nando Vieira",

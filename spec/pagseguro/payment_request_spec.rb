@@ -20,6 +20,51 @@ describe PagSeguro::PaymentRequest do
     expect(payment.sender).to eql(sender)
   end
 
+  context 'sets receivers' do
+    let(:subject) do
+      PagSeguro::PaymentRequest.new(receivers: receivers)
+    end
+
+    let(:receivers) do
+      [
+        {
+          email: 'a@example.com',
+          split: { amount: 1 }
+        },
+        {
+          email: 'b@example.com',
+          split: { amount: 1 }
+        }
+      ]
+    end
+
+    it "ensure they are PagSeguro::Receiver" do
+      subject.receivers.each do |receiver|
+        expect(receiver).to be_a(PagSeguro::Receiver)
+      end
+    end
+
+    it "ensure they have correct keys" do
+      expect(subject.receivers[0].email).to eq 'a@example.com'
+    end
+
+    it "changes url to checkouts" do
+      expect(PagSeguro::Request).to receive(:post).with(
+        'checkouts', 'v2',
+        {
+          receiverEmail: 'RECEIVER',
+          currency: 'BRL',
+          'receiver[1].email' => 'a@example.com',
+          'receiver[1].split.amount' => 1,
+          'receiver[2].email' => 'b@example.com',
+          'receiver[2].split.amount' => 1
+        }
+      )
+
+      subject.register
+    end
+  end
+
   it "sets the items" do
     payment = PagSeguro::PaymentRequest.new
     expect(payment.items).to be_a(PagSeguro::Items)
