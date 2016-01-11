@@ -49,6 +49,26 @@ describe PagSeguro::PaymentRequest::RequestSerializer do
     it { expect(params).to include(shippingCost: "1234.56") }
   end
 
+  context "receiver serialization" do
+    before do
+      payment_request.receivers = [
+        {
+          email: 'a@example.com',
+          split: {
+            amount: 10,
+            fee_percent: 11,
+            rate_percent: 12
+          }
+        }
+      ]
+    end
+
+    it { expect(params).to include('receiver[1].email' => 'a@example.com') }
+    it { expect(params).to include('receiver[1].split.amount' => 10) }
+    it { expect(params).to include('receiver[1].split.feePercent' => 11) }
+    it { expect(params).to include('receiver[1].split.ratePercent' => 12) }
+  end
+
   context "address serialization" do
     let(:address) do
       PagSeguro::Address.new(
