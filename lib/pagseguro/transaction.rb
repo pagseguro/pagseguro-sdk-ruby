@@ -1,5 +1,8 @@
 module PagSeguro
   class Transaction
+    ONE_DAY_IN_SECONDS = 86400
+    FIFTEEN_MINUTES_IN_SECONDS = 900
+
     include Extensions::MassAssignment
     include Extensions::EnsureType
     include Extensions::Credentiable
@@ -98,7 +101,7 @@ module PagSeguro
     #
     def self.find_by_date(options = {}, page = 0)
       options = {
-        starts_at: Time.now - 86400,
+        starts_at: Time.now - ONE_DAY_IN_SECONDS,
         ends_at: Time.now,
         per_page: 50
       }.merge(options)
@@ -128,8 +131,8 @@ module PagSeguro
     #
     def self.find_abandoned(options = {}, page = 0)
       options = {
-        starts_at: Time.now - 86400,
-        ends_at: Time.now - 900,
+        starts_at: Time.now - ONE_DAY_IN_SECONDS,
+        ends_at: Time.now - FIFTEEN_MINUTES_IN_SECONDS,
         per_page: 50
       }.merge(options)
 
