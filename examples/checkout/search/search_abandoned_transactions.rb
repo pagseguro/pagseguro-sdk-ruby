@@ -8,7 +8,10 @@ require_relative "../../boot"
 #   You can pass the credentials parameters to PagSeguro::Transaction#find_abandoned
 
 options = {
-  credentials: PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
+  credentials: PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN'),
+  starts_at: (Time.now - 86400),
+  ends_at: (Time.now - 900),
+  per_page: 50
   # You can pass more arguments by params, look (/lib/pagseguro/transaction.rb)
 }
 
