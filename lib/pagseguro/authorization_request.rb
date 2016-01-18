@@ -1,6 +1,7 @@
 module PagSeguro
   class AuthorizationRequest
     include Extensions::MassAssignment
+    include Extensions::EnsureType
     include Extensions::Credentiable
 
     # The permissions given to the application
@@ -15,6 +16,9 @@ module PagSeguro
 
     # The url which the application is going to be redirected after the proccess
     attr_accessor :redirect_url
+
+    # The account that can be passed to register suggestion
+    attr_reader :account
 
     # The code used to confirm the authorization
     attr_reader :code
@@ -35,10 +39,14 @@ module PagSeguro
       cancels: 'CANCEL_TRANSACTIONS'
     }
 
+    def account=(account)
+      @account = ensure_type(Account, account)
+    end
+
     # Post and create an Authorization.
     # Return Boolean.
     def create
-      request = Request.post('authorizations/request', api_version, params)
+      request = Request.post_xml('authorizations/request', api_version, credentials, xml)
       response = Response.new(request)
       update_attributes(response.serialize)
 
@@ -61,8 +69,8 @@ module PagSeguro
       self.permissions = PERMISSIONS.keys
     end
 
-    def params
-      RequestSerializer.new(self).to_params
+    def xml
+      RequestSerializer.new(self).build_xml
     end
 
     def update_attributes(attrs)
