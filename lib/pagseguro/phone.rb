@@ -2,6 +2,10 @@ module PagSeguro
   class Phone
     include Extensions::MassAssignment
 
+    # Set the type phone
+    # Must be HOME, MOBILE or BUSINESS
+    attr_accessor :type
+
     # Set the area code.
     attr_accessor :area_code
 
