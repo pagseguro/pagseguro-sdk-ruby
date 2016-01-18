@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<authorizationRequest>
+  <reference>123</reference>
+  <redirectURL>http://seusite.com.br/redirect</redirectURL>
+  <notificationURL>http://seusite.com.br/notification</notificationURL>
+  <permissions>
+    <code>CREATE_CHECKOUTS</code>
+    <code>SEARCH_TRANSACTIONS</code>
+    <code>RECEIVE_TRANSACTION_NOTIFICATIONS</code>
+  </permissions>
+  <account>
+    <email>usuario@seusite.com.br</email>
+    <type>SELLER</type>
+    <person>
+      <name>Antonio Carlos</name>
+      <birthDate>05/02/1982</birthDate>
+      <address>
+        <postalCode>414722</postalCode>
+        <street>Av. Brig. Faria Lima</street>
+        <number>1384</number>
+        <complement>5o andar</complement>
+        <district>Jardim Paulistano</district>
+        <city>Sao Paulo</city>
+        <state>SP</state>
+        <country>BRA</country>
+      </address>
+      <documents>
+        <document>
+          <type>CPF</type>
+          <value>99988877766</value>
+        </document>
+      </documents>
+      <phones>
+        <phone>
+          <type>HOME</type>
+          <areaCode>11</areaCode>
+          <number>30302323</number>
+        </phone>
+        <phone>
+          <type>MOBILE</type>
+          <areaCode>11</areaCode>
+          <number>976302323</number>
+        </phone>
+      </phones>
+    </person>
+  </account>
+</authorizationRequest>
