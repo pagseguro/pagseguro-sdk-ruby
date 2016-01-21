@@ -6,7 +6,7 @@ require_relative "../../boot"
 #     - transaction notification code
 #     - account credentials (EMAIL, TOKEN) OR application credentials (APP_ID, APP_KEY)
 #
-#   You can pass this parameters to PagSeguro::Transaction#find_by_code
+#   You can pass these parameters to PagSeguro::Transaction#find_by_code
 
 # credentials = PagSeguro::ApplicationCredentials.new('APP_ID', 'APP_KEY')
 credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')

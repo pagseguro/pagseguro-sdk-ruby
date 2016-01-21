@@ -7,7 +7,7 @@ require "active_support/all"
 #     - reference code
 #     - account credentials (EMAIL, TOKEN)
 #
-#   You can pass this parameters to PagSeguro::Transaction#find_by_date
+#   You can pass these parameters to PagSeguro::Transaction#find_by_date
 
 credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
 

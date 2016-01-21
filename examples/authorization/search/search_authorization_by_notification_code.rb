@@ -6,9 +6,9 @@ require_relative "../../boot"
 #     - authorization code
 #     - application credentials (APP_ID, APP_KEY)
 #
-#   You can pass this parameters to PagSeguro::Authorization#find_by_notification_code
+#   You can pass these parameters to PagSeguro::Authorization#find_by_notification_code
 #
-# PS: For more details look the class PagSeguro::Authorization#find_by_notification_code
+# PS: For more details take a look at the class PagSeguro::Authorization#find_by_notification_code
 
 
 credentials = PagSeguro::ApplicationCredentials.new('APP_ID', 'APP_KEY')

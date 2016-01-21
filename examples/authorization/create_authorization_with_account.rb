@@ -6,12 +6,12 @@ require_relative "../boot"
 #     - notification_url
 #     - redirect_url
 #     - permissions defaults to all permissions
-#     - applications credentials (APP_ID, APP_KEY)
+#     - application credentials (APP_ID, APP_KEY)
 #     - account params
 #
-#   You can pass this parameters to PagSeguro::AuthorizationRequest#new
+#   You can pass these parameters to PagSeguro::AuthorizationRequest#new
 #
-# PS: For more details look the class PagSeguro::AuthorizationRequest
+# PS: For more details take a look at the class PagSeguro::AuthorizationRequest
 
 credentials = PagSeguro::ApplicationCredentials.new('APP_ID', 'APP_KEY')
 
