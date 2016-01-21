@@ -9,7 +9,7 @@ require_relative "boot"
 #     - card_brand
 #     - account credentials (EMAIL, TOKEN)
 #
-#   You can pass this parameters to PagSeguro::Installment#find
+#   You can pass these parameters to PagSeguro::Installment#find
 
 credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
 

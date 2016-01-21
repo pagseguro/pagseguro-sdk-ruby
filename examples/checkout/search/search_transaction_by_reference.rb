@@ -6,7 +6,7 @@ require_relative "../../boot"
 #     - reference code
 #     - account credentials (EMAIL, TOKEN)
 #
-#   You can pass this parameters to PagSeguro::Transaction#find_by_reference
+#   You can pass these parameters to PagSeguro::Transaction#find_by_reference
 
 credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
 
