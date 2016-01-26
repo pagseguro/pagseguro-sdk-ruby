@@ -7,6 +7,5 @@ rvm:
   - jruby-19mode
 notifications:
   email:
-    - lucas.renan@codeminer42.com
     - dmitry.rocha@codeminer42.com
     - rafael.belo@codeminer42.com
