@@ -8,6 +8,14 @@ module PagSeguro
         @payment_request = payment_request
       end
 
+      def to_xml_params
+        xml_builder.to_xml(
+          save_with:
+          Nokogiri::XML::Node::SaveOptions::NO_EMPTY_TAGS |
+          Nokogiri::XML::Node::SaveOptions::FORMAT
+        )
+      end
+
       def to_params
         {}.tap do |data|
           data[:receiverEmail] = PagSeguro.receiver_email
@@ -104,6 +112,67 @@ module PagSeguro
 
       def to_amount(amount)
         "%.2f" % BigDecimal(amount.to_s).round(2).to_s("F") if amount
+      end
+
+      def xml_builder
+        Nokogiri::XML::Builder.new(encoding: PagSeguro.encoding) do |xml|
+          xml.send(:checkout) {
+            xml_serialize_receivers(xml)
+            xml_serialize_sender(xml, payment_request.sender)
+            xml.send(:currency, payment_request.currency)
+            xml.send(:reference, payment_request.reference)
+            xml.send(:redirectURL, payment_request.redirect_url)
+            xml.send(:notificationURL, payment_request.notification_url)
+            xml_serialize_items(xml, payment_request.items)
+          }
+        end
+      end
+
+      def xml_serialize_items(xml, items)
+        xml.send(:items) {
+          items.each do |item|
+            xml.send(:item) {
+              xml.send(:id, item.id)
+              xml.send(:description, item.description)
+              xml.send(:quantity, item.quantity)
+              xml.send(:amount, to_amount(item.amount))
+              xml.send(:weight, item.weight) if item.weight
+              xml.send(:shippingCost, to_amount(item.shipping_cost))
+            }
+          end
+        }
+      end
+
+      def xml_serialize_sender(xml, sender)
+        return unless sender
+
+        xml.send(:sender) {
+          xml.send(:name, sender.name)
+          xml.send(:email, sender.email)
+          if sender.phone
+            xml.send(:phone) {
+              xml.send(:areaCode, sender.phone.area_code)
+              xml.send(:number, sender.phone.number)
+            }
+          end
+        }
+      end
+
+      def xml_serialize_receivers(xml)
+        xml.send(:primaryReceiver) {
+          xml.send(:email, payment_request.primary_receiver)
+        }
+
+        xml.send(:receivers) {
+          payment_request.receivers.each do |receiver|
+            xml.send(:receiver) {
+              xml.send(:email, receiver.email)
+              xml.send(:split) {
+                xml.send(:amount, receiver.split.amount)
+              }
+            }
+          end
+        }
       end
     end
   end
