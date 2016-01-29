@@ -11,6 +11,9 @@ module PagSeguro
     # Get the payment sender.
     attr_reader :sender
 
+    # Set and get primary receiver email.
+    attr_accessor :primary_receiver
+
     # Get the payment receivers.
     attr_reader :receivers
 
@@ -82,16 +85,20 @@ module PagSeguro
 
     # Calls the PagSeguro web service and register this request for payment.
     def register
-      path = if @receivers.empty?
-               'checkout'
-             else
-               'checkouts'
-             end
+      request = if @receivers.empty?
+                  Request.post('checkout', api_version, params)
+                else
+                  Request.post_xml('checkouts', api_version, credentials, xml_params)
+                end
 
-      Response.new Request.post(path, api_version, params)
+      Response.new(request)
     end
 
     private
+
+    def xml_params
+      RequestSerializer.new(self).to_xml_params
+    end
 
     def params
       RequestSerializer.new(self).to_params

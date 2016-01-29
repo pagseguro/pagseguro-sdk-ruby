@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe PagSeguro::PaymentRequest do
+  it_assigns_attribute :primary_receiver
   it_assigns_attribute :currency
   it_assigns_attribute :redirect_url
   it_assigns_attribute :extra_amount
@@ -20,45 +21,55 @@ describe PagSeguro::PaymentRequest do
     expect(payment.sender).to eql(sender)
   end
 
-  context 'sets receivers' do
+  describe '#register split payment' do
+    before do
+      FakeWeb.register_uri(
+        :post,
+        'https://ws.pagseguro.uol.com.br/v2/checkouts?appId=id&appKey=key',
+        body: ""
+      )
+    end
+
+
     let(:subject) do
-      PagSeguro::PaymentRequest.new(receivers: receivers)
+      PagSeguro::PaymentRequest.new(
+        receivers: receivers,
+        credentials: credentials,
+        primary_receiver: 'primary@example.com',
+        sender: sender
+      )
+    end
+
+    let(:credentials) do
+      PagSeguro::ApplicationCredentials.new('id', 'key')
+    end
+
+    let(:sender) do
+      PagSeguro::Sender.new(phone: PagSeguro::Phone.new(area_code: 1, number: 2345))
     end
 
     let(:receivers) do
       [
-        {
-          email: 'a@example.com',
-          split: { amount: 1 }
-        },
-        {
-          email: 'b@example.com',
-          split: { amount: 1 }
-        }
+        { email: 'a@example.com', split: { amount: 1 } },
+        { email: 'b@example.com', split: { amount: 1 } }
       ]
     end
 
-    it "ensure they are PagSeguro::Receiver" do
-      subject.receivers.each do |receiver|
-        expect(receiver).to be_a(PagSeguro::Receiver)
+    context 'ensure receivers' do
+      it 'are PagSeguro::Receiver' do
+        subject.receivers.each do |receiver|
+          expect(receiver).to be_a(PagSeguro::Receiver)
+        end
+      end
+
+      it 'have correct keys' do
+        expect(subject.receivers[0].email).to eq 'a@example.com'
       end
     end
 
-    it "ensure they have correct keys" do
-      expect(subject.receivers[0].email).to eq 'a@example.com'
-    end
-
     it "changes url to checkouts" do
-      expect(PagSeguro::Request).to receive(:post).with(
-        'checkouts', 'v2',
-        {
-          receiverEmail: 'RECEIVER',
-          currency: 'BRL',
-          'receiver[1].email' => 'a@example.com',
-          'receiver[1].split.amount' => 1,
-          'receiver[2].email' => 'b@example.com',
-          'receiver[2].split.amount' => 1
-        }
+      expect(PagSeguro::Request).to receive(:post_xml).with(
+        'checkouts', 'v2', credentials, a_string_matching(/<checkout>/)
       )
 
       subject.register
