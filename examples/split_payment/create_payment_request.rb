@@ -15,7 +15,7 @@ payment.redirect_url = "http://example.com/?redirect"
 # If you don't want to use the application config, can give your credentials
 # object to payment request.
 
-credentials = PagSeguro::ApplicationCredentials.new('APP_ID', 'APP_KEY')
+payment.credentials = PagSeguro::ApplicationCredentials.new('APP_ID', 'APP_KEY')
 
 payment.items << {
   id: 1234,
@@ -59,7 +59,7 @@ payment.shipping = {
 }
 
 puts "=> REQUEST"
-puts PagSeguro::PaymentRequest::RequestSerializer.new(payment).build_xml
+puts PagSeguro::PaymentRequest::RequestSerializer.new(payment).to_xml_params
 
 response = payment.register
 
