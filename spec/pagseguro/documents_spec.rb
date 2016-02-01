@@ -1,28 +1,10 @@
 require 'spec_helper'
 
 RSpec.describe PagSeguro::Documents do
-  [
-    :size,
-    :clear,
-    :empty?,
-    :any?,
-    :each,
-    :map
-  ].each do |method|
-    it { is_expected.to respond_to(method) }
-  end
-
-  it 'should initialize empty' do
-    expect(subject).to be_empty
-  end
+  it_behaves_like "Collection"
 
   context 'adding a new document' do
     let(:document) { { type: 'CPF', value: 11122233344 } }
-
-    it "shouldn't add the same document" do
-      subject << document
-      expect{ subject << document }.to_not change{ subject.size }
-    end
 
     context 'ensures type the new document' do
       it 'can be a hash' do

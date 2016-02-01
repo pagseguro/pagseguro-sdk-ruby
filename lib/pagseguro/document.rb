@@ -7,5 +7,9 @@ module PagSeguro
 
     # Set the value.
     attr_accessor :value
+
+    def ==(other)
+      type == other.type && value == other.value
+    end
   end
 end

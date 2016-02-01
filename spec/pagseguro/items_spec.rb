@@ -1,60 +1,28 @@
 require "spec_helper"
 
 describe PagSeguro::Items do
-  it "implements #each" do
-    expect(PagSeguro::Items.new).to respond_to(:each)
-  end
+  it_behaves_like "Collection"
 
-  it "implements #any" do
-    expect(PagSeguro::Items.new).to respond_to(:any?)
-  end
-
-  it "includes Enumerable" do
-    expect(PagSeguro::Items.included_modules).to include(Enumerable)
-  end
-
-  it "sets item" do
-    item = PagSeguro::Item.new
-    items = PagSeguro::Items.new
-    items << item
-
-    expect(items.size).to eql(1)
-    expect(items).to include(item)
-  end
-
-  it "sets item from Hash" do
-    item = PagSeguro::Item.new(id: 1234)
-
-    expect(PagSeguro::Item)
-      .to receive(:new)
-      .with({id: 1234})
-      .and_return(item)
-
-    items = PagSeguro::Items.new
-    items << {id: 1234}
-
-    expect(items).to include(item)
-  end
-
-  it "empties items" do
-    items = PagSeguro::Items.new
-    items << {id: 1234}
-    items.clear
-
-    expect(items).to be_empty
-  end
-
-  context "#<<" do
+  context "adding a new item" do
     before do
       subject << item
     end
 
-    subject do
-      PagSeguro::Items.new
-    end
-
     let(:item) do
       PagSeguro::Item.new(id: 1234, description: "Tea", quantity: 1, amount: 300.0)
+    end
+
+    it "sets item" do
+      expect(subject.size).to eql(1)
+      expect(subject).to include(item)
+    end
+
+    it "sets item from Hash" do
+      item_hash = { id: 4321 }
+      subject << item_hash
+      item = PagSeguro::Item.new(item_hash)
+
+      expect(subject).to include(item)
     end
 
     context "when add same item" do
