@@ -14,8 +14,7 @@ payment.redirect_url = "http://dev.simplesideias.com.br/?redirect"
 
 # if you don't want use the application config, can give your credentials object to payment request
 #
-# payment.credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
-
+payment.credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
 
 payment.items << {
   id: 1234,
@@ -23,21 +22,6 @@ payment.items << {
   amount: 459.50,
   weight: 0
 }
-
-payment.receivers = [
-  {
-    email: 'a@example.com',
-    split: {
-      amount: '400.00',
-    },
-  },
-  {
-    email: 'b@example.com',
-    split: {
-      amount: '59.50',
-    },
-  }
-]
 
 payment.reference = "REF1234"
 payment.sender = {
