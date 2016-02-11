@@ -12,8 +12,7 @@ payment.abandon_url = "http://dev.simplesideias.com.br/?abandoned"
 payment.notification_url = "http://dev.simplesideias.com.br/?notification"
 payment.redirect_url = "http://dev.simplesideias.com.br/?redirect"
 
-# if you don't want use the application config, can give your credentials object to payment request
-#
+# If you don't want to use payment request credentials you can use application config
 payment.credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
 
 payment.items << {

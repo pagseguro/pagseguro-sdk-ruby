@@ -10,7 +10,6 @@ require_relative "../../boot"
 #
 # PS: For more details take a look at the class PagSeguro::Authorization#find_by_notification_code
 
-
 credentials = PagSeguro::ApplicationCredentials.new('APP_ID', 'APP_KEY')
 
 options = { credentials: credentials } # Unnecessary if you set in application config

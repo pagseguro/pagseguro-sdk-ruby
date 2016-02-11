@@ -12,7 +12,7 @@ payment.abandon_url = "http://example.com/?abandoned"
 payment.notification_url = "http://example.com/?notification"
 payment.redirect_url = "http://example.com/?redirect"
 
-# If you don't want to use the application config, can give your credentials
+# If you don't want to use the application config, you can give your credentials
 # object to payment request.
 
 payment.credentials = PagSeguro::ApplicationCredentials.new('APP_ID', 'APP_KEY')
