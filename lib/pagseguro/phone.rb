@@ -12,5 +12,9 @@ module PagSeguro
     # Set the phone number.
     # Must have 7-9 numbers.
     attr_accessor :number
+
+    def ==(other)
+      [type, area_code, number] == [other.type, other.area_code, other.number]
+    end
   end
 end
