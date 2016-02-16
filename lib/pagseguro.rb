@@ -10,6 +10,11 @@ require "pagseguro/extensions/mass_assignment"
 require "pagseguro/extensions/ensure_type"
 require "pagseguro/extensions/credentiable"
 
+require "pagseguro/collection_managers"
+require "pagseguro/collection_managers/generic_manager"
+require "pagseguro/collection_managers/items_manager"
+require "pagseguro/collection_base"
+
 require "pagseguro/version"
 require "pagseguro/config"
 
