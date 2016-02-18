@@ -21,6 +21,10 @@ module PagSeguro
     # Set the shipping cost per unit.
     attr_accessor :shipping_cost
 
+    def ==(other)
+      [id, description, amount] == [other.id, other.description, other.amount]
+    end
+
     private
     def before_initialize
       self.quantity = 1

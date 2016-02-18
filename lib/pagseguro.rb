@@ -9,6 +9,7 @@ require "i18n"
 require "pagseguro/extensions/mass_assignment"
 require "pagseguro/extensions/ensure_type"
 require "pagseguro/extensions/credentiable"
+require "pagseguro/extensions/collection_object"
 
 require "pagseguro/version"
 require "pagseguro/config"
