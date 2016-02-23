@@ -42,8 +42,8 @@ describe PagSeguro::Authorization::Collection do
   end
 
   describe "method delegation" do
-    it { subject.respond_to? (:each) }
-    it { subject.respond_to? (:empty?) }
-    it { subject.respond_to? (:any?) }
+    it { is_expected.to respond_to(:each) }
+    it { is_expected.to respond_to(:empty?) }
+    it { is_expected.to respond_to(:any?) }
   end
 end

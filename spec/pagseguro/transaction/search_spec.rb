@@ -4,7 +4,14 @@ describe PagSeguro::Search do
   let(:search) { PagSeguro::Search.new("foo", "bar", 1) }
   let(:source) { File.read("./spec/fixtures/transactions/search.xml") }
   let(:xml) { Nokogiri::XML(source) }
-  let(:response) { double(:response, data: xml, unauthorized?: false, bad_request?: false, not_found?: false) }
+  let(:response) do
+    double(
+      :response,
+      data: xml,
+      error?: false,
+      error: nil
+    )
+  end
 
   context 'when being initialized' do
     it 'initializes with passed page number' do
@@ -57,19 +64,19 @@ describe PagSeguro::Search do
     context 'when there is a next page' do
       search = PagSeguro::Search.new('foo', 'bar', 0)
       it 'is page 0' do
-        expect(search.next_page?).to be_truthy
+        expect(search).to be_next_page
       end
 
       it 'is not page 0, but page < total_pages' do
         allow(search).to receive(:total_pages).and_return(3)
-        expect(search.next_page?).to be_truthy
+        expect(search).to be_next_page
       end
     end
 
     context 'when there is no next page' do
       it 'is not page 0, but page == total_pages' do
         allow(search).to receive(:total_pages).and_return(1)
-        expect(search.next_page?).to be_falsy
+        expect(search).not_to be_next_page
       end
     end
   end
@@ -77,11 +84,11 @@ describe PagSeguro::Search do
   describe '#previous_page?' do
     context 'when there is a previous page' do
       search = PagSeguro::Search.new('foo', 'bar', 2)
-      it { expect(search.previous_page?).to be_truthy }
+      it { expect(search).to be_previous_page }
     end
 
     context 'when there is no previous page' do
-      it { expect(search.previous_page?).to be_falsy }
+      it { expect(search).not_to be_previous_page }
     end
   end
 
@@ -115,12 +122,12 @@ describe PagSeguro::Search do
   describe '#valid?' do
     it 'is valid' do
       allow(search).to receive(:fetch).and_return(true)
-      expect(search.valid?).to be_truthy
+      expect(search).to be_valid
     end
 
     it "isn't valid" do
       allow(search).to receive(:fetch).and_return(false)
-      expect(search.valid?).to be_falsy
+      expect(search).not_to be_valid
     end
   end
 end

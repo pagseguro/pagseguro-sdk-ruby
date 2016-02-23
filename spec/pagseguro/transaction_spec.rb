@@ -48,10 +48,13 @@ describe PagSeguro::Transaction do
 
     context "when request fails" do
       before do
-        allow(request).to receive(:success?).and_return(false)
-        allow(request).to receive(:bad_request?).and_return(true)
-        allow(request).to receive(:not_found?).and_return(false)
+        allow(request).to receive_messages(
+          success?: false,
+          error?: true,
+          error: Aitch::BadRequestError
+        )
       end
+
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
       it "returns an instance of Transaction" do
@@ -72,7 +75,7 @@ describe PagSeguro::Transaction do
     end
     let(:parsed_xml) { Nokogiri::XML(raw_xml) }
     let(:request) do
-      double(:Request, xml?: true, success?: true, unauthorized?: false,
+      double(:Request, xml?: true, success?: true, error?: false,
              bad_request?: false, body: raw_xml, data: parsed_xml)
     end
     subject { PagSeguro::Transaction.find_by_code("CODE") }
@@ -95,10 +98,13 @@ describe PagSeguro::Transaction do
 
     context "when request fails" do
       before do
-        allow(request).to receive(:success?).and_return(false)
-        allow(request).to receive(:bad_request?).and_return(true)
-        allow(request).to receive(:not_found?).and_return(false)
+        allow(request).to receive_messages(
+          success?: false,
+          error?: true,
+          error: Aitch::BadRequestError
+        )
       end
+
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
       it "returns an instance of Transaction" do
@@ -132,8 +138,7 @@ describe PagSeguro::Transaction do
     end
     let(:parsed_xml) { Nokogiri::XML(raw_xml) }
     let(:response) do
-      double(:Response, xml?: true, success?: true, unauthorized?: false,
-             bad_request?: false, body: raw_xml, data: parsed_xml)
+      double(:Response, xml?: true, success?: true, errors?: false, body: raw_xml, data: parsed_xml)
     end
     subject { PagSeguro::Transaction.find_status_history("CODE") }
 
@@ -155,9 +160,11 @@ describe PagSeguro::Transaction do
 
     context "when request fails" do
       before do
-        allow(response).to receive(:success?).and_return(false)
-        allow(response).to receive(:bad_request?).and_return(true)
-        allow(response).to receive(:not_found?).and_return(false)
+        allow(response).to receive_messages(
+          success?: false,
+          error?: true,
+          error: Aitch::NotFoundError
+        )
       end
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 

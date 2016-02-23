@@ -6,7 +6,7 @@ module PagSeguro
       end
 
       def serialize
-        if response.success? && response.xml?
+        if success?
           xml = Nokogiri::XML(response.body).css('authorizationRequest').first
           ResponseSerializer.new(xml).serialize
         else
@@ -15,7 +15,7 @@ module PagSeguro
       end
 
       def success?
-        (response.success? && response.xml?) ? true : false
+        response.success? && response.xml?
       end
 
       private

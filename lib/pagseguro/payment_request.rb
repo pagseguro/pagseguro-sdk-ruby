@@ -11,6 +11,12 @@ module PagSeguro
     # Get the payment sender.
     attr_reader :sender
 
+    # Set and get primary receiver email.
+    attr_accessor :primary_receiver
+
+    # Get the payment receivers.
+    attr_reader :receivers
+
     # Get the shipping info.
     attr_reader :shipping
 
@@ -65,6 +71,13 @@ module PagSeguro
       @sender = ensure_type(Sender, sender)
     end
 
+    # Set the receivers.
+    def receivers=(receivers)
+      receivers.each do |receiver|
+        @receivers << ensure_type(Receiver, receiver)
+      end
+    end
+
     # Set the shipping info.
     def shipping=(shipping)
       @shipping = ensure_type(Shipping, shipping)
@@ -72,14 +85,29 @@ module PagSeguro
 
     # Calls the PagSeguro web service and register this request for payment.
     def register
-      params = Serializer.new(self).to_params
-      Response.new Request.post("checkout", api_version, params)
+      request = if @receivers.empty?
+                  Request.post('checkout', api_version, params)
+                else
+                  Request.post_xml('checkouts', api_version, credentials, xml_params)
+                end
+
+      Response.new(request)
     end
 
     private
+
+    def xml_params
+      RequestSerializer.new(self).to_xml_params
+    end
+
+    def params
+      RequestSerializer.new(self).to_params
+    end
+
     def before_initialize
       self.extra_params = []
       self.currency = "BRL"
+      @receivers = []
     end
 
     def api_version

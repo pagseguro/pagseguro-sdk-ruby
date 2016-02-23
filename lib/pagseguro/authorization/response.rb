@@ -29,7 +29,7 @@ module PagSeguro
       end
 
       def success?
-        (response.success? && response.xml?) ? true : false
+        response.success? && response.xml?
       end
 
       private
@@ -41,7 +41,7 @@ module PagSeguro
 
       def serialize_authorizations
         Nokogiri::XML(response.body).css('authorizations > authorization').map do |node|
-          ResponseSerializer.new(node).serialize
+          Authorization.new(ResponseSerializer.new(node).serialize)
         end
       end
     end

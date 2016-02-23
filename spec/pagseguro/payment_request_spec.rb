@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe PagSeguro::PaymentRequest do
+  it_assigns_attribute :primary_receiver
   it_assigns_attribute :currency
   it_assigns_attribute :redirect_url
   it_assigns_attribute :extra_amount
@@ -20,6 +21,61 @@ describe PagSeguro::PaymentRequest do
     expect(payment.sender).to eql(sender)
   end
 
+  describe '#register split payment' do
+    before do
+      FakeWeb.register_uri(
+        :post,
+        'https://ws.pagseguro.uol.com.br/v2/checkouts?appId=id&appKey=key',
+        body: ""
+      )
+    end
+
+
+    let(:subject) do
+      PagSeguro::PaymentRequest.new(
+        receivers: receivers,
+        credentials: credentials,
+        primary_receiver: 'primary@example.com',
+        sender: sender
+      )
+    end
+
+    let(:credentials) do
+      PagSeguro::ApplicationCredentials.new('id', 'key')
+    end
+
+    let(:sender) do
+      PagSeguro::Sender.new(phone: PagSeguro::Phone.new(area_code: 1, number: 2345))
+    end
+
+    let(:receivers) do
+      [
+        { email: 'a@example.com', split: { amount: 1 } },
+        { email: 'b@example.com', split: { amount: 1 } }
+      ]
+    end
+
+    context 'ensure receivers' do
+      it 'are PagSeguro::Receiver' do
+        subject.receivers.each do |receiver|
+          expect(receiver).to be_a(PagSeguro::Receiver)
+        end
+      end
+
+      it 'have correct keys' do
+        expect(subject.receivers[0].email).to eq 'a@example.com'
+      end
+    end
+
+    it "changes url to checkouts" do
+      expect(PagSeguro::Request).to receive(:post_xml).with(
+        'checkouts', 'v2', credentials, a_string_matching(/<checkout>/)
+      )
+
+      subject.register
+    end
+  end
+
   it "sets the items" do
     payment = PagSeguro::PaymentRequest.new
     expect(payment.items).to be_a(PagSeguro::Items)
@@ -35,7 +91,7 @@ describe PagSeguro::PaymentRequest do
     before { FakeWeb.register_uri :any, %r[.*?], body: "" }
 
     it "serializes payment request" do
-      expect(PagSeguro::PaymentRequest::Serializer)
+      allow_any_instance_of(PagSeguro::PaymentRequest::RequestSerializer)
         .to receive(:new)
         .with(payment)
         .and_return(double.as_null_object)
@@ -44,9 +100,9 @@ describe PagSeguro::PaymentRequest do
     end
 
     it "performs request" do
-      params = double
+      params = double(:Params)
 
-      allow_any_instance_of(PagSeguro::PaymentRequest::Serializer).to receive(:to_params).and_return(params)
+      allow_any_instance_of(PagSeguro::PaymentRequest::RequestSerializer).to receive(:to_params).and_return(params)
 
       expect(PagSeguro::Request)
         .to receive(:post)
@@ -76,7 +132,7 @@ describe PagSeguro::PaymentRequest do
 
   describe "#extra_params" do
     it "is empty before initialization" do
-      expect(subject.extra_params).to eql([])
+      expect(subject.extra_params).to be_empty
     end
 
     it "allows extra parameter addition" do

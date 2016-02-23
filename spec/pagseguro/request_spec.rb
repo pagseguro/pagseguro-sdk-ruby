@@ -43,6 +43,29 @@ describe PagSeguro::Request do
       expect(request["lib-description"]).to be
       expect(request["language-engine-description"]).to be
     end
+
+    context "when POST request with XML data" do
+      let(:credentials) { PagSeguro::ApplicationCredentials.new('app123', 'key123') }
+      let(:xml) { File.read('./spec/fixtures/authorization_request/authorization_request.xml') }
+
+      before do
+        PagSeguro::Request.post_xml('authorizations/request', 'v2', credentials, xml)
+      end
+
+      let(:request) { FakeWeb.last_request }
+
+      it 'include request headers' do
+        expect(request["Content-Type"]).to eq "application/xml; charset=#{PagSeguro.encoding}"
+      end
+
+      it 'include data xml' do
+        expect(request.body).to eq xml
+      end
+
+      it 'correct url' do
+        expect(request.path).to eq '/v2/authorizations/request?appId=app123&appKey=key123'
+      end
+    end
   end
 
   context "GET request" do

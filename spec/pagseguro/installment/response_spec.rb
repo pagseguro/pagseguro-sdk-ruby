@@ -39,9 +39,11 @@ RSpec.describe PagSeguro::Installment::Response do
 
     context "when request fails" do
       before do
-        allow(http_response).to receive(:success?).and_return(false)
-        allow(http_response).to receive(:bad_request?).and_return(true)
-        allow(http_response).to receive(:not_found?).and_return(false)
+        allow(http_response).to receive_messages(
+          success?: false,
+          error?: true,
+          error: Aitch::BadRequestError
+        )
       end
 
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }

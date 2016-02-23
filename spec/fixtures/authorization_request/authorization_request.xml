@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<authorizationRequest>
+  <reference>123</reference>
+  <redirectURL>http://seusite.com.br/redirect</redirectURL>
+  <notificationURL>http://seusite.com.br/notification</notificationURL>
+  <permissions>
+    <code>CREATE_CHECKOUTS</code>
+    <code>SEARCH_TRANSACTIONS</code>
+    <code>RECEIVE_TRANSACTION_NOTIFICATIONS</code>
+  </permissions>
+</authorizationRequest>

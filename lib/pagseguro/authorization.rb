@@ -33,7 +33,7 @@ module PagSeguro
       authorization
     end
 
-    def self.find_by_date(options)
+    def self.find_by(options)
       request = Request.get("authorizations", api_version, RequestSerializer.new(options).to_params)
       collection = Collection.new
       Response.new(request, collection).serialize_collection

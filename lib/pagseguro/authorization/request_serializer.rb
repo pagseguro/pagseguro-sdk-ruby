@@ -3,15 +3,15 @@ module PagSeguro
     class RequestSerializer
       attr_reader :authorization
 
-      def initialize(authorization)
-        @authorization = authorization
+      def initialize(options)
+        @options = options
       end
 
       def to_params
-        params[:credentials] = authorization.credentials if authorization.respond_to? :credentials
-        params[:initialDate] = authorization.initial_date if authorization.respond_to? :initial_date
-        params[:finalDate]   = authorization.final_date if authorization.respond_to? :final_date
-
+        params[:credentials] = @options[:credentials] if @options[:credentials]
+        params[:reference]   = @options[:reference] if @options[:reference]
+        params[:initialDate] = @options[:initial_date].xmlschema if @options[:initial_date]
+        params[:finalDate]   = @options[:final_date].xmlschema if @options[:final_date]
         params
       end
 

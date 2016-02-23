@@ -20,8 +20,8 @@ describe PagSeguro::TransactionCancellation do
     context "when request succeds" do
       let(:raw_xml) { File.read("./spec/fixtures/transaction_cancellation/success.xml") }
 
-      it "returns boolean" do
-        expect(subject.register).to be_truthy
+      it "returns a PagSeguro::TransactionCancellation" do
+        expect(subject.register).to be_a_kind_of PagSeguro::TransactionCancellation
       end
 
       it "does not add errors" do
@@ -35,9 +35,11 @@ describe PagSeguro::TransactionCancellation do
 
     context "when request fails" do
       before do
-        allow(http_request).to receive(:success?).and_return(false)
-        allow(http_request).to receive(:bad_request?).and_return(true)
-        allow(http_request).to receive(:not_found?).and_return(false)
+        allow(http_request).to receive_messages(
+          success?: false,
+          error?: true,
+          error: Aitch::BadRequestError
+        )
       end
 
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }

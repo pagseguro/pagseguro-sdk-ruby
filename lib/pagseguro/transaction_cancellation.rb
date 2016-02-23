@@ -10,13 +10,10 @@ module PagSeguro
     attr_accessor :result
 
     # Calls the PagSeguro webservice and register the cancellation.
-    # Return boolean.
+    # Returns PagSeguro::TransactionCancellation.
     def register
-      request = Request.post("transactions/cancels", api_version, params)
-      response = Response.new(request, self)
-      response.serialize
-
-      response.success?
+      response_request = Request.post("transactions/cancels", api_version, params)
+      Response.new(response_request, self).serialize
     end
 
     # Errors object.

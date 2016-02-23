@@ -1,30 +1,23 @@
 module PagSeguro
   class Items
-    extend Forwardable
-    include Enumerable
-    include Extensions::EnsureType
+    include Extensions::CollectionObject
 
-    def_delegators :@store, :size, :clear, :empty?, :any?, :each
-
-    def initialize
-      @store = []
-    end
-
-    # Adds a new item to item list.
+    # Overriding standard method to add new objects
     def <<(item)
       item = ensure_type(Item, item)
 
-      if include?(item)
-        item.quantity += 1
+      original_item = find_item(item)
+
+      if original_item
+        original_item.quantity += (item.quantity || 1)
       else
-        @store << item
+        store << item
       end
     end
 
-    # Verify if the item is already included to item list.
-    # Returns boolean.
-    def include?(item)
-      @store.find {|stored_item| stored_item.id == ensure_type(Item, item).id }
+    private
+    def find_item(item)
+      store.detect {|stored_item| stored_item == item }
     end
   end
 end

@@ -57,7 +57,7 @@ describe PagSeguro::TransactionRequest do |variable|
 
   describe "#extra_params" do
     it "is empty before initialization" do
-      expect(subject.extra_params).to eql([])
+      expect(subject.extra_params).to be_empty
     end
 
     it "allows extra parameter addition" do
@@ -92,20 +92,26 @@ describe PagSeguro::TransactionRequest do |variable|
       let(:raw_xml) { File.read("./spec/fixtures/transaction_request/success.xml") }
 
       it "creates a transaction request" do
-        expect(transaction_request.create).not_to be_a(PagSeguro::TransactionRequest)
+        expect(transaction_request.create).to be_a(PagSeguro::TransactionRequest)
         expect(transaction_request.code).to eq("9E884542-81B3-4419-9A75-BCC6FB495EF1")
       end
     end
 
     context "when request fails" do
       let :response_request do
-        double(:ResponseRequest, success?: false, unauthorized?: false, bad_request?: false, data: xml_parsed, not_found?: false, body: raw_xml, :xml? => true)
+        double(
+          :ResponseRequest,
+          success?: false,
+          error?: true,
+          bad_request?: true,
+          error: Aitch::BadRequestError,
+          xml?: true,
+          data: xml_parsed,
+          body: raw_xml
+        )
       end
 
       before do
-        allow(response_request).to receive(:success?).and_return(false)
-        allow(response_request).to receive(:bad_request?).and_return(true)
-
         allow(PagSeguro::Request).to receive(:post)
           .and_return(response_request)
       end
@@ -113,8 +119,7 @@ describe PagSeguro::TransactionRequest do |variable|
       let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
 
       it "does not create a transaction request" do
-        expect(transaction_request.create).to be_falsy
-        expect(transaction_request.code).to be_nil
+        expect { transaction_request.create }.not_to change { transaction_request.code }
       end
 
       it "add errors" do
