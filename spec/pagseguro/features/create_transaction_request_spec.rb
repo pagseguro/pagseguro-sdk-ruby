@@ -10,7 +10,7 @@ RSpec.describe "Creating Transaction Request" do
         body: body, content_type: "text/xml"
     end
 
-    it "returns true" do
+    xit "returns true" do
       expect(transaction.create).to be_truthy
     end
 
@@ -19,11 +19,11 @@ RSpec.describe "Creating Transaction Request" do
         transaction.create
       end
 
-      it "is an errors object" do
+      xit "is an errors object" do
         expect(transaction.errors).to be_a(PagSeguro::Errors)
       end
 
-      it "has no errors" do
+      xit "has no errors" do
         expect(transaction.errors).to be_empty
       end
     end
@@ -37,7 +37,7 @@ RSpec.describe "Creating Transaction Request" do
         status: [400, "Bad Request"], body: body, content_type: "text/xml"
     end
 
-    it "does not change attributes" do
+    xit "does not change attributes" do
       expect { transaction.create }.not_to change { transaction.code }
     end
 
@@ -46,11 +46,11 @@ RSpec.describe "Creating Transaction Request" do
         transaction.create
       end
 
-      it "is an errors object" do
+      xit "is an errors object" do
         expect(transaction.errors).to be_a(PagSeguro::Errors)
       end
 
-      it "has errors" do
+      xit "has errors" do
         expect(transaction.errors).to_not be_empty
       end
     end

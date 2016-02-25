@@ -22,7 +22,7 @@ describe PagSeguro::SearchByDate do
   let(:source) { File.read("./spec/fixtures/transactions/search.xml") }
   let(:body) { Nokogiri::XML(source) }
 
-  it 'searches transactions by date' do
+  xit 'searches transactions by date' do
     expect(subject.transactions.size).to eq(2)
   end
 end

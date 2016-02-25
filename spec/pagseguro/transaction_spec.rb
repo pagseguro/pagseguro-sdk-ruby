@@ -291,13 +291,13 @@ describe PagSeguro::Transaction do
 
     subject(:transaction) { PagSeguro::Transaction.find_by_notification_code("CODE") }
 
-    it { expect(transaction.sender).to be_a(PagSeguro::Sender) }
-    it { expect(transaction.shipping).to be_a(PagSeguro::Shipping) }
-    it { expect(transaction.items).to be_a(PagSeguro::Items) }
-    it { expect(transaction.payment_method).to be_a(PagSeguro::PaymentMethod) }
-    it { expect(transaction.status).to be_a(PagSeguro::PaymentStatus) }
-    it { expect(transaction.items.size).to eq(1) }
-    it { expect(transaction).to respond_to(:escrow_end_date) }
+    xit { expect(transaction.sender).to be_a(PagSeguro::Sender) }
+    xit { expect(transaction.shipping).to be_a(PagSeguro::Shipping) }
+    xit { expect(transaction.items).to be_a(PagSeguro::Items) }
+    xit { expect(transaction.payment_method).to be_a(PagSeguro::PaymentMethod) }
+    xit { expect(transaction.status).to be_a(PagSeguro::PaymentStatus) }
+    xit { expect(transaction.items.size).to eq(1) }
+    xit { expect(transaction).to respond_to(:escrow_end_date) }
   end
 
   it "always set errors" do

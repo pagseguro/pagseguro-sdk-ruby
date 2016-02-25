@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "vcr", "~> 3.0.1"
   spec.add_development_dependency "fakeweb", "~> 1.3"
   spec.add_development_dependency "activesupport", "~> 4.0"
 end
