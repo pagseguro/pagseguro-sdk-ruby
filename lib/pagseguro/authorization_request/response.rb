@@ -7,7 +7,7 @@ module PagSeguro
 
       def serialize
         if success?
-          xml = Nokogiri::XML(response.body).css('authorizationRequest').first
+          xml = Nokogiri::XML(response.body).at_css('authorizationRequest')
           ResponseSerializer.new(xml).serialize
         else
           { errors: Errors.new(response) }

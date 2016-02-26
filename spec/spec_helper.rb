@@ -2,10 +2,7 @@ require "bundler/setup"
 Bundler.require(:default, :development)
 
 I18n.enforce_available_locales = false
-require "fakeweb"
 require "pagseguro"
-
-FakeWeb.allow_net_connect = false
 
 Dir["./spec/support/**/*.rb"].each {|file| require file }
 
@@ -20,7 +17,6 @@ I18n.locale = ENV.fetch("LOCALE", I18n.default_locale)
 RSpec.configure do |config|
   config.before(:each) do
     load "./lib/pagseguro.rb"
-    FakeWeb.clean_registry
   end
 
   config.after do

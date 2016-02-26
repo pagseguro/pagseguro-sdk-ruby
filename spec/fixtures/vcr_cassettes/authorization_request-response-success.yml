@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ws.sandbox.pagseguro.uol.com.br/v2/authorizations/request?appId=APP_ID&appKey=APP_KEY
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <authorizationRequest>
+          <reference>REF4321</reference>
+          <redirectURL>http://example.com/</redirectURL>
+          <notificationURL>http://example.com/</notificationURL>
+          <permissions>
+            <code>SEARCH_TRANSACTIONS</code>
+            <code>RECEIVE_TRANSACTION_NOTIFICATIONS</code>
+          </permissions>
+        </authorizationRequest>
+    headers:
+      Accept-Encoding:
+      - gzip,deflate
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Aitch/0.5.0 (http://rubygems.org/gems/aitch)
+      Lib-Description:
+      - ruby:2.5.0
+      Language-Engine-Description:
+      - ruby:2.2.1
+      Content-Type:
+      - application/xml; charset=UTF-8
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 26 Feb 2016 19:13:18 GMT
+      Server:
+      - Apache-Coyote/1.1
+      Content-Type:
+      - application/xml;charset=ISO-8859-1
+      Cache-Control:
+      - max-age=180
+      Expires:
+      - Fri, 26 Feb 2016 19:16:18 GMT
+      Vary:
+      - User-Agent
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?><authorizationRequest><code>2D3EFBD7B9DD4F16AF4940250ED7F528</code><date>2016-02-26T16:13:18.000-03:00</date></authorizationRequest>
+    http_version:
+  recorded_at: Fri, 26 Feb 2016 19:13:18 GMT
+recorded_with: VCR 3.0.1

@@ -33,7 +33,7 @@ module PagSeguro
       end
 
       def serialize_permissions(xml, permissions)
-        return unless permissions.any?
+        return unless permissions
         xml.send(:permissions) {
           format_permissions(permissions).each do |permission|
             xml.send(:code, permission)

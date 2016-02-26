@@ -29,6 +29,8 @@ module PagSeguro
     # Errors object.
     attr_writer :errors
 
+    API_VERSION = 'v2'
+
     PERMISSIONS = {
       checkouts: 'CREATE_CHECKOUTS',
       notifications: 'RECEIVE_TRANSACTION_NOTIFICATIONS',
@@ -46,7 +48,7 @@ module PagSeguro
     # Post and create an Authorization.
     # Return Boolean.
     def create
-      request = Request.post_xml('authorizations/request', api_version, credentials, xml)
+      request = Request.post_xml('authorizations/request', API_VERSION, credentials, xml)
       response = Response.new(request)
       update_attributes(response.serialize)
 
@@ -55,7 +57,7 @@ module PagSeguro
 
     # URL to confirm authorization after create one.
     def url
-      PagSeguro.site_url("#{api_version}/authorization/request.jhtml?code=#{code}") if code
+      PagSeguro.site_url("#{API_VERSION}/authorization/request.jhtml?code=#{code}") if code
     end
 
     def errors
@@ -75,10 +77,6 @@ module PagSeguro
 
     def update_attributes(attrs)
       attrs.each { |method, value| send("#{method}=", value) }
-    end
-
-    def api_version
-      'v2'
     end
   end
 end
