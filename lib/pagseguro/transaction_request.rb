@@ -2,6 +2,7 @@ module PagSeguro
   class TransactionRequest
     include Extensions::MassAssignment
     include Extensions::EnsureType
+    include Extensions::Credentiable
 
     # Set the payment currency.
     # Defaults to BRL.
@@ -9,6 +10,12 @@ module PagSeguro
 
     # Get the payment sender.
     attr_reader :sender
+
+    # Set and get primary receiver email.
+    attr_accessor :primary_receiver
+
+    # Get the payment receivers.
+    attr_reader :receivers
 
     # Get the shipping info.
     attr_reader :shipping
@@ -99,7 +106,12 @@ module PagSeguro
     # Calls the PagSeguro web service and create this request for payment.
     # Return boolean.
     def create
-      request = Request.post("transactions", api_version, params)
+      request = if receivers.empty?
+                  Request.post('transactions', api_version, params)
+                else
+                  Request.post_xml('transactions', api_version, credentials, xml_params)
+                end
+
       Response.new(request, self).serialize
     end
 
@@ -107,7 +119,15 @@ module PagSeguro
       attrs.map { |name, value| send("#{name}=", value) }
     end
 
+    # Set the receivers.
+    def receivers=(receivers)
+      @receivers = receivers.map do |receiver|
+                     ensure_type(Receiver, receiver)
+                   end
+    end
+
     private
+
     attr_writer :code, :type_id, :payment_link, :status, :payment_method,
       :gross_amount, :discount_amount, :net_amount, :installment_count,
       :created_at, :updated_at
@@ -115,10 +135,15 @@ module PagSeguro
     def before_initialize
       self.currency = "BRL"
       self.extra_params = []
+      self.receivers = []
     end
 
     def params
       RequestSerializer.new(self).to_params
+    end
+
+    def xml_params
+      RequestSerializer.new(self).to_xml_params
     end
 
     # Used to set response items from api.
