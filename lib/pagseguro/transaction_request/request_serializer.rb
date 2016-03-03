@@ -8,6 +8,14 @@ module PagSeguro
         @transaction_request = transaction_request
       end
 
+      def to_xml_params
+        xml_builder.to_xml(
+          save_with:
+          Nokogiri::XML::Node::SaveOptions::NO_EMPTY_TAGS |
+          Nokogiri::XML::Node::SaveOptions::FORMAT
+        )
+      end
+
       def to_params
         params[:receiverEmail] = PagSeguro.receiver_email
         params[:currency] = transaction_request.currency
@@ -142,6 +150,155 @@ module PagSeguro
 
       def to_amount(amount)
         "%.2f" % BigDecimal(amount.to_s).round(2).to_s("F") if amount
+      end
+
+      def xml_builder
+        Nokogiri::XML::Builder.new(encoding: PagSeguro.encoding) do |xml|
+          xml.send(:payment) {
+            xml.mode transaction_request.payment_mode
+            xml.method_ transaction_request.payment_method
+            xml.currency transaction_request.currency
+            xml.notificationURL transaction_request.notification_url
+            xml.extraAmount transaction_request.extra_amount
+            xml.reference transaction_request.reference
+
+            xml_serialize_sender(xml, transaction_request.sender)
+            xml_serialize_items(xml, transaction_request.items)
+            xml_serialize_receivers(xml, transaction_request.receivers)
+            xml_serialize_shipping(xml, transaction_request.shipping)
+            xml_serialize_credit_card(xml)
+          }
+        end
+      end
+
+      def xml_serialize_credit_card(xml)
+        return unless transaction_request.is_a?(PagSeguro::CreditCardTransactionRequest)
+
+        xml.send(:creditCard) do
+          xml.send(:token, transaction_request.credit_card_token)
+
+          if transaction_request.installment
+            xml.send(:installment) do
+              xml.send(:quantity, transaction_request.installment.quantity)
+              xml.send(:value, transaction_request.installment.value)
+            end
+          end
+
+          if transaction_request.billing_address
+            xml.send(:billingAddress) do
+              xml.send(:street, transaction_request.billing_address.street)
+              xml.send(:number, transaction_request.billing_address.number)
+              xml.send(:complement, transaction_request.billing_address.complement)
+              xml.send(:district, transaction_request.billing_address.district)
+              xml.send(:city, transaction_request.billing_address.city)
+              xml.send(:state, transaction_request.billing_address.state)
+              xml.send(:country, transaction_request.billing_address.country)
+              xml.send(:postalCode, transaction_request.billing_address.postal_code)
+            end
+          end
+
+          if transaction_request.holder
+            xml.send(:holder) do
+              xml.send(:name, transaction_request.holder.name)
+              xml_serialize_documents(xml, [transaction_request.holder.document])
+
+              xml.send(:birthDate, transaction_request.holder.birth_date)
+              xml_serialize_phone(xml, transaction_request.holder.phone)
+            end
+          end
+        end
+      end
+
+      def xml_serialize_documents(xml, documents = [])
+        return if documents.reject(&:nil?).empty?
+
+        xml.send(:documents) {
+          documents.each do |document|
+            xml.send(:document) {
+              xml.send(:type, document.type)
+              xml.send(:value, document.value)
+            }
+          end
+        }
+      end
+
+      def xml_serialize_phone(xml, phone)
+        if phone
+          xml.send(:phone) {
+            xml.send(:areaCode, phone.area_code)
+            xml.send(:number, phone.number)
+          }
+        end
+      end
+
+      def xml_serialize_shipping(xml, shipping)
+        return unless shipping
+
+        xml.send(:shipping) do
+          if shipping.address
+            xml.send(:address) do
+              xml.send(:street, shipping.address.street)
+              xml.send(:number, shipping.address.number)
+              xml.send(:district, shipping.address.district)
+              xml.send(:country, shipping.address.country)
+              xml.send(:postalCode, shipping.address.postal_code)
+              xml.send(:city, shipping.address.city)
+              xml.send(:state, shipping.address.state)
+              xml.send(:complement, shipping.address.complement)
+            end
+          end
+        end
+      end
+
+      def xml_serialize_items(xml, items)
+        return unless items
+
+        xml.send(:items) do
+          items.each do |item|
+            xml.send(:item) do
+              xml.send(:id, item.id)
+              xml.send(:description, item.description)
+              xml.send(:quantity, item.quantity)
+              xml.send(:amount, to_amount(item.amount))
+            end
+          end
+        end
+      end
+
+      def xml_serialize_sender(xml, sender)
+        return unless sender
+
+        xml.send(:sender) {
+          xml.send(:name, sender.name)
+          xml.send(:email, sender.email)
+          xml_serialize_phone(xml, sender.phone)
+
+          documents = [sender.document]
+          if sender.cpf
+            documents << PagSeguro::Document.new(type: 'CPF', value: sender.cpf)
+          end
+
+          xml_serialize_documents(xml, documents)
+
+          xml.send(:hash_, sender.hash)
+        }
+      end
+
+      def xml_serialize_receivers(xml, receivers)
+        return if receivers.empty?
+
+        xml.send(:receivers) {
+          receivers.each do |receiver|
+            xml.send(:receiver) {
+              xml.send(:publicKey, receiver.public_key)
+              xml.send(:split) {
+                xml.send(:amount, receiver.split.amount)
+                xml.send(:ratePercent, receiver.split.rate_percent)
+                xml.send(:feePercent, receiver.split.fee_percent)
+              }
+            }
+          end
+        }
       end
     end
   end

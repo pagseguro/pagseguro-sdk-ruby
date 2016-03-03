@@ -4,6 +4,7 @@ describe PagSeguro::TransactionRequest do |variable|
   let(:xml_parsed) { Nokogiri::XML(raw_xml) }
 
   it_assigns_attribute :currency
+  it_assigns_attribute :primary_receiver
   it_assigns_attribute :extra_amount
   it_assigns_attribute :reference
   it_assigns_attribute :notification_url
@@ -68,6 +69,31 @@ describe PagSeguro::TransactionRequest do |variable|
         { extraParam: 'value' },
         { itemParam1: 'value1' }
       ])
+    end
+  end
+
+  describe '#receivers' do
+    subject do
+      PagSeguro::TransactionRequest.new receivers: receivers
+    end
+
+    let(:receivers) do
+      [
+        { email: 'a@example.com', split: { amount: 1 } },
+        { email: 'b@example.com', split: { amount: 1 } }
+      ]
+    end
+
+    context 'ensure receivers' do
+      it 'are PagSeguro::Receiver' do
+        subject.receivers.each do |receiver|
+          expect(receiver).to be_a(PagSeguro::Receiver)
+        end
+      end
+
+      it 'have correct keys' do
+        expect(subject.receivers[0].email).to eq 'a@example.com'
+      end
     end
   end
 

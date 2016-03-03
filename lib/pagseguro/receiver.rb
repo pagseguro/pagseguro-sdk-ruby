@@ -6,6 +6,9 @@ module PagSeguro
     # Set receiver's email.
     attr_accessor :email
 
+    # Set receiver's public_key.
+    attr_accessor :public_key
+
     # Get receiver split.
     attr_reader :split
 
