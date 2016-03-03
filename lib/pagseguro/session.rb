@@ -15,9 +15,9 @@ module PagSeguro
     # Create a payment session.
     # Return a PagSeguro::Session instance.
     def self.create
-      response = Request.post("sessions", api_version)
       session = Session.new
-      response = Response.new(response, session).serialize
+      request = Request.post("sessions", api_version)
+      response = Response.new(request, session).serialize
 
       session
     end
