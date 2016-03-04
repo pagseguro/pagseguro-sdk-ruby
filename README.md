@@ -369,6 +369,28 @@ PagSeguro.encoding = "UTF-8" # UTF-8 ou ISO-8859-1
 Encontre toda a documentação necessária para o checkout transparente aqui:
 https://github.com/pagseguro/ruby/blob/master/docs/transparent_checkout.md
 
+## Docker
+
+[Docker](http://www.docker.com/) é uma ferramenta open-source que cria uma
+camada de abstração e automação da virtualização do kernel do
+GNU/Linux[\*](https://en.wikipedia.org/wiki/Docker_(software)).
+
+Primeiro certifique-se de que o Docker está instalado e configurado
+corretamente, em seguida construa a imagem:
+
+    % docker build -t pagseguro .
+
+E para entrar na imagem:
+
+    % docker run --rm -it -v ${PWD}:/app pagseguro
+    root@5c480dd6e22a:/app#
+
+Ou se preferir você pode usar o
+[docker-compose](https://docs.docker.com/compose/):
+
+    % docker-compose run script
+    root@c6697abac095:/app#
+
 ## Dúvidas?
 
 Caso tenha dúvidas ou precise de suporte, acesse nosso [fórum].
