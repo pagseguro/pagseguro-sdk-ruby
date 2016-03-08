@@ -45,74 +45,130 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
     end
 
     context "should serializer sender's" do
-      before do
-        transaction_request.sender = {
-          name: 'Alice',
-          email: 'alice@example.com',
-          hash: 'hash1234',
-          phone: {
-            area_code: 12,
-            number: "23456789"
-          },
-          cpf: '12345',
-          document: { type: 'CPF', value: '23606838450' },
-        }
-      end
+      context 'when there is only the name' do
+        before do
+          transaction_request.sender = { name: 'Alice' }
+        end
 
-      it 'name' do
-        expect(xml).to match %r[
-        <payment>
-          .*<sender>
-            .*<name>Alice</name>
+        it 'should render only the name' do
+          expect(xml).to match %r[
+          <payment>
+            .*<sender>
+              .*<name>Alice
           ]xm
+        end
       end
 
-      it 'email' do
-        expect(xml).to match %r[
-        <payment>
-          .*<sender>
-            .*<email>alice@example.com</email>
-        ]xm
+      context 'when there is only cpf' do
+        before do
+          transaction_request.sender = { cpf: '12345' }
+        end
+
+        it 'document' do
+          expect(xml).to match %r[
+          <payment>
+            .*<sender>
+              .*<documents>
+                .*<document>
+                  .*<type>CPF</type>
+                  .*<value>12345</value>
+          ]xm
+        end
       end
 
-      it 'phone' do
-        expect(xml).to match %r[
-        <payment>
-          .*<sender>
-            .*<phone>
-              .*<areaCode>12</areaCode>
-              .*<number>23456789</number>
-        ]xm
+      context 'when there is only another document' do
+        before do
+          transaction_request.sender = {
+            document: { type: 'CNPJ', value: '62057673000135' }
+          }
+        end
+
+        it 'should render only the name' do
+          expect(xml).to match %r[
+          <payment>
+            .*<sender>
+              .*<documents>
+                .*<document>
+                  .*<type>CNPJ</type>
+                  .*<value>62057673000135</value>
+          ]xm
+        end
       end
 
-      it 'document' do
-        expect(xml).to match %r[
-        <payment>
-          .*<sender>
-            .*<documents>
-              .*<document>
-                .*<type>CPF</type>
-                .*<value>23606838450</value>
-        ]xm
-      end
+      context 'when there are all fields' do
+        before do
+          transaction_request.sender = {
+            name: 'Alice',
+            email: 'alice@example.com',
+            hash: 'hash1234',
+            phone: {
+              area_code: 12,
+              number: "23456789"
+            },
+            cpf: '00242866131',
+            document: { type: 'CNPJ', value: '62057673000135' },
+          }
+        end
 
-      it 'cpf' do
-        expect(xml).to match %r[
-        <payment>
-          .*<sender>
-            .*<documents>
-              .*<document>
-                .*<type>CPF</type>
-                .*<value>12345</value>
-        ]xm
-      end
+        it 'name' do
+          expect(xml).to match %r[
+          <payment>
+            .*<sender>
+              .*<name>Alice</name>
+            ]xm
+        end
 
-      it 'hash' do
-        expect(xml).to match %r[
-        <payment>
-          .*<sender>
-            .*<hash>hash1234</hash>
-        ]xm
+        it 'email' do
+          expect(xml).to match %r[
+          <payment>
+            .*<sender>
+              .*<email>alice@example.com</email>
+          ]xm
+        end
+
+        it 'phone' do
+          expect(xml).to match %r[
+          <payment>
+            .*<sender>
+              .*<phone>
+                .*<areaCode>12</areaCode>
+                .*<number>23456789</number>
+          ]xm
+        end
+
+        it 'cpf' do
+          expect(xml).to match %r[
+          <payment>
+            .*<sender>
+              .*<documents>
+                .*<document>
+                  .*<type>CPF</type>
+                  .*<value>00242866131</value>
+          ]xm
+        end
+
+        it 'other documents' do
+          expect(xml).to match %r[
+          <payment>
+            .*<sender>
+              .*<documents>
+                .*<document>
+                  .*<type>CNPJ</type>
+                  .*<value>62057673000135</value>
+                .*</document>
+                .*<document>
+                  .*<type>CPF</type>
+                  .*<value>00242866131</value>
+          ]xm
+        end
+
+        it 'hash' do
+          expect(xml).to match %r[
+          <payment>
+            .*<sender>
+              .*<hash>hash1234</hash>
+          ]xm
+        end
       end
     end
 
