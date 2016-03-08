@@ -210,7 +210,9 @@ module PagSeguro
       end
 
       def xml_serialize_documents(xml, documents = [])
-        return if documents.reject(&:nil?).empty?
+        documents = documents.reject(&:nil?)
+
+        return if documents.empty?
 
         xml.send(:documents) {
           documents.each do |document|
