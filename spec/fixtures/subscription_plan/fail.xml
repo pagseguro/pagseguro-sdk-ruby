@@ -1,0 +1,6 @@
+<errors>
+  <error>
+    <code>11072</code>
+    <message>preApprovalFinalDate invalid value.</message>
+  </error>
+</errors>
