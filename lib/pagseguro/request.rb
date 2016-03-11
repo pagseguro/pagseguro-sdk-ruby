@@ -38,9 +38,10 @@ module PagSeguro
     #
     def post_xml(path, api_version, credentials, data)
       credentials_params = credentials_to_params(credentials)
+      url_path = [api_version, path].reject(&:nil?).join('/')
 
       request.post do
-        url PagSeguro.api_url("#{api_version}/#{path}?#{credentials_params}")
+        url PagSeguro.api_url("#{url_path}?#{credentials_params}")
         headers "Content-Type" => "application/xml; charset=#{PagSeguro.encoding}"
         body data
       end

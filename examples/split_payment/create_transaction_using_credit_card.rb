@@ -9,12 +9,12 @@ require_relative "../boot"
 payment = PagSeguro::CreditCardTransactionRequest.new
 payment.notification_url = "http://example.com/notification"
 payment.payment_mode = "gateway"
-payment.credentials = PagSeguro::AccountCredentials.new("EMAIL", "TOKEN")
+payment.credentials = PagSeguro::ApplicationCredentials.new("APP_ID", "APP_KEY")
 
 payment.items << {
   id: 1234,
   description: %[Televisão 19" Sony],
-  amount: 459.50,
+  amount: 50.0,
   weight: 0
 }
 
@@ -43,12 +43,14 @@ payment.shipping = {
   }
 }
 
-payment.primary_receiver = 'primary.receiver@example.com'
-
 payment.receivers = [
   {
-    email: 'other.receiver@sandbox.pagseguro.com.br',
-    split: { amount: '400.00' }
+    public_key: 'PUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    split: {
+      amount: 20.0,
+      rate_percent: 50.0,
+      fee_percent: 50.0
+    }
   }
 ]
 
@@ -117,6 +119,13 @@ else
     puts "      description: #{item.description}"
     puts "      quantity: #{item.quantity}"
     puts "      amount: #{item.amount.to_f}"
+  end
+
+  puts "    => Receivers"
+  puts "      receivers count: #{payment.receivers.size}"
+  payment.receivers.each do |receiver|
+    puts "      email: #{receiver.email}"
+    puts "      amount: #{receiver.split.amount}"
   end
 
   puts "    => Sender"
