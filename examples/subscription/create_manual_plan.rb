@@ -1,6 +1,6 @@
 require_relative '../boot'
 
-# Create a Subscription Plan
+# Create a Subscription Plan (Manual charge)
 #
 # You need to set your AccountCredentials (EMAIL, TOKEN) in the application config
 #
@@ -9,13 +9,14 @@ require_relative '../boot'
 plan = PagSeguro::SubscriptionPlan.new(
   max_users: 10,
   name: 'Testing',
-  charge: 'AUTO',
-  amount: 80,
+  charge: 'MANUAL', # Manual Subscription Plan must always use manual charge type.
+  amount: 80.0,
   max_amount: 35_000,
+  max_amount_per_period: 100,
   final_date: Date.new(2017, 1, 1),
-  membership_fee: 150,
+  membership_fee: 150.0,
   trial_duration: 28,
-  period: 'MONTHLY'
+  period: 'Monthly'
 )
 
 plan.credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
