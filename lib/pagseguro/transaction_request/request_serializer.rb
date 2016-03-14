@@ -159,7 +159,7 @@ module PagSeguro
             xml.method_ transaction_request.payment_method
             xml.currency transaction_request.currency
             xml.notificationURL transaction_request.notification_url
-            xml.extraAmount transaction_request.extra_amount
+            xml.extraAmount to_amount(transaction_request.extra_amount || 0)
             xml.reference transaction_request.reference
 
             xml_serialize_sender(xml, transaction_request.sender)
@@ -294,9 +294,9 @@ module PagSeguro
             xml.send(:receiver) {
               xml.send(:publicKey, receiver.public_key)
               xml.send(:split) {
-                xml.send(:amount, receiver.split.amount)
-                xml.send(:ratePercent, receiver.split.rate_percent)
-                xml.send(:feePercent, receiver.split.fee_percent)
+                xml.send(:amount, to_amount(receiver.split.amount))
+                xml.send(:ratePercent, to_amount(receiver.split.rate_percent))
+                xml.send(:feePercent, to_amount(receiver.split.fee_percent))
               }
             }
           end

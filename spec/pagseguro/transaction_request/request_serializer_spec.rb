@@ -26,9 +26,9 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
           .*<receiver>
             .*<publicKey>PUB1234ABC</publicKey>
             .*<split>
-              .*<amount>10</amount>
-              .*<ratePercent>12</ratePercent>
-              .*<feePercent>11</feePercent>
+              .*<amount>10.00</amount>
+              .*<ratePercent>12.00</ratePercent>
+              .*<feePercent>11.00</feePercent>
         ]xm
     end
 
@@ -237,12 +237,21 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
       end
     end
 
+    it 'should serialize empty extraAmount' do
+      transaction_request.extra_amount = nil
+
+      expect(xml).to match %r[
+      <payment>
+        .*<extraAmount>0.00</extraAmount>
+      ]xm
+    end
+
     it 'should serialize extraAmount' do
       transaction_request.extra_amount = 100
 
       expect(xml).to match %r[
       <payment>
-        .*<extraAmount>100</extraAmount>
+        .*<extraAmount>100.00</extraAmount>
       ]xm
     end
 

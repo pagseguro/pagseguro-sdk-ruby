@@ -109,7 +109,7 @@ module PagSeguro
       request = if receivers.empty?
                   Request.post('transactions', api_version, params)
                 else
-                  Request.post_xml('transactions', api_version, credentials, xml_params)
+                  Request.post_xml('transactions/', nil, credentials, xml_params)
                 end
 
       Response.new(request, self).serialize
