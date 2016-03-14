@@ -4,36 +4,29 @@ module PagSeguro
 
     include Extensions::MassAssignment
     include Extensions::Credentiable
+    include Extensions::EnsureType
 
-    # Max users a plan can have at time
     attr_accessor :max_users
-
-    # The name of the plan
     attr_accessor :name
-
-    # The charge of payment
     attr_accessor :charge
-
-    # The period of payment
     attr_accessor :period
-
-    # The amount of each payment
     attr_accessor :amount
-
-    # The total limit of the payment
-    attr_accessor :max_amount
-
-    # The date time to finish the payment
+    attr_accessor :max_total_amount
+    attr_accessor :max_amount_per_period
+    attr_accessor :max_payments_per_period
+    attr_accessor :max_amount_per_payment
     attr_accessor :final_date
-
-    # The membership fee, it charge with the amount at the first time
+    attr_accessor :initial_date
     attr_accessor :membership_fee
-
-    # The trial period, in days, of the user to the subscription
     attr_accessor :trial_duration
-
-    # The code of a created to the plan, must be saved
     attr_accessor :code
+    attr_accessor :reference
+    attr_accessor :redirect_url
+    attr_accessor :review_url
+    attr_accessor :details
+
+    attr_reader :sender
+    attr_reader :sender_address
 
     # Set errors
     def errors
@@ -45,12 +38,28 @@ module PagSeguro
       attrs.each { |name, value| send("#{name}=", value) }
     end
 
+    # Set sender
+    def sender=(sender)
+      @sender = ensure_type(Sender, sender)
+    end
+
+    # Set sender's address
+    def sender_address=(address)
+      @sender_address = ensure_type(Address, address)
+    end
+
     def create
       request = Request.post_xml('pre-approvals/request', API_VERSION, credentials, xml_params)
 
       Response.new(request, self).serialize
 
       self
+    end
+
+    def url
+      return unless code
+
+      "https://pagseguro.uol.com.br/v2/pre-approvals/request.html?code=#{code}"
     end
 
     private
