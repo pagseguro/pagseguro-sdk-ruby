@@ -4,6 +4,7 @@ module PagSeguro
 
     include Extensions::MassAssignment
     include Extensions::Credentiable
+    include Extensions::EnsureType
 
     # Max users a plan can have at time
     attr_accessor :max_users
@@ -23,6 +24,9 @@ module PagSeguro
     # The total limit of the payment
     attr_accessor :max_amount
 
+    # The total limit of the payment (per period)
+    attr_accessor :max_amount_per_period
+
     # The date time to finish the payment
     attr_accessor :final_date
 
@@ -35,6 +39,24 @@ module PagSeguro
     # The code of a created to the plan, must be saved
     attr_accessor :code
 
+    # The reference of the plan
+    attr_accessor :reference
+
+    # The url to redirect the user
+    attr_accessor :redirect_url
+
+    # The url to review the user
+    attr_accessor :review_url
+
+    # The details of the plan
+    attr_accessor :details
+
+    # Get the payment sender.
+    attr_reader :sender
+
+    # Get the address of sender.
+    attr_reader :sender_address
+
     # Set errors
     def errors
       @errors ||= Errors.new
@@ -43,6 +65,16 @@ module PagSeguro
     # Update all attributes
     def update_attributes(attrs)
       attrs.each { |name, value| send("#{name}=", value) }
+    end
+
+    # Set sender
+    def sender=(sender)
+      @sender = ensure_type(Sender, sender)
+    end
+
+    # Set sender's address
+    def sender_address=(address)
+      @sender_address = ensure_type(Address, address)
     end
 
     def create

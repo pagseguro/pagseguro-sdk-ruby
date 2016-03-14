@@ -6,9 +6,19 @@ describe PagSeguro::SubscriptionPlan do
   it_assigns_attribute :charge
   it_assigns_attribute :amount
   it_assigns_attribute :max_amount
+  it_assigns_attribute :max_amount_per_period
   it_assigns_attribute :final_date
   it_assigns_attribute :membership_fee
   it_assigns_attribute :trial_duration
+  it_assigns_attribute :period
+
+  it_assigns_attribute :redirect_url
+  it_assigns_attribute :review_url
+  it_assigns_attribute :reference
+  it_assigns_attribute :details
+
+  it_ensures_type PagSeguro::Sender, :sender
+  it_ensures_type PagSeguro::Address, :sender_address
 
   context 'errors attribute' do
     it 'should start with errors' do
