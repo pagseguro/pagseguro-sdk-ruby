@@ -18,6 +18,13 @@ module PagSeguro
       execute :get, path, api_version, data, headers
     end
 
+    def get_with_auth_on_url(path, api_version, credentials)
+      request.public_send(
+        :get,
+        PagSeguro.api_url("#{api_version}/#{path}?#{credentials_to_params(credentials)}"),
+      )
+    end
+
     # Perform a POST request.
     #
     # # +path+: the path that will be requested. Must be something like <tt>"checkout"</tt>.

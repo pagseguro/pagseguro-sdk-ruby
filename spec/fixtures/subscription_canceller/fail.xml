@@ -1,0 +1,6 @@
+<errors>
+  <error>
+    <code>17022</code>
+    <message>invalid pre-approval status to execute the requested operation. Pre-approval status is CANCELLED_BY_RECEIVER.</message>
+  </error>
+</errors>
