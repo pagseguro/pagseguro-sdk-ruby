@@ -21,17 +21,55 @@ module PagSeguro
         "%.2f" % BigDecimal(amount.to_s).round(2).to_s("F") if amount
       end
 
+      def xml_serialize_sender(xml)
+        return unless object.sender
+
+        xml.send(:sender) {
+          xml.send(:name, object.sender.name)
+          xml.send(:email, object.sender.email)
+          if object.sender.phone
+            xml.send(:phone) {
+              xml.send(:areaCode, object.sender.phone.area_code)
+              xml.send(:number, object.sender.phone.number)
+            }
+          end
+
+          if object.sender_address
+            xml.send(:address) {
+              xml.send(:street, object.sender_address.street)
+              xml.send(:number, object.sender_address.number)
+              xml.send(:complement, object.sender_address.complement)
+              xml.send(:district, object.sender_address.district)
+              xml.send(:postalCode, object.sender_address.postal_code)
+              xml.send(:city, object.sender_address.city)
+              xml.send(:state, object.sender_address.state)
+              xml.send(:country, object.sender_address.country)
+            }
+          end
+        }
+      end
+
       def xml_builder
         Nokogiri::XML::Builder.new(encoding: PagSeguro.encoding) do |xml|
           xml.send(:preApprovalRequest) {
+            xml.send(:redirectURL, object.redirect_url)
+            xml.send(:reviewURL, object.review_url)
+            xml.send(:reference, object.reference)
             xml.send(:maxUsers, object.max_users)
+            xml_serialize_sender(xml)
+
             xml.send(:preApproval) {
               xml.send(:name, object.name)
+              xml.send(:details, object.details)
               xml.send(:charge, object.charge)
               xml.send(:period, object.period)
               xml.send(:amountPerPayment, to_amount(object.amount))
-              xml.send(:maxTotalAmount, to_amount(object.max_amount))
-              xml.send(:finalDate, object.final_date.to_s + 'T00:00:000-03:00') if object.final_date
+              xml.send(:maxTotalAmount, to_amount(object.max_total_amount))
+              xml.send(:maxPaymentsPerPeriod, to_amount(object.max_payments_per_period))
+              xml.send(:maxAmountPerPeriod, to_amount(object.max_amount_per_period))
+              xml.send(:maxAmountPerPayment, to_amount(object.max_amount_per_payment))
+              xml.send(:finalDate, object.final_date.xmlschema) if object.final_date
+              xml.send(:initialDate, object.initial_date.xmlschema) if object.initial_date
               xml.send(:membershipFee, to_amount(object.membership_fee))
               xml.send(:trialPeriodDuration, object.trial_duration.to_i)
             }
