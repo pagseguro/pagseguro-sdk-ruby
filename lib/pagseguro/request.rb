@@ -36,13 +36,14 @@ module PagSeguro
     # # +credentials+: the credentials like ApplicationCredentials or AccountCredentials.
     # # +data+: the data that will be sent as body data. Must be a XML.
     #
-    def post_xml(path, api_version, credentials, data)
+    def post_xml(path, api_version, credentials, data, options={})
       credentials_params = credentials_to_params(credentials)
       url_path = [api_version, path].reject(&:nil?).join('/')
 
       request.post do
         url PagSeguro.api_url("#{url_path}?#{credentials_params}")
         headers "Content-Type" => "application/xml; charset=#{PagSeguro.encoding}"
+        headers.merge!(options[:headers]) if options[:headers]
         body data
       end
     end

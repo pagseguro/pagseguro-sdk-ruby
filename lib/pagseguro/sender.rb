@@ -9,6 +9,9 @@ module PagSeguro
     # Get the sender document
     attr_reader :document
 
+    # Get the sender address
+    attr_reader :address
+
     # Set the sender name.
     attr_accessor :name
 
@@ -17,6 +20,9 @@ module PagSeguro
 
     # Set the CPF document.
     attr_accessor :cpf
+
+    # Set the sender ip
+    attr_accessor :ip
 
     # Set sender hash.
     # It's used to identify the sender.
@@ -30,6 +36,11 @@ module PagSeguro
     # Set the sender document.
     def document=(document)
       @document = ensure_type(Document, document)
+    end
+
+    # Set the sender address.
+    def address=(address)
+      @address = ensure_type(Address, address)
     end
   end
 end

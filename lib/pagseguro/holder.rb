@@ -15,6 +15,9 @@ module PagSeguro
     # Get the phone.
     attr_reader :phone
 
+    # Get the billing address
+    attr_reader :billing_address
+
     # Set the document.
     def document=(document)
       @document = ensure_type(Document, document)
@@ -23,6 +26,11 @@ module PagSeguro
     # Set the phone.
     def phone=(phone)
       @phone = ensure_type(Phone, phone)
+    end
+
+    # Set the billing address
+    def billing_address=(billing_address)
+      @billing_address = ensure_type(Address, billing_address)
     end
   end
 end
