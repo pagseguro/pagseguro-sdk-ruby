@@ -21,7 +21,7 @@ module PagSeguro
     def get_with_auth_on_url(path, api_version, credentials)
       request.public_send(
         :get,
-        PagSeguro.api_url("#{api_version}/#{path}?#{credentials_to_params(credentials)}"),
+        PagSeguro.api_url("#{api_version}/#{path}?#{credentials_to_params(credentials)}")
       )
     end
 

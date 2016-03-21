@@ -12,9 +12,14 @@ module PagSeguro
         @object = object
       end
 
-      def serialize
+      def serialize(kind = :normal)
         if success?
-          object.update_attributes(serialized_data)
+          case kind
+          when :normal
+            object.update_attributes(serialized_data)
+          when :search
+            object.update_attributes(serialized_data_from_search)
+          end
         else
           object.errors.add response
         end
@@ -34,6 +39,10 @@ module PagSeguro
 
       def serialized_data
         ResponseSerializer.new(xml).serialize
+      end
+
+      def serialized_data_from_search
+        ResponseSerializer.new(xml).serialize_from_search
       end
     end
   end
