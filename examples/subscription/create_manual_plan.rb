@@ -11,7 +11,7 @@ plan = PagSeguro::SubscriptionPlan.new(
   name: 'Testing',
   charge: 'MANUAL', # Manual Subscription Plan must always use manual charge type.
   amount: 80.0,
-  max_amount: 35_000,
+  max_amount_per_payment: 35_000,
   max_amount_per_period: 100,
   final_date: Date.new(2017, 1, 1),
   membership_fee: 150.0,
