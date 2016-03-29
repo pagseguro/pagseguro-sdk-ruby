@@ -55,6 +55,23 @@ module PagSeguro
       end
     end
 
+    # Perform a PUT request, sending XML data.
+    #
+    # # +path+: the path that will be requested. Must be something like <tt>"checkout"</tt>.
+    # # +credentials+: the credentials like ApplicationCredentials or AccountCredentials.
+    # # +data+: the data that will be sent as body data. Must be a XML.
+    #
+    def put_xml(path, credentials, data)
+      full_url = PagSeguro.api_url("#{path}?#{credentials_to_params(credentials)}")
+
+      request.put do
+        url full_url
+        headers "Content-Type" => "application/xml; charset=#{PagSeguro.encoding}",
+                "Accept" => "application/vnd.pagseguro.com.br.v1+xml;charset=ISO-8859-1"
+        body data
+      end
+    end
+
     # Perform the specified HTTP request. It will include the API credentials,
     # api_version, encoding and additional headers.
     def execute(request_method, path, api_version, data, headers) # :nodoc:
