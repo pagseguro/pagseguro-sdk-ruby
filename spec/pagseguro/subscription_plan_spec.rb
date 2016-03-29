@@ -92,8 +92,16 @@ describe PagSeguro::SubscriptionPlan do
           allow(subject).to receive(:code).and_return('12345')
         end
 
-        it 'should return correct url with code' do
-          expect(subject.url).to eq 'https://pagseguro.uol.com.br/v2/pre-approvals/request.html?code=12345'
+        context 'should return correct url with code' do
+          it 'to production' do
+            PagSeguro.configuration.environment = :production
+            expect(subject.url).to eq 'https://pagseguro.uol.com.br/v2/pre-approvals/request.html?code=12345'
+          end
+
+          it 'to sandbox' do
+            PagSeguro.configuration.environment = :sandbox
+            expect(subject.url).to eq 'https://sandbox.pagseguro.uol.com.br/v2/pre-approvals/request.html?code=12345'
+          end
         end
       end
 

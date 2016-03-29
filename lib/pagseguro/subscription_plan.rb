@@ -59,7 +59,7 @@ module PagSeguro
     def url
       return unless code
 
-      "https://pagseguro.uol.com.br/v2/pre-approvals/request.html?code=#{code}"
+      "#{PagSeguro.uris[PagSeguro.environment][:site]}v2/pre-approvals/request.html?code=#{code}"
     end
 
     private
