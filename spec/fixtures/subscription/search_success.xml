@@ -1,0 +1,18 @@
+<preApprovalSearchResult>
+  <resultsInThisPage>1</resultsInThisPage>
+  <currentPage>1</currentPage>
+  <totalPages>1</totalPages>
+  <date>2011-08-08T16:16:23.000-03:00</date>
+  <preApprovals>
+    <preApproval>
+      <name>PagSeguro Pre Approval</name>
+      <code>12E10BEF5E5EF94004313FB891C8E4CF</code>
+      <date>2011-08-15T11:06:44.000-03:00</date>
+      <tracker>624C17</tracker>
+      <status>INITIATED</status>
+      <reference>R123456</reference>
+      <lastEventDate>2011-08-08T15:37:30.000-03:00</lastEventDate>
+      <charge>auto</charge>
+    </preApproval>
+  </preApprovals>
+</preApprovalSearchResult>

@@ -33,14 +33,30 @@ describe PagSeguro::Subscription::Response do
     let(:xml_parsed) { Nokogiri::XML(raw_xml) }
 
     context 'when request succeeds' do
-      let(:raw_xml) { File.read('./spec/fixtures/subscription/success.xml') }
 
-      it 'returns a hash with serialized response data' do
-        expect{ subject.serialize }.to change { subscription.code }
+
+      context 'and response is normal' do
+        let(:raw_xml) { File.read('./spec/fixtures/subscription/success.xml') }
+
+        it 'not change subscription errors' do
+          expect { subject.serialize }.not_to change { subscription.errors.empty? }
+        end
+
+        it 'returns a hash with serialized response data' do
+          expect{ subject.serialize }.to change { subscription.code }
+        end
       end
 
-      it 'not change subscription errors' do
-        expect { subject.serialize }.not_to change { subscription.errors.empty? }
+      context 'and response is a search' do
+        let(:raw_xml) { File.read('./spec/fixtures/subscription/search_success.xml') }
+
+        it 'not change subscription errors' do
+          expect { subject.serialize }.not_to change { subscription.errors.empty? }
+        end
+
+        it 'return a hash with serialized search response data' do
+          expect{ subject.serialize(:search) }.to change { subscription.name }
+        end
       end
     end
 
