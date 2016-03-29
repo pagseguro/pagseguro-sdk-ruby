@@ -12,7 +12,8 @@ plan = PagSeguro::SubscriptionPlan.new(
   name: 'Seguro contra roubo do Notebook',
   details: 'Taxa referente ao seguro contra roubo de Notebook',
   amount: 100.0,
-  max_amount_per_period: 2400.0,
+  max_total_amount: 2400.0,
+  max_amount_per_payment: 100.0,
   period: 'Monthly',
   final_date: Time.new(2017, 2, 28, 20, 20),
 
