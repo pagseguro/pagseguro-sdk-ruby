@@ -26,7 +26,6 @@ module PagSeguro
     attr_accessor :details
 
     attr_reader :sender
-    attr_reader :sender_address
 
     # Set errors
     def errors
@@ -41,11 +40,6 @@ module PagSeguro
     # Set sender
     def sender=(sender)
       @sender = ensure_type(Sender, sender)
-    end
-
-    # Set sender's address
-    def sender_address=(address)
-      @sender_address = ensure_type(Address, address)
     end
 
     def create

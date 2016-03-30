@@ -1,10 +1,13 @@
 require_relative '../boot'
 
-# Create a Subscription
+# Subscribe your client in a SubscriptionPlan (Transparent Checkout).
 #
 # You need to set your AccountCredentials (EMAIL, TOKEN) in the application config
 #
 # P.S: See the boot file example for more details.
+
+email = 'EMAIL'
+token = 'TOKEN'
 
 subscription = PagSeguro::Subscription.new(
   plan: '7E3A9C989999E49AS4D29FAC5D4B910G',
@@ -51,7 +54,9 @@ subscription = PagSeguro::Subscription.new(
   }
 )
 
-subscription.credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
+# Edit the lines above.
+
+subscription.credentials = PagSeguro::AccountCredentials.new(email, token)
 subscription.create
 
 if subscription.errors.any?

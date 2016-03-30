@@ -7,6 +7,9 @@ require_relative '../boot'
 #
 # P.S: See the boot file example for more details.
 
+email = 'EMAIL'
+token = 'TOKEN'
+
 discount = PagSeguro::SubscriptionDiscount.new(
   # The types of discount are DISCOUNT_PERCENT and DISCOUNT_AMOUNT.
   type: 'DISCOUNT_AMOUNT',
@@ -14,7 +17,9 @@ discount = PagSeguro::SubscriptionDiscount.new(
   code: '00951371D7D707B7745AFF9D4D4AE763',
 )
 
-discount.credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
+# Edit the lines above.
+
+discount.credentials = PagSeguro::AccountCredentials.new(email, token)
 discount.create
 
 if discount.errors.any?

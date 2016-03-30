@@ -7,6 +7,9 @@ require_relative '../boot'
 #
 # See the boot file example for more details.
 
+email = 'EMAIL'
+token = 'TOKEN'
+
 charger = PagSeguro::ManualSubscriptionCharger.new(
   reference: 'REF12341',
   subscription_code: '12E10BEF5E5EF94004313FB891C8E4CF',
@@ -19,7 +22,9 @@ charger.items << {
   quantity: 1
 }
 
-charger.credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
+# Edit the lines above.
+
+charger.credentials = PagSeguro::AccountCredentials.new(email, token)
 charger.create
 
 if charger.errors.any?
