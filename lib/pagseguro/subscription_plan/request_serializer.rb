@@ -34,16 +34,16 @@ module PagSeguro
             }
           end
 
-          if object.sender_address
+          if object.sender.address
             xml.send(:address) {
-              xml.send(:street, object.sender_address.street)
-              xml.send(:number, object.sender_address.number)
-              xml.send(:complement, object.sender_address.complement)
-              xml.send(:district, object.sender_address.district)
-              xml.send(:postalCode, object.sender_address.postal_code)
-              xml.send(:city, object.sender_address.city)
-              xml.send(:state, object.sender_address.state)
-              xml.send(:country, object.sender_address.country)
+              xml.send(:street, object.sender.address.street)
+              xml.send(:number, object.sender.address.number)
+              xml.send(:complement, object.sender.address.complement)
+              xml.send(:district, object.sender.address.district)
+              xml.send(:postalCode, object.sender.address.postal_code)
+              xml.send(:city, object.sender.address.city)
+              xml.send(:state, object.sender.address.state)
+              xml.send(:country, object.sender.address.country)
             }
           end
         }

@@ -178,17 +178,16 @@ describe PagSeguro::SubscriptionPlan::RequestSerializer do
           name: 'John',
           email: 'john@example.com',
           phone: { area_code: 11, number: 123 },
-        }
-
-        plan.sender_address = {
-          street: 'Park Street',
-          number: 12,
-          complement: 'Complement here',
-          district: 'Neighborhood',
-          postal_code: '123456',
-          city: 'Sao Paulo',
-          state: 'SP',
-          country: 'BRA'
+          address: {
+            street: 'Park Street',
+            number: 12,
+            complement: 'Complement here',
+            district: 'Neighborhood',
+            postal_code: '123456',
+            city: 'Sao Paulo',
+            state: 'SP',
+            country: 'BRA'
+          }
         }
       end
 

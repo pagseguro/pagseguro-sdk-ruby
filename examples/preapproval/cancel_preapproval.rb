@@ -7,11 +7,15 @@ require_relative '../boot'
 #
 # P.S: See the boot file example for more details.
 
-cancel = PagSeguro::SubscriptionCanceller.new(
-  subscription_code: 'CODE',
-)
+code = 'CODE'
+email = 'EMAIL'
+token = 'TOKEN'
 
-cancel.credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
+# Edit the lines above.
+
+cancel = PagSeguro::SubscriptionCanceller.new(subscription_code: code)
+
+cancel.credentials = PagSeguro::AccountCredentials.new(email, token)
 cancel.save
 
 if cancel.errors.any?

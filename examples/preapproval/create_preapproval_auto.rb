@@ -6,38 +6,42 @@ require_relative '../boot'
 #
 # P.S: See the boot file example for more details.
 
+email = 'EMAIL'
+token = 'TOKEN'
+
 plan = PagSeguro::SubscriptionPlan.new(
   charge: 'auto', # Automatic Subscription Plan must always use auto charge type.
-
-  name: 'Seguro contra roubo do Notebook',
-  details: 'Taxa referente ao seguro contra roubo de Notebook',
-  amount: 100.0,
-  max_total_amount: 2400.0,
-  max_amount_per_payment: 100.0,
-  period: 'Monthly',
-  final_date: Time.new(2017, 2, 28, 20, 20),
 
   redirect_url: 'http://example.com/redirect',
   review_url: 'http://example.com/review',
   reference: 'AUTOPLAN123',
+  name: 'Seguro contra roubo do Notebook',
+  details: 'Taxa referente ao seguro contra roubo de Notebook',
+  amount: 100.0,
+  period: 'Monthly',
+  final_date: Time.new(2017, 2, 28, 20, 20),
+  max_total_amount: 2400.0,
+
   sender: {
     name: 'Nome do Cliente',
     email: 'client@example.com',
     phone: { area_code: 11, number: 123456 },
-  },
-  sender_address: {
-    street: 'Avenida Brigadeiro Faria Lima',
-    number: 1384,
-    complement: '1 Andar',
-    district: 'Jardim Paulistano',
-    postal_code: '01452002',
-    city: 'São Paulo',
-    state: 'SP',
-    country: 'BRA',
+    address: {
+      street: 'Avenida Brigadeiro Faria Lima',
+      number: 1384,
+      complement: '1 Andar',
+      district: 'Jardim Paulistano',
+      postal_code: '01452002',
+      city: 'São Paulo',
+      state: 'SP',
+      country: 'BRA',
+    }
   }
 )
 
-plan.credentials = PagSeguro::AccountCredentials.new('EMAIL', 'TOKEN')
+# Edit the lines above.
+
+plan.credentials = PagSeguro::AccountCredentials.new(email, token)
 plan.create
 
 if plan.errors.any?

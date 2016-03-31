@@ -20,7 +20,6 @@ describe PagSeguro::SubscriptionPlan do
   it_assigns_attribute :details
 
   it_ensures_type PagSeguro::Sender, :sender
-  it_ensures_type PagSeguro::Address, :sender_address
 
   context 'errors attribute' do
     it 'should start with errors' do
