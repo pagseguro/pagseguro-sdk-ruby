@@ -25,6 +25,10 @@ module PagSeguro
       )
     end
 
+    def get_without_api_version(path, data={}, headers={})
+      request.get(path, extended_data(data), headers)
+    end
+
     # Perform a POST request.
     #
     # # +path+: the path that will be requested. Must be something like <tt>"checkout"</tt>.

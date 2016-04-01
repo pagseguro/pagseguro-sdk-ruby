@@ -32,7 +32,6 @@ module PagSeguro
     end
 
     def status_code
-      # puts "status: #{@status}"
       STATUSES[@status.to_sym]
     end
 

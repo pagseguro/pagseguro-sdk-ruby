@@ -117,6 +117,7 @@ require "pagseguro/subscription_transaction"
 require "pagseguro/subscription_payment_order"
 require "pagseguro/subscription_payment_order/response_serializer"
 require "pagseguro/subscription_payment_order/response"
+require "pagseguro/subscription_search_payment_orders"
 
 I18n.load_path += Dir[File.expand_path("../../locales/*.yml", __FILE__)]
 
