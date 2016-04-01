@@ -1,4 +1,4 @@
-require_relative '../boot'
+require_relative '../../boot'
 
 # Search Subscriptions by days interval
 # PS: Since it has receipt some notification in the interval
