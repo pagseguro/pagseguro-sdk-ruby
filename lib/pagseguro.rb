@@ -113,6 +113,7 @@ require "pagseguro/subscription/subscription_search"
 require "pagseguro/subscription_change_status/request_serializer"
 require "pagseguro/subscription_change_status/response"
 require "pagseguro/subscription_change_status"
+require "pagseguro/subscription_transaction"
 
 I18n.load_path += Dir[File.expand_path("../../locales/*.yml", __FILE__)]
 
