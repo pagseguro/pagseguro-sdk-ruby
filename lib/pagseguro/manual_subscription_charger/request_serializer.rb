@@ -40,6 +40,7 @@ module PagSeguro
         Nokogiri::XML::Builder.new(encoding: PagSeguro.encoding) do |xml|
           xml.send(:payment) {
             xml.send(:reference, object.reference)
+            xml.send(:preApprovalCode, object.subscription_code)
             xml_serialize_items(xml, object.items)
           }
         end
