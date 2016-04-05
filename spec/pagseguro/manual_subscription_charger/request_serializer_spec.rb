@@ -15,6 +15,15 @@ describe PagSeguro::ManualSubscriptionCharger::RequestSerializer do
         ]xm
     end
 
+    it 'should serializer subscription code' do
+      charger.subscription_code = '12345'
+
+      expect(subject.to_xml_params).to match %r[
+        <payment>
+          .*<preApprovalCode>12345
+        ]xm
+    end
+
     context "serialize items'" do
       before do
         charger.items = items
