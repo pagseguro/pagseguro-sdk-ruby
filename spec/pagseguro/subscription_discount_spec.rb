@@ -20,8 +20,8 @@ describe PagSeguro::SubscriptionDiscount do
       subject.credentials = credentials
 
       FakeWeb.register_uri(
-        :post,
-        'https://ws.pagseguro.uol.com.br/v2/pre-approvals/1234/discount?email=user@example.com&token=TOKEN',
+        :put,
+        'https://ws.pagseguro.uol.com.br/pre-approvals/1234/discount?email=user@example.com&token=TOKEN',
         body: ''
       )
     end
@@ -41,16 +41,16 @@ describe PagSeguro::SubscriptionDiscount do
 
     it 'sends it to correct url' do
       expect(PagSeguro).to receive(:api_url).with(
-        'v2/pre-approvals/1234/discount?email=user@example.com&token=TOKEN'
-      ).and_return('https://ws.pagseguro.uol.com.br/v2/pre-approvals/1234/discount?email=user@example.com&token=TOKEN')
+        'pre-approvals/1234/discount?email=user@example.com&token=TOKEN'
+      ).and_return('https://ws.pagseguro.uol.com.br/pre-approvals/1234/discount?email=user@example.com&token=TOKEN')
 
       subject.create
     end
 
     context 'when parsing' do
       it 'create a discount' do
-        expect(PagSeguro::Request).to receive(:post_xml).with(
-          'pre-approvals/1234/discount', :v2, credentials, a_string_matching(/<directPreApproval>/)
+        expect(PagSeguro::Request).to receive(:put_xml).with(
+          'pre-approvals/1234/discount', credentials, a_string_matching(/<directPreApproval>/)
         ).and_return(request)
 
         subject.create
