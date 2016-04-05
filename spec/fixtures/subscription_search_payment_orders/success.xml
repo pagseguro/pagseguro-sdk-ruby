@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<paymentOrdersResult>
+  <date>2016-03-30T18:59:53-03:00</date>
+  <resultsInThisPage>2</resultsInThisPage>
+  <currentPage>1</currentPage>
+  <totalPages>1</totalPages>
+  <paymentOrders>
+    <paymentOrder>
+      <code>D2579C9461BA45F880419FE535763EFE</code>
+      <status>5</status>
+      <amount>80.00</amount>
+      <grossAmount>230</grossAmount>
+      <lastEventDate>2016-03-30T00:50:11-03:00</lastEventDate>
+      <discount>
+        <type>DISCOUNT_PERCENT</type>
+        <value>0</value>
+      </discount>
+      <schedulingDate>2016-04-14T15:14:29-03:00</schedulingDate>
+      <transactions>
+        <code>DBFABA621D734DCDA471F592E964A39E</code>
+        <date>2016-03-30T00:48:49-0300</date>
+        <status>3</status>
+      </transactions>
+    </paymentOrder>
+    <paymentOrder>
+      <code>C735289AF87F4CAA8D661DC977C0D383</code>
+      <status>5</status>
+      <amount>80.00</amount>
+      <grossAmount>80</grossAmount>
+      <lastEventDate>2016-03-30T00:50:48-03:00</lastEventDate>
+      <discount>
+        <type>DISCOUNT_PERCENT</type>
+        <value>0</value>
+      </discount>
+      <schedulingDate>2016-05-14T22:14:29-03:00</schedulingDate>
+      <transactions>
+        <code>129A62902B01421993504EF4954A60FD</code>
+        <date>2016-03-30T00:49:07-0300</date>
+        <status>3</status>
+      </transactions>
+    </paymentOrder>
+  </paymentOrders>
+</paymentOrdersResult>
