@@ -21,7 +21,7 @@ module PagSeguro
 
     # The server returns only with a 200 response in case of success.
     def create
-      request = Request.post_xml("pre-approvals/#{code}/discount", API_VERSION, credentials, xml_params)
+      request = Request.put_xml("pre-approvals/#{code}/discount", credentials, xml_params)
 
       Response.new(request, self).serialize
 
