@@ -34,9 +34,9 @@ module PagSeguro
       def serialize_general(data)
         data[:code] = xml.at_css("code").text
         data[:reference] = xml.css("reference").text
-        data[:type_id] = xml.at_css("type").text
         data[:payment_link] = xml.css("paymentLink").text
-        data[:status] = xml.at_css("status").text
+        data[:type_id] = xml.at_css("type").text if xml.at_css('type')
+        data[:status] = xml.at_css("status").text if xml.at_css('status')
 
         cancellation_source = xml.css("cancellationSource")
         data[:cancellation_source] = cancellation_source.text if cancellation_source.any?
