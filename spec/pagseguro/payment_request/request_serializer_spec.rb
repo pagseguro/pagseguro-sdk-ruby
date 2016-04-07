@@ -163,7 +163,7 @@ describe PagSeguro::PaymentRequest::RequestSerializer do
       it { expect(params).to include(shippingAddressComplement: "COMPLEMENT") }
     end
 
-    context "sender serialization" do
+    context "sender serialization with cpf" do
       before do
         sender = PagSeguro::Sender.new({
           email: "EMAIL",
@@ -177,6 +177,22 @@ describe PagSeguro::PaymentRequest::RequestSerializer do
       it { expect(params).to include(senderEmail: "EMAIL") }
       it { expect(params).to include(senderName: "NAME") }
       it { expect(params).to include(senderCPF: "CPF") }
+    end
+
+    context "sender serialization with cnpj" do
+      before do
+        sender = PagSeguro::Sender.new({
+          email: "EMAIL",
+          name: "NAME",
+          cnpj: "CNPJ"
+        })
+
+        allow(payment_request).to receive(:sender).and_return(sender)
+      end
+
+      it { expect(params).to include(senderEmail: "EMAIL") }
+      it { expect(params).to include(senderName: "NAME") }
+      it { expect(params).to include(senderCNPJ: "CNPJ") }
     end
 
     context "phone serialization" do
