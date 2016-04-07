@@ -98,7 +98,8 @@ module PagSeguro
 
         params[:senderEmail] =  sender.email
         params[:senderName] = sender.name
-        params[:senderCPF] = sender.cpf
+        params[:senderCPF] = sender.cpf if sender.cpf
+        params[:senderCNPJ] = sender.cnpj if sender.cnpj
         params[:senderHash] = sender.hash
 
         serialize_sender_phone(sender.phone)
@@ -276,8 +277,11 @@ module PagSeguro
           xml_serialize_phone(xml, sender.phone)
 
           documents = [sender.document]
+
           if sender.cpf
             documents << PagSeguro::Document.new(type: 'CPF', value: sender.cpf)
+          elsif sender.cnpj
+            documents << PagSeguro::Document.new(type: 'CNPJ', value: sender.cnpj)
           end
 
           xml_serialize_documents(xml, documents)

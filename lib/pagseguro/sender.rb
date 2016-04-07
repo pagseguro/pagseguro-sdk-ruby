@@ -18,6 +18,9 @@ module PagSeguro
     # Set the CPF document.
     attr_accessor :cpf
 
+    # Set the CNPJ document.
+    attr_accessor :cnpj
+
     # Set sender hash.
     # It's used to identify the sender.
     attr_accessor :hash
