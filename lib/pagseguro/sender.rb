@@ -23,7 +23,7 @@ module PagSeguro
 
     # Set the sender ip
     attr_accessor :ip
-    #
+
     # Set the CNPJ document.
     attr_accessor :cnpj
 
