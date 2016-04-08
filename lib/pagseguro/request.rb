@@ -47,7 +47,7 @@ module PagSeguro
     # # +credentials+: the credentials like ApplicationCredentials or AccountCredentials.
     # # +data+: the data that will be sent as body data. Must be a XML.
     #
-    def post_xml(path, api_version, credentials, data, options={})
+    def post_xml(path, api_version, credentials, data = '', options={})
       credentials_params = credentials_to_params(credentials)
       url_path = [api_version, path].reject(&:nil?).join('/')
 
