@@ -98,11 +98,19 @@ module PagSeguro
 
         params[:senderEmail] =  sender.email
         params[:senderName] = sender.name
-        params[:senderCPF] = sender.cpf if sender.cpf
-        params[:senderCNPJ] = sender.cnpj if sender.cnpj
         params[:senderHash] = sender.hash
 
+        serialize_sender_documents(sender.documents)
         serialize_sender_phone(sender.phone)
+      end
+
+      def serialize_sender_documents(documents)
+        return if documents.empty?
+
+        documents.each do |document|
+          params[:senderCPF] = document.value if document.cpf?
+          params[:senderCNPJ] = document.value if document.cnpj?
+        end
       end
 
       def serialize_sender_phone(phone)
@@ -274,17 +282,9 @@ module PagSeguro
         xml.send(:sender) {
           xml.send(:name, sender.name)
           xml.send(:email, sender.email)
+
           xml_serialize_phone(xml, sender.phone)
-
-          documents = [sender.document]
-
-          if sender.cpf
-            documents << PagSeguro::Document.new(type: 'CPF', value: sender.cpf)
-          elsif sender.cnpj
-            documents << PagSeguro::Document.new(type: 'CNPJ', value: sender.cnpj)
-          end
-
-          xml_serialize_documents(xml, documents)
+          xml_serialize_documents(xml, sender.documents)
 
           xml.send(:hash_, sender.hash)
         }

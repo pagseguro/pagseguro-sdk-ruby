@@ -11,5 +11,13 @@ module PagSeguro
     def ==(other)
       [type, value] == [other.type, other.value]
     end
+
+    def cpf?
+      type == 'CPF'
+    end
+
+    def cnpj?
+      type == 'CNPJ'
+    end
   end
 end
