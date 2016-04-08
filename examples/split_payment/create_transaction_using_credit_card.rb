@@ -23,7 +23,7 @@ payment.sender = {
   hash: "f8d95a0747cdddf277a111ec1bab1d68628e095243b7a56382ec01f260216313",
   name: "Joao Comprador",
   email: "joao@sandbox.pagseguro.com.br",
-  cpf: "75073461100",
+  document: { type: "CPF", value: "75073461100" },
   phone: {
     area_code: 11,
     number: "12345678"

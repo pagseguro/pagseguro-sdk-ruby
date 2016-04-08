@@ -26,7 +26,7 @@ payment.reference = "REF1234"
 payment.sender = {
   name: "Nando Vieira",
   email: "fnando.vieira@gmail.com",
-  cpf: "21639716866",
+  document: { type: "CPF", value: "21639716866" },
   phone: {
     area_code: 11,
     number: "12345678"
