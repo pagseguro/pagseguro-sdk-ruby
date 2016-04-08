@@ -24,6 +24,9 @@ module PagSeguro
     # Set the sender ip
     attr_accessor :ip
 
+    # Set the CNPJ document.
+    attr_accessor :cnpj
+
     # Set sender hash.
     # It's used to identify the sender.
     attr_accessor :hash

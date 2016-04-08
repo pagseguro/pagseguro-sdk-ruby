@@ -68,7 +68,8 @@ module PagSeguro
 
         data[:senderEmail] =  sender.email
         data[:senderName] = sender.name
-        data[:senderCPF] = sender.cpf
+        data[:senderCPF] = sender.cpf if sender.cpf
+        data[:senderCNPJ] = sender.cnpj if sender.cnpj
 
         serialize_phone(data, sender.phone)
       end
