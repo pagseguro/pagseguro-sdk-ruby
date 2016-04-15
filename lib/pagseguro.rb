@@ -164,7 +164,7 @@ module PagSeguro
 
   # The configuration instance
   def self.configuration
-    @configuration ||= PagSeguro::Config.new
+    Thread.current[:pag_seguro_configuration] ||= PagSeguro::Config.new
   end
 
   # Set the global configuration.
