@@ -12,13 +12,13 @@ token = 'TOKEN'
 plan = PagSeguro::SubscriptionPlan.new(
   charge: 'auto', # Automatic Subscription Plan must always use auto charge type.
 
-  redirect_url: 'http://example.com/redirect',
-  review_url: 'http://example.com/review',
+  redirect_url: 'http://www.lojateste.com.br/redirect',
+  review_url: 'http://www.lojateste.com.br/review',
   reference: 'AUTOPLAN123',
   name: 'Seguro contra roubo do Notebook',
   details: 'Taxa referente ao seguro contra roubo de Notebook',
-  amount: 100.0,
   period: 'Monthly',
+  initial_date: Time.new(2017, 2, 28, 1, 0),
   final_date: Time.new(2017, 2, 28, 20, 20),
   max_total_amount: 2400.0,
 
