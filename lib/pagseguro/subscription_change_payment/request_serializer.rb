@@ -49,7 +49,12 @@ module PagSeguro
                       }
                     end
 
-                    xml_serialize_documents(xml, [holder.document])
+                    if holder.document
+                      xml.send(:document) {
+                        xml.send(:type, holder.document.type)
+                        xml.send(:value, holder.document.value)
+                      }
+                    end
 
                     if billing_address
                       xml.send(:billingAddress) {
@@ -69,21 +74,6 @@ module PagSeguro
             end
           }
         end
-      end
-
-      def xml_serialize_documents(xml, documents = [])
-        documents = documents.reject(&:nil?)
-
-        return if documents.empty?
-
-        xml.send(:documents) {
-          documents.each do |document|
-            xml.send(:document) {
-              xml.send(:type, document.type)
-              xml.send(:value, document.value)
-            }
-          end
-        }
       end
     end
   end

@@ -94,6 +94,18 @@ describe PagSeguro::SubscriptionChangePayment::RequestSerializer do
           ]xm
         end
 
+        it 'not include <documents>' do
+          expect(subject.serialize).not_to match %r[
+          .*<paymentMethod>
+            .*<creditCard>
+              .*<holder>
+                .*<documents>
+                  .*<document>
+                     .*<type>CPF</type>
+                     .*<value>00000000191
+          ]xm
+        end
+
         it 'document' do
           expect(subject.serialize).to match %r[
           .*<paymentMethod>
