@@ -36,9 +36,10 @@ module PagSeguro
           xml.send(:email, sender.email) if sender.email
           xml.send(:ip, sender.ip) if sender.ip
           xml.send(:hash_, sender.hash) if sender.hash
+
           serialize_phone(xml, sender.phone)
           serialize_address(xml, sender.address)
-          serialize_documents(xml, [sender.document])
+          serialize_documents(xml, sender.documents)
         }
       end
 

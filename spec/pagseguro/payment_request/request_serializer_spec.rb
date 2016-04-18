@@ -34,6 +34,38 @@ describe PagSeguro::PaymentRequest::RequestSerializer do
       expect(subject.to_xml_params).to match %r[<sender>.*<name>Sender<\/name>.*<email>b@example.com<\/email>.*<phone>.*<areaCode>51<\/areaCode>.*<number>2<\/number>]m
     end
 
+    context 'should serialize sender document' do
+      it 'when it was CPF' do
+        payment.sender = PagSeguro::Sender.new(document: PagSeguro::Document.new(type: 'CPF', value: '12312312312'))
+
+        expect(subject.to_xml_params).to match %r[
+          .*<sender>
+            .*<documents>
+              .*<document>
+                .*<type>CPF</type>
+                .*<value>12312312312</value>
+              .*</document>
+            .*</documents>
+          .*</sender>
+        ]mx
+      end
+
+      it 'when it was CNPJ' do
+        payment.sender = PagSeguro::Sender.new(document: PagSeguro::Document.new(type: 'CNPJ', value: '12123123000112'))
+
+        expect(subject.to_xml_params).to match %r[
+          .*<sender>
+            .*<documents>
+              .*<document>
+                .*<type>CNPJ</type>
+                .*<value>12123123000112</value>
+              .*</document>
+            .*</documents>
+          .*</sender>
+        ]mx
+      end
+    end
+
     it 'should serializer currency' do
       payment.currency = 'BRL'
       expect(subject.to_xml_params).to match %r[<currency>BRL</currency>]
@@ -163,52 +195,36 @@ describe PagSeguro::PaymentRequest::RequestSerializer do
       it { expect(params).to include(shippingAddressComplement: "COMPLEMENT") }
     end
 
-    context "sender serialization with cpf" do
+    context 'sender serialize' do
       before do
-        sender = PagSeguro::Sender.new({
-          email: "EMAIL",
-          name: "NAME",
-          cpf: "CPF"
-        })
+        sender = PagSeguro::Sender.new(
+          name: 'NAME',
+          email: 'EMAIL',
+          phone: { area_code: 'AREA_CODE', number: 'NUMBER' }
+        )
 
         allow(payment_request).to receive(:sender).and_return(sender)
       end
 
-      it { expect(params).to include(senderEmail: "EMAIL") }
-      it { expect(params).to include(senderName: "NAME") }
-      it { expect(params).to include(senderCPF: "CPF") }
-    end
+      it { expect(params).to include(senderName: 'NAME') }
+      it { expect(params).to include(senderEmail: 'EMAIL') }
 
-    context "sender serialization with cnpj" do
-      before do
-        sender = PagSeguro::Sender.new({
-          email: "EMAIL",
-          name: "NAME",
-          cnpj: "CNPJ"
-        })
-
-        allow(payment_request).to receive(:sender).and_return(sender)
+      context "phone" do
+        it { expect(params).to include(senderAreaCode: "AREA_CODE") }
+        it { expect(params).to include(senderPhone: "NUMBER") }
       end
 
-      it { expect(params).to include(senderEmail: "EMAIL") }
-      it { expect(params).to include(senderName: "NAME") }
-      it { expect(params).to include(senderCNPJ: "CNPJ") }
-    end
+      context 'documents' do
+        it 'when is CPF' do
+          payment_request.sender.document = PagSeguro::Document.new(type: 'CPF', value: '12312312312')
+          expect(params).to include(senderCPF: '12312312312')
+        end
 
-    context "phone serialization" do
-      before do
-        sender = PagSeguro::Sender.new({
-          phone: {
-            area_code: "AREA_CODE",
-            number: "NUMBER"
-          }
-        })
-
-        allow(payment_request).to receive(:sender).and_return(sender)
+        it 'when is CNPJ' do
+          payment_request.sender.document = PagSeguro::Document.new(type: 'CNPJ', value: '12123123000112')
+          expect(params).to include(senderCNPJ: '12123123000112')
+        end
       end
-
-      it { expect(params).to include(senderAreaCode: "AREA_CODE") }
-      it { expect(params).to include(senderPhone: "NUMBER") }
     end
 
     context "items serialization" do

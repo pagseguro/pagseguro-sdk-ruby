@@ -61,7 +61,7 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
 
       context 'when there is only cpf' do
         before do
-          transaction_request.sender = { cpf: '12345' }
+          transaction_request.sender = { document: PagSeguro::Document.new(type: 'CPF', value: '12345') }
         end
 
         it 'document' do
@@ -78,7 +78,9 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
 
       context 'when there is only cnpj' do
         before do
-          transaction_request.sender = { cnpj: '62057673000135' }
+          transaction_request.sender = {
+            document: PagSeguro::Document.new(type: 'CNPJ', value: '62057673000135')
+          }
         end
 
         it 'should render only the name' do
@@ -103,8 +105,10 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
               area_code: 12,
               number: "23456789"
             },
-            cpf: '00242866131',
-            document: { type: 'CNPJ', value: '62057673000135' },
+            documents: [
+              { type: 'CNPJ', value: '62057673000135' },
+              { type: 'CPF', value: '00242866131' }
+            ]
           }
         end
 
@@ -571,7 +575,7 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
           hash: "HASH",
           email: "EMAIL",
           name: "NAME",
-          cpf: "CPF",
+          document: { type: "CPF", value: "CPF" },
           phone: {
             area_code: "AREA_CODE",
             number: "NUMBER"
@@ -595,7 +599,7 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
           hash: "HASH",
           email: "EMAIL",
           name: "NAME",
-          cnpj: "CNPJ",
+          document: { type: "CNPJ", value: "CNPJ" },
           phone: {
             area_code: "AREA_CODE",
             number: "NUMBER"
