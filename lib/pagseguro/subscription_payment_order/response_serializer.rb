@@ -16,7 +16,7 @@ module PagSeguro
           data[:scheduling_date] = Time.parse(xml.css('schedulingDate').text)
           data[:last_event_date] = Time.parse(xml.css('lastEventDate').text)
           data[:discount] = serialize_discount if xml.at_css('discount')
-          data[:transaction] = serialize_transaction if xml.at_css('transactions')
+          data[:transactions] = serialize_transactions if xml.css('transactions').any?
         end
       end
 
@@ -29,11 +29,17 @@ module PagSeguro
         end
       end
 
-      def serialize_transaction
+      def serialize_transactions
+        xml.css('transactions').map do |node|
+          serialize_transaction(node)
+        end
+      end
+
+      def serialize_transaction(node)
         {}.tap do |data|
-          data[:code] = xml.css('transactions > code').text
-          data[:date] = Time.parse(xml.css('transactions > date').text)
-          data[:status] = SubscriptionTransaction::STATUSES.key(xml.css('transactions > status').text.to_i)
+          data[:code] = node.css('> code').text
+          data[:date] = Time.parse(node.css('> date').text)
+          data[:status] = SubscriptionTransaction::STATUSES.key(node.css('> status').text.to_i)
         end
       end
 

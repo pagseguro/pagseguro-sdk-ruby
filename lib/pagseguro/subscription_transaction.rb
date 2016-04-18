@@ -21,5 +21,9 @@ module PagSeguro
     def status_code
       STATUSES[status.to_sym]
     end
+
+    def ==(object)
+      [code, status, date] == [object.code, object.status, object.date]
+    end
   end
 end

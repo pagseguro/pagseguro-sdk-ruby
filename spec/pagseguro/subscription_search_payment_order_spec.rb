@@ -56,9 +56,9 @@ describe PagSeguro::SubscriptionSearchPaymentOrders do
         it { expect(order.discount.type).to eq 'DISCOUNT_PERCENT' }
         it { expect(order.discount.value).to eq '0' }
         it { expect(order.scheduling_date).to eq Time.new(2016,4,14,15,14,29, '-03:00') }
-        it { expect(order.transaction.code).to eq 'DBFABA621D734DCDA471F592E964A39E' }
-        it { expect(order.transaction.date).to eq Time.new(2016,3,30,0,48,49, '-03:00') }
-        it { expect(order.transaction.status).to eq :paid }
+        it { expect(order.transactions.first.code).to eq 'DBFABA621D734DCDA471F592E964A39E' }
+        it { expect(order.transactions.first.date).to eq Time.new(2016,3,30,0,48,49, '-03:00') }
+        it { expect(order.transactions.first.status).to eq :paid }
       end
     end
   end

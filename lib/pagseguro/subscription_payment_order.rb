@@ -21,14 +21,19 @@ module PagSeguro
     attr_accessor :last_event_date
     attr_accessor :scheduling_date
     attr_reader :discount
-    attr_reader :transaction
 
     def discount=(discount)
       @discount = ensure_type(PagSeguro::SubscriptionDiscount, discount)
     end
 
-    def transaction=(transaction)
-      @transaction = ensure_type(PagSeguro::SubscriptionTransaction, transaction)
+    def transactions
+      @transactions ||= SubscriptionTransactions.new
+    end
+
+    def transactions=(attrs)
+      attrs.each do |params|
+        transactions << SubscriptionTransaction.new(params)
+      end
     end
 
     def status_code
