@@ -23,7 +23,7 @@ new_payment = PagSeguro::SubscriptionChangePayment.new(
       birth_date: Date.new(1984, 12, 31),
       phone: { area_code: '11', number: '988881234' },
       document: { type: 'CPF', value: '00000000191' },
-        billing_address: {
+      billing_address: {
         street: 'Av Brigadeira Faria Lima',
         number: '1384',
         complement: '3 andar',
@@ -44,7 +44,7 @@ new_payment.update
 
 if new_payment.errors.any?
   puts '=> ERRORS'
-  puts new_payment.errors.join('\n')
+  puts new_payment.errors.join("\n")
 else
-  print '=> Subscription Discount correct added.'
+  print '=> Subscription correct changed.'
 end

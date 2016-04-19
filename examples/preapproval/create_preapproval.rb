@@ -10,7 +10,7 @@ email = 'EMAIL'
 token = 'TOKEN'
 
 subscription = PagSeguro::Subscription.new(
-  plan: '7E3A9C989999E49AS4D29FAC5D4B910G',
+  plan: 'SUBSCRIPTION_CODE',
   reference: 'SUB-1234',
   sender: {
     name: 'Comprador',
@@ -34,7 +34,7 @@ subscription = PagSeguro::Subscription.new(
     }
   },
   payment_method: {
-    token: 'eb3d3d40e0b344d1aeadf9c2375d016f',
+    token: 'TOKEN',
     holder: {
       name: 'Nome',
       birth_date: '11/01/1984',

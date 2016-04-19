@@ -12,6 +12,9 @@ token = 'TOKEN'
 plan = PagSeguro::SubscriptionPlan.new(
   charge: 'auto',
 
+  redirect_url: 'http://www.lojateste.com.br/redirect',
+  review_url: 'http://www.lojateste.com.br/review',
+
   name: 'Test',
   period: 'Monthly',
   amount: 100.0,
