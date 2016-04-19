@@ -1,6 +1,18 @@
-## Next release - 2.5.0
+2.6.0
+
+- Assinatura
+- Adicionado arquivo de configuração docker e docker-compose
+- Atualização e refatoração de exemplos
+
+2.5.0
 
 - Atualizado a sintaxe do rspec
+- Cobertura de todos os tipos de erros http
+- Removido gems não usadas
+- Criado módulo de coleções
+- Adicionado parcelamento por receptor
+- Classe Refund renomeada para TransactionRefund
+- Requisição de autorização com conta existente ou sugestão de cadastro
 
 2.4.0
 
