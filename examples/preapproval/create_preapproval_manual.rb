@@ -11,8 +11,9 @@ token = 'TOKEN'
 
 plan = PagSeguro::SubscriptionPlan.new(
   charge: 'manual', # Manual Subscription Plan must always use manual charge type.
-  redirect_url: 'http://example.com',
-  reference: 'REF-123',
+  redirect_url: 'http://www.lojateste.com.br/redirect',
+  review_url: 'http://www.lojateste.com.br/review',
+  reference: 'REFERENCE',
 
   sender: {
     name: 'Nome do Cliente',
@@ -33,11 +34,10 @@ plan = PagSeguro::SubscriptionPlan.new(
   name: 'Insurance',
   details: 'Payment of 100.',
   amount: 100.0,
-  max_amount_per_payment: 100.0,
   period: 'Monthly',
   max_payments_per_period: 2,
   max_amount_per_period: 200.0,
-  initial_date: Time.new(2017, 1, 1, 0, 0),
+  initial_date: Time.new(2016, 4, 19, 0, 0),
   final_date: Time.new(2017, 1, 1, 0, 0),
   max_total_amount: 2_400.0
 )

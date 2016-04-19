@@ -11,8 +11,8 @@ email = 'EMAIL'
 token = 'TOKEN'
 
 charger = PagSeguro::ManualSubscriptionCharger.new(
-  reference: 'REF12341',
-  subscription_code: '12E10BEF5E5EF94004313FB891C8E4CF',
+  reference: 'REFERENCE',
+  subscription_code: 'SUBSCRIPTION_CODE',
 )
 
 charger.items << {
@@ -29,7 +29,7 @@ charger.create
 
 if charger.errors.any?
   puts '=> ERRORS'
-  puts charger.errors.join('\n')
+  puts charger.errors.join("\n")
 else
   print '=> Subscription was corrected charged, the transaction code is '
   puts charger.transaction_code
