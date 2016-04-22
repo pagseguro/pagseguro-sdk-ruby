@@ -95,6 +95,16 @@ describe PagSeguro::SubscriptionPlan::RequestSerializer do
         ]xm
     end
 
+    it 'should not use floating number to serializer max payments per period' do
+      plan.max_payments_per_period = 3
+
+      expect(subject.to_xml_params).not_to match %r[
+        <preApprovalRequest>
+          .*<preApproval>
+            .*<maxPaymentsPerPeriod>3.00
+        ]xm
+    end
+
     it 'should serializer max amount per period' do
       plan.max_amount_per_period = 300
 

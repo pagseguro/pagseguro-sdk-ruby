@@ -65,7 +65,7 @@ module PagSeguro
               xml.send(:period, object.period)
               xml.send(:amountPerPayment, to_amount(object.amount))
               xml.send(:maxTotalAmount, to_amount(object.max_total_amount))
-              xml.send(:maxPaymentsPerPeriod, to_amount(object.max_payments_per_period))
+              xml.send(:maxPaymentsPerPeriod, object.max_payments_per_period.to_i)
               xml.send(:maxAmountPerPeriod, to_amount(object.max_amount_per_period))
               xml.send(:maxAmountPerPayment, to_amount(object.max_amount_per_payment))
               xml.send(:finalDate, object.final_date.xmlschema) if object.final_date
