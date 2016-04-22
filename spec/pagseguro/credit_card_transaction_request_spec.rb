@@ -9,7 +9,7 @@ describe PagSeguro::CreditCardTransactionRequest do
 
   describe "#payment_method" do
     it "is credit_card" do
-      expect(subject.payment_method).to eq("credit_card")
+      expect(subject.payment_method).to eq("creditCard")
     end
   end
 
