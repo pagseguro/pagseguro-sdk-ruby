@@ -400,7 +400,7 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
           .*<creditCard>
             .*<installment>
               .*<quantity>10</quantity>
-              .*<value>50
+              .*<value>50.00
         ]xm
       end
 

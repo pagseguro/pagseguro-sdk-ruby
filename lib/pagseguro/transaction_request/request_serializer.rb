@@ -189,7 +189,7 @@ module PagSeguro
           if transaction_request.installment
             xml.send(:installment) do
               xml.send(:quantity, transaction_request.installment.quantity)
-              xml.send(:value, transaction_request.installment.value)
+              xml.send(:value, to_amount(transaction_request.installment.value))
             end
           end
 

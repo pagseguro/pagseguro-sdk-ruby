@@ -6,23 +6,26 @@ require_relative "../boot"
 #
 # P.S: See the boot file example for more details.
 
+app_id = 'APP_ID'
+app_key = 'APP_KEY'
+
 payment = PagSeguro::CreditCardTransactionRequest.new
-payment.notification_url = "http://example.com/notification"
-payment.payment_mode = "gateway"
-payment.credentials = PagSeguro::ApplicationCredentials.new("APP_ID", "APP_KEY")
+payment.notification_url = "http://www.lojateste.com.br/notification"
+payment.payment_mode = "default"
+payment.credentials = PagSeguro::ApplicationCredentials.new(app_id, app_key)
 
 payment.items << {
   id: 1234,
   description: %[Televisão 19" Sony],
-  amount: 50.0,
+  amount: 100.0,
   weight: 0
 }
 
 payment.reference = "REF1234-credit-card"
 payment.sender = {
-  hash: "f8d95a0747cdddf277a111ec1bab1d68628e095243b7a56382ec01f260216313",
+  hash: "9aff5821b4a6f5a1dc9e15d3a3b02ac666a1629fcb90e2bbf6b7da661b344094",
   name: "Joao Comprador",
-  email: "joao@sandbox.pagseguro.com.br",
+  email: "EMAIL_FROM@sandbox.pagseguro.com.br",
   document: { type: "CPF", value: "75073461100" },
   phone: {
     area_code: 11,
@@ -45,7 +48,7 @@ payment.shipping = {
 
 payment.receivers = [
   {
-    public_key: 'PUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    public_key: 'PUBLIC_KEY',
     split: {
       amount: 20.0,
       rate_percent: 50.0,
@@ -64,7 +67,7 @@ payment.billing_address = {
   postal_code: "01452002"
 }
 
-payment.credit_card_token = "41c1f784216748ccae689fcd854aaca1"
+payment.credit_card_token = "CREDIT_CARD_TOKEN"
 payment.holder = {
   name: "João Comprador",
   birth_date: "07/05/1981",
@@ -79,13 +82,15 @@ payment.holder = {
 }
 
 payment.installment = {
-  value: 459.50,
+  value: 100.0,
   quantity: 1
 }
 
 # Add extras params to request
 # payment.extra_params << { paramName: 'paramValue' }
 # payment.extra_params << { senderBirthDate: '07/05/1981' }
+
+# Edit the lines above.
 
 puts "=> REQUEST"
 puts PagSeguro::TransactionRequest::RequestSerializer.new(payment).to_params
