@@ -94,7 +94,7 @@ module PagSeguro
     def params
       {}.tap do |param|
         param[:credentials] = options[:credentials]
-        param[:page] = page
+        param[:page] = page unless page.zero?
         param[:maxPageResults] = options[:per_page]
         param[:initialDate] = options[:starts_at].xmlschema if options[:starts_at]
         param[:finalDate] = options[:ends_at].xmlschema if options[:ends_at]
