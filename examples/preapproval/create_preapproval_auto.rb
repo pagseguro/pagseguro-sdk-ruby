@@ -18,8 +18,8 @@ plan = PagSeguro::SubscriptionPlan.new(
   name: 'Seguro contra roubo do Notebook',
   details: 'Taxa referente ao seguro contra roubo de Notebook',
   period: 'Monthly',
-  initial_date: Time.new(2017, 2, 28, 1, 0),
   final_date: Time.new(2017, 2, 28, 20, 20),
+  amount: 100.0,
   max_total_amount: 2400.0,
 
   sender: {
@@ -46,7 +46,7 @@ plan.create
 
 if plan.errors.any?
   puts '=> ERRORS'
-  puts plan.errors.join('\n')
+  puts plan.errors.join("\n")
 else
   print '=> Subscription Plan correct created, its code is '
   puts plan.code

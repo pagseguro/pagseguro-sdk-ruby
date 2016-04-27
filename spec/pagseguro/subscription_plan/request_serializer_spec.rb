@@ -85,6 +85,12 @@ describe PagSeguro::SubscriptionPlan::RequestSerializer do
         ]xm
     end
 
+    it 'should not serializer max payments per period if its value is nil' do
+      plan.max_payments_per_period = nil
+
+      expect(subject.to_xml_params).not_to match %r[.*<maxPaymentsPerPeriod>]xm
+    end
+
     it 'should serializer max payments per period' do
       plan.max_payments_per_period = 3
 
