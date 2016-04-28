@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<transaction>
+	<date>2013-05-01T01:40:27.000-03:00</date>
+	<code>667A3914-4F9F-4705-0EB6-CA6FA0DF8A19</code>
+	<reference>REF1234</reference>
+	<lastEventDate>2013-05-01T01:41:20.000-03:00</lastEventDate>
+	<paymentMethod>
+		<type>2</type>
+		<code>202</code>
+	</paymentMethod>
+	<paymentLink>https://pagseguro.uol.com.br/checkout/imprimeBoleto.jhtml?code=667D39144F9F47059FB6CA6FA0DF8A20</paymentLink>
+	<grossAmount>459.50</grossAmount>
+	<discountAmount>0.00</discountAmount>
+  <creditorFees>
+		<operationalFeeAmount>0.00</operationalFeeAmount>
+    <installmentFeeAmount>0.00</installmentFeeAmount>
+    <intermediationRateAmount>0.40</intermediationRateAmount>
+    <intermediationFeeAmount>1644.80</intermediationFeeAmount>
+    <commissionFeeAmount>1.98</commissionFeeAmount>
+    <efrete>1.98</efrete>
+	</creditorFees>
+	<netAmount>445.77</netAmount>
+	<extraAmount>0.00</extraAmount>
+	<installmentCount>1</installmentCount>
+	<paymentReleases>
+    <paymentRelease>
+      <installment>1</installment>
+      <totalAmount>202.92</totalAmount>
+      <releaseAmount>202.92</releaseAmount>
+      <status>OPENED</status>
+      <releaseDate>2015-03-25T16:14:23-03:00</releaseDate>
+    </paymentRelease>
+  </paymentReleases>
+	<itemCount>1</itemCount>
+	<items>
+		<item>
+			<id>1234</id>
+			<description>Some product</description>
+			<quantity>1</quantity>
+			<amount>459.50</amount>
+		</item>
+	</items>
+	<sender>
+		<name>JOHN DOE</name>
+		<email>john@example.com</email>
+		<phone>
+			<areaCode>11</areaCode>
+			<number>12345678</number>
+		</phone>
+    <documents>
+      <document>
+        <type>CPF</type>
+        <value>65647162142</value>
+      </document>
+    </documents>
+	</sender>
+	<shipping>
+		<address>
+			<street>AV. BRIG. FARIA LIMA</street>
+			<number>1384</number>
+			<complement>5 ANDAR</complement>
+			<district>JARDIM PAULISTANO</district>
+			<postalCode>01452002</postalCode>
+			<city>SAO PAULO</city>
+			<state>SP</state>
+			<country>BRA</country>
+		</address>
+		<type>2</type>
+		<cost>0.00</cost>
+	</shipping>
+</transaction>
