@@ -84,4 +84,14 @@ describe PagSeguro::Transaction::Serializer do
     it { expect(data.first.date).to eq(Time.parse("2015-02-24T10:23:34.000-03:00")) }
     it { expect(data.first.notification_code).to eq("B7C381-7AADE5ADE576-8CC4159F8FBB-25C7D6") }
   end
+
+  context "transaction without status and type" do
+    let(:source) { File.read("./spec/fixtures/transactions/without_status_and_type.xml") }
+    let(:xml) { Nokogiri::XML(source) }
+    let(:serializer) { described_class.new(xml) }
+    let(:data) { serializer.serialize }
+
+    it { expect(data[:status]).to be_nil }
+    it { expect(data[:type]).to be_nil }
+  end
 end
