@@ -130,54 +130,6 @@ describe PagSeguro::Transaction do
     end
   end
 
-  describe ".find_status_history" do
-    before do
-      allow(PagSeguro::Request).to receive(:get)
-        .with("transactions/CODE/statusHistory", "v3", {})
-        .and_return(response)
-    end
-    let(:parsed_xml) { Nokogiri::XML(raw_xml) }
-    let(:response) do
-      double(:Response, xml?: true, success?: true, errors?: false, body: raw_xml, data: parsed_xml)
-    end
-    subject { PagSeguro::Transaction.find_status_history("CODE") }
-
-    context "when request succeds" do
-      let(:raw_xml) { File.read("./spec/fixtures/transactions/status_history.xml") }
-
-      it "returns an instance of StatusCollection" do
-        expect(subject).to be_a(PagSeguro::Transaction::StatusCollection)
-      end
-
-      it "returns a collection with errors object" do
-        expect(subject.errors).to be_a(PagSeguro::Errors)
-      end
-
-      it "returns a collection with no errors" do
-        expect(subject.errors).to be_empty
-      end
-    end
-
-    context "when request fails" do
-      before do
-        allow(response).to receive_messages(
-          success?: false,
-          error?: true,
-          error: Aitch::NotFoundError
-        )
-      end
-      let(:raw_xml) { File.read("./spec/fixtures/invalid_code.xml") }
-
-      it "returns an instance of StatusCollection" do
-        expect(subject).to be_a(PagSeguro::Transaction::StatusCollection)
-      end
-
-      it "returns a collection with errors" do
-        expect(subject.errors).not_to be_empty
-      end
-    end
-  end
-
   describe ".find_by_date" do
     it "initializes search with default options" do
       now = Time.now
