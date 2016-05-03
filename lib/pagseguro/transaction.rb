@@ -79,16 +79,6 @@ module PagSeguro
       load_from_response send_request("transactions/notifications/#{code}", options)
     end
 
-    # Find a transaction by status.
-    # Return a PagSeguro::Transaction::Colletion.
-    def self.find_status_history(code)
-      request = send_request("transactions/#{code}/statusHistory")
-      collection = StatusCollection.new
-      Response.new(request, collection).serialize_statuses
-
-      collection
-    end
-
     # Search transactions within a date range.
     # Return a PagSeguro::SearchByDate instance
     #
