@@ -74,14 +74,13 @@ describe PagSeguro::Transaction::Serializer do
     it { expect(data).to include(escrow_end_date: Time.parse("2013-06-01T01:41:20.000-03:00")) }
   end
 
-  context "when looking for transaction status history" do
-    let(:source) { File.read("./spec/fixtures/transactions/status_history.xml") }
+  context "transaction without status and type" do
+    let(:source) { File.read("./spec/fixtures/transactions/without_status_and_type.xml") }
     let(:xml) { Nokogiri::XML(source) }
     let(:serializer) { described_class.new(xml) }
-    subject(:data) { serializer.serialize_status_history }
+    let(:data) { serializer.serialize }
 
-    it { expect(data.first.code).to eq("1") }
-    it { expect(data.first.date).to eq(Time.parse("2015-02-24T10:23:34.000-03:00")) }
-    it { expect(data.first.notification_code).to eq("B7C381-7AADE5ADE576-8CC4159F8FBB-25C7D6") }
+    it { expect(data[:status]).to be_nil }
+    it { expect(data[:type]).to be_nil }
   end
 end

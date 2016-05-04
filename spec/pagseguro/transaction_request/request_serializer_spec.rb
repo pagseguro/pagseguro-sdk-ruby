@@ -61,7 +61,7 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
 
       context 'when there is only cpf' do
         before do
-          transaction_request.sender = { cpf: '12345' }
+          transaction_request.sender = { document: PagSeguro::Document.new(type: 'CPF', value: '12345') }
         end
 
         it 'document' do
@@ -76,10 +76,10 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
         end
       end
 
-      context 'when there is only another document' do
+      context 'when there is only cnpj' do
         before do
           transaction_request.sender = {
-            document: { type: 'CNPJ', value: '62057673000135' }
+            document: PagSeguro::Document.new(type: 'CNPJ', value: '62057673000135')
           }
         end
 
@@ -105,8 +105,10 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
               area_code: 12,
               number: "23456789"
             },
-            cpf: '00242866131',
-            document: { type: 'CNPJ', value: '62057673000135' },
+            documents: [
+              { type: 'CNPJ', value: '62057673000135' },
+              { type: 'CPF', value: '00242866131' }
+            ]
           }
         end
 
@@ -398,7 +400,7 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
           .*<creditCard>
             .*<installment>
               .*<quantity>10</quantity>
-              .*<value>50
+              .*<value>50.00
         ]xm
       end
 
@@ -567,13 +569,13 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
       it { expect(params).to include(billingAddressComplement: "COMPLEMENT") }
     end
 
-    context "sender serialization" do
+    context "sender serialization with CPF" do
       before do
         sender = PagSeguro::Sender.new({
           hash: "HASH",
           email: "EMAIL",
           name: "NAME",
-          cpf: "CPF",
+          document: { type: "CPF", value: "CPF" },
           phone: {
             area_code: "AREA_CODE",
             number: "NUMBER"
@@ -587,6 +589,30 @@ describe PagSeguro::TransactionRequest::RequestSerializer do
       it { expect(params).to include(senderEmail: "EMAIL") }
       it { expect(params).to include(senderName: "NAME") }
       it { expect(params).to include(senderCPF: "CPF") }
+      it { expect(params).to include(senderAreaCode: "AREA_CODE") }
+      it { expect(params).to include(senderPhone: "NUMBER") }
+    end
+
+    context "sender serialization with CNPJ" do
+      before do
+        sender = PagSeguro::Sender.new({
+          hash: "HASH",
+          email: "EMAIL",
+          name: "NAME",
+          document: { type: "CNPJ", value: "CNPJ" },
+          phone: {
+            area_code: "AREA_CODE",
+            number: "NUMBER"
+          }
+        })
+
+        allow(transaction_request).to receive(:sender).and_return(sender)
+      end
+
+      it { expect(params).to include(senderHash: "HASH") }
+      it { expect(params).to include(senderEmail: "EMAIL") }
+      it { expect(params).to include(senderName: "NAME") }
+      it { expect(params).to include(senderCNPJ: "CNPJ") }
       it { expect(params).to include(senderAreaCode: "AREA_CODE") }
       it { expect(params).to include(senderPhone: "NUMBER") }
     end

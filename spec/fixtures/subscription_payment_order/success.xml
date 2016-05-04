@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<paymentOrder>
+  <code>D2579C9461BA45F880419FE535763EFE</code>
+  <status>5</status>
+  <amount>80.00</amount>
+  <grossAmount>230</grossAmount>
+  <lastEventDate>2016-03-30T00:50:11-03:00</lastEventDate>
+  <discount>
+    <type>DISCOUNT_PERCENT</type>
+    <value>0</value>
+  </discount>
+  <schedulingDate>2016-04-14T15:14:29-03:00</schedulingDate>
+  <transactions>
+    <code>DBFABA621D734DCDA471F592E964A39E</code>
+    <date>2016-03-30T00:48:49-0300</date>
+    <status>3</status>
+  </transactions>
+</paymentOrder>

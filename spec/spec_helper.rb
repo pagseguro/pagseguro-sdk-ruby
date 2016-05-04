@@ -26,6 +26,7 @@ RSpec.configure do |config|
   config.after do
     PagSeguro.configure do |config|
       config.app_id = nil
+      config.environment = :production
       config.app_key = nil
       config.email = nil
       config.token = nil

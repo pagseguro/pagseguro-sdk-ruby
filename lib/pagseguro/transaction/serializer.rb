@@ -34,9 +34,10 @@ module PagSeguro
       def serialize_general(data)
         data[:code] = xml.at_css("code").text
         data[:reference] = xml.css("reference").text
-        data[:type_id] = xml.at_css("type").text
         data[:payment_link] = xml.css("paymentLink").text
-        data[:status] = xml.at_css("status").text
+
+        data[:type_id] = serialize_general_type_id
+        data[:status] = serialize_general_status
 
         cancellation_source = xml.css("cancellationSource")
         data[:cancellation_source] = cancellation_source.text if cancellation_source.any?
@@ -155,6 +156,22 @@ module PagSeguro
 
       def address_node
         @address_node ||= xml.css("shipping > address")
+      end
+
+      def serialize_general_type_id
+        type = xml.css('type').detect do |node|
+          node if node.parent.name == 'transaction'
+        end
+
+        type.text if type
+      end
+
+      def serialize_general_status
+        status = xml.css('status').detect do |node|
+          node if node.parent.name == 'transaction'
+        end
+
+        status.text if status
       end
     end
   end

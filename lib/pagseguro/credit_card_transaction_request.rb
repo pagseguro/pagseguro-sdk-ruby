@@ -15,7 +15,7 @@ module PagSeguro
 
     # Get the payment_method.
     def payment_method
-      "credit_card"
+      "creditCard"
     end
 
     # Set the installment.

@@ -68,9 +68,18 @@ module PagSeguro
 
         data[:senderEmail] =  sender.email
         data[:senderName] = sender.name
-        data[:senderCPF] = sender.cpf
 
+        serialize_documents(data, sender.documents)
         serialize_phone(data, sender.phone)
+      end
+
+      def serialize_documents(data, documents)
+        return if documents.empty?
+
+        documents.each do |document|
+          data[:senderCPF] = document.value if document.cpf?
+          data[:senderCNPJ] = document.value if document.cnpj?
+        end
       end
 
       def serialize_phone(data, phone)
@@ -143,6 +152,19 @@ module PagSeguro
         }
       end
 
+      def xml_serialize_documents(xml, documents)
+        return if documents.empty?
+
+        xml.send(:documents) {
+          documents.each do |document|
+            xml.send(:document) {
+              xml.send(:type, document.type)
+              xml.send(:value, document.value)
+            }
+          end
+        }
+      end
+
       def xml_serialize_sender(xml, sender)
         return unless sender
 
@@ -155,6 +177,8 @@ module PagSeguro
               xml.send(:number, sender.phone.number)
             }
           end
+
+          xml_serialize_documents(xml, sender.documents)
         }
       end
 

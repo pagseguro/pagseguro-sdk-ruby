@@ -6,4 +6,5 @@ describe PagSeguro::Holder do
 
   it_ensures_type PagSeguro::Document, :document
   it_ensures_type PagSeguro::Phone, :phone
+  it_ensures_type PagSeguro::Address, :billing_address
 end

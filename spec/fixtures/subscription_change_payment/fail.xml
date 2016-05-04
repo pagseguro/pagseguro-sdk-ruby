@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<errors>
+  <error>
+    <code>17075</code>
+    <message>Credit card token is invalid.</message>
+  </error>
+</errors>

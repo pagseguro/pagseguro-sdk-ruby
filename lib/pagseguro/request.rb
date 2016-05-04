@@ -18,6 +18,17 @@ module PagSeguro
       execute :get, path, api_version, data, headers
     end
 
+    def get_with_auth_on_url(path, api_version, credentials)
+      request.public_send(
+        :get,
+        PagSeguro.api_url("#{api_version}/#{path}?#{credentials_to_params(credentials)}")
+      )
+    end
+
+    def get_without_api_version(path, data={}, headers={})
+      request.get(path, extended_data(data), headers)
+    end
+
     # Perform a POST request.
     #
     # # +path+: the path that will be requested. Must be something like <tt>"checkout"</tt>.
@@ -36,13 +47,31 @@ module PagSeguro
     # # +credentials+: the credentials like ApplicationCredentials or AccountCredentials.
     # # +data+: the data that will be sent as body data. Must be a XML.
     #
-    def post_xml(path, api_version, credentials, data)
+    def post_xml(path, api_version, credentials, data = '', options={})
       credentials_params = credentials_to_params(credentials)
       url_path = [api_version, path].reject(&:nil?).join('/')
 
       request.post do
         url PagSeguro.api_url("#{url_path}?#{credentials_params}")
         headers "Content-Type" => "application/xml; charset=#{PagSeguro.encoding}"
+        headers.merge!(options[:headers]) if options[:headers]
+        body data
+      end
+    end
+
+    # Perform a PUT request, sending XML data.
+    #
+    # # +path+: the path that will be requested. Must be something like <tt>"checkout"</tt>.
+    # # +credentials+: the credentials like ApplicationCredentials or AccountCredentials.
+    # # +data+: the data that will be sent as body data. Must be a XML.
+    #
+    def put_xml(path, credentials, data)
+      full_url = PagSeguro.api_url("#{path}?#{credentials_to_params(credentials)}")
+
+      request.put do
+        url full_url
+        headers "Content-Type" => "application/xml; charset=#{PagSeguro.encoding}",
+                "Accept" => "application/vnd.pagseguro.com.br.v1+xml;charset=ISO-8859-1"
         body data
       end
     end
