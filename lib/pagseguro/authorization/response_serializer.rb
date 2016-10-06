@@ -18,6 +18,7 @@ module PagSeguro
         data[:code] = xml.css("> code").text
         data[:reference] = xml.css("reference").text
         data[:created_at] = Time.parse xml.css("creationDate").text
+        data[:authorizer_email] = xml.css("authorizerEmail").text
       end
 
       def serialize_permissions(data)

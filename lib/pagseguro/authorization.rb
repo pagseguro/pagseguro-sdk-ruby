@@ -15,6 +15,9 @@ module PagSeguro
     # The authorization permissions
     attr_accessor :permissions
 
+    # The authorization authorizerEmail
+    attr_accessor :authorizer_email
+
     # Find an authorization by it's notification code
     def self.find_by_notification_code(code, options = {})
       request = Request.get("authorizations/notifications/#{code}", api_version, options)
