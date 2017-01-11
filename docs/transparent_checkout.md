@@ -194,8 +194,8 @@ Este serviço envia os dados do comprador e do pagamento para realizar a cobran�
 
 A criação das transações podem ser feitas utilizando três métodos de pagamento:
 
-[Boleto Bancário](https://github.com/pagseguro/ruby/blob/master/examples/transaction/boleto_transaction_request.rb)
+[Boleto Bancário](https://github.com/pagseguro/ruby/blob/master/examples/direct/create_transaction_using_boleto.rb)
 
-[Cartão de Crédito](https://github.com/pagseguro/ruby/blob/master/examples/transaction/credit_card_transaction_request.rb)
+[Cartão de Crédito](https://github.com/pagseguro/ruby/blob/master/examples/direct/create_transaction_using_credit_card.rb)
 
-[Transferência Eletrônica](https://github.com/pagseguro/ruby/blob/master/examples/transaction/online_debit_transaction.rb)
+[Transferência Eletrônica](https://github.com/pagseguro/ruby/blob/master/examples/direct/create_transaction_using_online_debit.rb)
