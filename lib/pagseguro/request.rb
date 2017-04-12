@@ -90,6 +90,10 @@ module PagSeguro
     private
     def request
       @request ||= Aitch::Namespace.new
+      @request.configure do |config|
+        config.timeout = 50 
+      end
+      @request
     end
 
     def extended_data(data)
