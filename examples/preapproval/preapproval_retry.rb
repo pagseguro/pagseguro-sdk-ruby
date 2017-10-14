@@ -13,7 +13,7 @@ payment_order_code = 'PAYMENT'
 
 credentials = PagSeguro::AccountCredentials.new(email, token)
 
-subscription_retry = PagSeguro::SubscriptionRetry.new(
+subscription_retry ||= PagSeguro::SubscriptionRetry.new(
   subscription_code: subscription_code,
   payment_order_code: payment_order_code
 )
