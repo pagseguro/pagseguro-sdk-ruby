@@ -240,7 +240,7 @@ Em seguida, acesse o link para confirmar as autorizações
 Você pode estornar pagamentos que as transações estiverem com status: Paga (3), Disponível (4), Em disputa (5).
 
 ```ruby
-  refund = PagSeguro::Refund.new
+  refund = PagSeguro::TransactionRefund.new
   refund.transaction_code = "D5D5BE444148407891E497B421975599"
 
   response = refund.register
