@@ -151,6 +151,12 @@ describe PagSeguro::SubscriptionPlan::RequestSerializer do
         ]xm
     end
 
+    it 'should not serializer trial duration if its value is nil' do
+      plan.trial_duration = nil
+
+      expect(subject.to_xml_params).not_to match %r[.*<trialPeriodDuration>]xm
+    end
+
     it 'should serializer trial duration' do
       plan.trial_duration = 30.0
 

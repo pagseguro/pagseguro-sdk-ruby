@@ -71,7 +71,7 @@ module PagSeguro
               xml.send(:finalDate, object.final_date.xmlschema) if object.final_date
               xml.send(:initialDate, object.initial_date.xmlschema) if object.initial_date
               xml.send(:membershipFee, to_amount(object.membership_fee))
-              xml.send(:trialPeriodDuration, object.trial_duration.to_i)
+              xml.send(:trialPeriodDuration, object.trial_duration.to_i) if object.trial_duration
             }
           }
         end
