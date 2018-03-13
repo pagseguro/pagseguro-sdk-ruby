@@ -76,7 +76,7 @@ module PagSeguro
         }
 
         operationalFeeAmount = xml.css("creditorFees > operationalFeeAmount").text
-        data[:creditor_fees].merge!(operational_fee_amount: BigDecimal(operationalFeeAmount)) if operationalFeeAmount.present?,
+        data[:creditor_fees].merge!(operational_fee_amount: BigDecimal(operationalFeeAmount)) if operationalFeeAmount.present?
       end
 
       def serialize_payments(data)
