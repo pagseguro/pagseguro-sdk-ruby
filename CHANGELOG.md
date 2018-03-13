@@ -1,3 +1,7 @@
+2.6.1
+
+- Correção na serialização da transação
+
 2.6.0
 
 - Assinatura
