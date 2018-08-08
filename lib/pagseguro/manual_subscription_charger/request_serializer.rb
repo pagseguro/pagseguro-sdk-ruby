@@ -18,7 +18,7 @@ module PagSeguro
       private
 
       def to_amount(amount = 0.0)
-        "%.2f" % BigDecimal(amount.to_s).round(2).to_s("F")
+        "%.2f" % BigDecimal(amount.to_s.to_f.to_s).round(2).to_s("F")
       end
 
       def xml_serialize_items(xml, items = [])

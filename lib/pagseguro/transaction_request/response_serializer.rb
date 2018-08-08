@@ -40,10 +40,10 @@ module PagSeguro
       end
 
       def serialize_amounts(data)
-        data[:gross_amount] = BigDecimal(xml.css("grossAmount").text)
-        data[:discount_amount] = BigDecimal(xml.css("discountAmount").text)
-        data[:net_amount] = BigDecimal(xml.css("netAmount").text)
-        data[:extra_amount] = BigDecimal(xml.css("extraAmount").text)
+        data[:gross_amount] = BigDecimal(xml.css("grossAmount").text.to_f.to_s)
+        data[:discount_amount] = BigDecimal(xml.css("discountAmount").text.to_f.to_s)
+        data[:net_amount] = BigDecimal(xml.css("netAmount").text.to_f.to_s)
+        data[:extra_amount] = BigDecimal(xml.css("extraAmount").text.to_f.to_s)
         data[:installment_count] = xml.css("installmentCount").text.to_i
       end
 
@@ -55,7 +55,7 @@ module PagSeguro
           item[:id] = node.css("id").text
           item[:description] = node.css("description").text
           item[:quantity] = node.css("quantity").text.to_i
-          item[:amount] = BigDecimal(node.css("amount").text)
+          item[:amount] = BigDecimal(node.css("amount").text.to_f.to_s)
 
           data[:items] << item
         end
@@ -89,7 +89,7 @@ module PagSeguro
       def serialize_shipping(data)
         shipping = {
           type_id: xml.css("shipping > type").text,
-          cost: BigDecimal(xml.css("shipping > cost").text),
+          cost: BigDecimal(xml.css("shipping > cost").text.to_f.to_s),
         }
 
         serialize_address(shipping)
