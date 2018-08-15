@@ -7,13 +7,12 @@
 
 A biblioteca PagSeguro em Ruby é um conjunto de classes de domínio que facilitam, para o desenvolvedor Ruby, a utilização das funcionalidades que o PagSeguro oferece na forma de APIs. Com a biblioteca instalada e configurada, você pode facilmente integrar funcionalidades como:
 
- - Criar [requisições de pagamentos] \(este serviço utiliza a versão **V2** da API\)
- - Consultar [transações por código] \(este serviço utiliza a versão **V3** da API\)
- - Consultar [transações por intervalo de datas] \(este serviço utiliza a versão **V3** da API)
- - Consultar [transações abandonadas] \(este serviço utiliza a versão **V2** da API\)
- - Receber [notificações] \(este serviço utiliza a versão **V3** da API\)
- - Enviar estorno de transações \(este serviço utiliza a versão **V2** da API\)
-  - Cancelar transações \(este serviço utiliza a versão **V2** da API\)
+ - [Criar Requisições de Pagamentos]
+ - [Consultar Transações por Código]
+ - [Consultar Transações por Intervalo de Datas]
+ - [Receber Notificações]
+ - [Estornar Transações por Código]
+ - [Cancelar Transações por Código]
 
 ## Requisitos
 
@@ -429,13 +428,12 @@ O código, os commits e os comentários devem ser em inglês.
 Adicione exemplos para sua nova feature.
 Se seu Pull Request for relacionado a uma versão específica, o Pull Request não deve ser enviado para o branch master e sim para o branch correspondente a versão.
 
-
-  [requisições de pagamentos]: https://pagseguro.uol.com.br/v2/guia-de-integracao/api-de-pagamentos.html
-  [notificações]: https://pagseguro.uol.com.br/v3/guia-de-integracao/api-de-notificacoes.html
-  [transações por código]: https://pagseguro.uol.com.br/v3/guia-de-integracao/consulta-de-transacoes-por-codigo.html
-  [transações por intervalo de datas]: https://pagseguro.uol.com.br/v3/guia-de-integracao/consulta-de-transacoes-por-intervalo-de-datas.html
-  [transações abandonadas]: https://pagseguro.uol.com.br/v3/guia-de-integracao/consulta-de-transacoes-abandonadas.html
+  [Criar Requisições de Pagamentos]: https://devs.pagseguro.uol.com.br/docs/checkout-web
+  [Consultar Transações por Código]: https://devs.pagseguro.uol.com.br/docs/pagamento-recorrente-consulta-pelo-codigo-de-adesao
+  [Consultar Transações por Intervalo de Datas]: https://devs.pagseguro.uol.com.br/docs/pagamento-recorrente-consulta-por-intervalo-de-datas
+  [Receber Notificações]: https://devs.pagseguro.uol.com.br/docs/checkout-web-notificacoes
+  [Estornar Transações por Código]: https://devs.pagseguro.uol.com.br/docs/checkout-web-cancelamento-e-estorno
+  [Cancelar Transações por Código]: https://devs.pagseguro.uol.com.br/docs/pagamento-recorrente-cancelamento-de-adesao
   [fórum]: http://forum.pagseguro.uol.com.br/
   [Ruby]: http://www.ruby-lang.org/pt/
-  [GitHub]: https://github.com/pagseguro/ruby/
   [Aitch]: https://github.com/fnando/aitch
