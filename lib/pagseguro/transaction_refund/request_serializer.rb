@@ -17,7 +17,7 @@ module PagSeguro
 
       private
       def to_amount(amount)
-        "%.2f" % BigDecimal(amount.to_s).round(2).to_s("F") if amount
+        "%.2f" % BigDecimal(amount.to_s.to_f.to_s).round(2).to_s("F") if amount
       end
     end
   end
