@@ -1,3 +1,7 @@
+2.6.1
+
+- Correção de problemas de compatibilidade no uso de valores decimais pela lib com algumas versões do Ruby (2.5.1, etc)
+
 2.6.0
 
 - Assinatura
