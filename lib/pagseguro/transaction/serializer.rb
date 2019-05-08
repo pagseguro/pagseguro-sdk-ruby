@@ -71,10 +71,15 @@ module PagSeguro
           intermediation_rate_amount: BigDecimal(xml.css("creditorFees > intermediationRateAmount").text.to_f.to_s),
           intermediation_fee_amount: BigDecimal(xml.css("creditorFees > intermediationFeeAmount").text.to_f.to_s),
           installment_fee_amount: BigDecimal(xml.css("creditorFees > installmentFeeAmount").text.to_f.to_s),
-          operational_fee_amount: BigDecimal(xml.css("creditorFees > operationalFeeAmount").text.to_f.to_s),
-          commission_fee_amount: BigDecimal(xml.css("creditorFees > commissionFeeAmount").text.to_f.to_s),
-          efrete: BigDecimal(xml.css("creditorFees > efrete").text.to_f.to_s)
         }
+        operational_fee_amount = xml.css("creditorFees > operationalFeeAmount").text.to_f.to_s
+        data[:creditor_fees].merge!(operational_fee_amount: BigDecimal(operational_fee_amount)) if operational_fee_amount.present?
+
+        commission_fee_amount = xml.css("creditorFees > commissionFeeAmount").text.to_f.to_s
+        data[:creditor_fees].merge!(commission_fee_amount: BigDecimal(commission_fee_amount)) if commission_fee_amount.present?
+
+        efrete = xml.css("creditorFees > efrete").text.to_f.to_s
+        data[:creditor_fees].merge!(efrete: BigDecimal(efrete)) if efrete.present?
       end
 
       def serialize_payments(data)
