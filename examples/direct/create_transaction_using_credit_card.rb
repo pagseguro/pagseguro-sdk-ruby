@@ -8,7 +8,7 @@ require_relative "../boot"
 
 payment = PagSeguro::CreditCardTransactionRequest.new
 payment.notification_url = "http://www.meusite.com.br/notification"
-payment.payment_mode = "gateway"
+payment.payment_mode = "default"
 
 payment.items << {
   id: 1234,
