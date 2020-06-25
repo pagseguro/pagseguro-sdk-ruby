@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.summary               = "Biblioteca de integração com o PagSeguro"
   spec.description           = "Biblioteca oficial de integração via API com o PagSeguro"
   spec.homepage              = "http://www.pagseguro.com.br"
-  spec.license               = "ASL"
+  spec.license               = "AAL"
 
   spec.files                 = `git ls-files`.split($/)
   spec.executables           = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
